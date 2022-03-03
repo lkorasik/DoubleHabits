@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">DoubleHabits</string>
+
+    <string name="add_habit.habit_name">Habit name</string>
+    <string name="add_habit.habit_description">Habit description</string>
+    <string name="add_habit.habit_count">Count of execution</string>
+    <string name="add_habit.habit_periodicity">Periodicity</string>
+    <string name="add_habit.habit_type">Habit type:</string>
+    <string name="add_habit.habit_priority">Habit priority:</string>
+    <string name="add_habit.habit_type_1">Type 1</string>
+    <string name="add_habit.habit_type_2">Type 2</string>
+    <string name="add_habit.empty_name">You must write habit\'s name</string>
 </resources>

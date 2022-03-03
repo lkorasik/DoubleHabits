@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddHabitActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/base_element"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/habit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
+            android:layout_marginVertical="@dimen/add_habit.vertical_margin"
+            android:hint="@string/add_habit.habit_name"
+            android:importantForAutofill="no"
+            android:inputType="text|textCapSentences"
+            android:lines="1"
+            app:layout_constraintTop_toTopOf="@id/base_element"
+            tools:layout_editor_absoluteX="10dp" />
+
+        <EditText
+            android:id="@+id/habit_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/add_habit.vertical_margin"
+            android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
+            android:hint="@string/add_habit.habit_description"
+            android:inputType="text|textCapSentences"
+            android:maxLines="2"
+            android:importantForAutofill="no"
+            app:layout_constraintTop_toBottomOf="@id/habit_name" />
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/habit_description">
+
+            <TextView
+                android:text="@string/add_habit.habit_priority"
+                android:textSize="17sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/add_habit.vertical_margin"
+                android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
+                android:paddingHorizontal="@dimen/add_habit.horizontal_margin"/>
+
+            <Spinner
+                android:id="@+id/habit_priority"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/add_habit.vertical_margin"
+                android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin" />
+
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/add_habit.vertical_margin"
+            android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
+            android:checkedButton="@id/first_type"
+            app:layout_constraintTop_toBottomOf="@id/container">
+
+            <TextView
+                android:text="@string/add_habit.habit_type"
+                android:textSize="17sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/add_habit.horizontal_margin"/>
+
+            <RadioButton
+                android:id="@+id/first_type"
+                android:text="@string/add_habit.habit_type_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <RadioButton
+                android:id="@+id/second_type"
+                android:text="@string/add_habit.habit_type_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/add_habit.vertical_margin"
+            android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
+            app:layout_constraintTop_toBottomOf="@id/radio_group"
+            android:hint="@string/add_habit.habit_count"
+            android:inputType="number"
+            android:lines="1"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/periodicity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/add_habit.vertical_margin"
+            android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
+            app:layout_constraintTop_toBottomOf="@id/count"
+            android:hint="@string/add_habit.habit_periodicity"
+            android:inputType="text"
+            android:lines="1"
+            android:importantForAutofill="no" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
