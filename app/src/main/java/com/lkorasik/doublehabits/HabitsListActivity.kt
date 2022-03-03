@@ -12,6 +12,7 @@ class HabitsListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private var habits: MutableList<Habit> = mutableListOf()
+    private lateinit var adapter: HabitRecycleViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +32,7 @@ class HabitsListActivity : AppCompatActivity() {
         if(it.resultCode == Activity.RESULT_OK) {
             val habit = it.data?.getParcelableExtra<Habit>(IntentKeys.Habit) as Habit
             habits.add(habit)
-
-            setAdapter()
+            adapter.notifyItemInserted(habits.size - 1)
         }
     }
 
@@ -42,13 +42,12 @@ class HabitsListActivity : AppCompatActivity() {
             val position = it.data?.getIntExtra(IntentKeys.Position, -1)
 
             habits[position!!] = habit
-
-            setAdapter()
+            adapter.notifyItemChanged(position)
         }
     }
 
     private fun setAdapter() {
-        binding.habitsList.adapter = HabitRecycleViewAdapter(habits, this) { data, position ->
+        adapter = HabitRecycleViewAdapter(habits, this) { data, position ->
             val intent = Intent(this, AddHabitActivity::class.java).apply {
                 putExtra(IntentKeys.Habit, data)
                 putExtra(IntentKeys.Position, position)
@@ -56,5 +55,6 @@ class HabitsListActivity : AppCompatActivity() {
 
             editExistingHabit.launch(intent)
         }
+        binding.habitsList.adapter = adapter
     }
 }
