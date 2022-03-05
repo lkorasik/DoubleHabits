@@ -16,29 +16,34 @@ class AddHabitActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initActivity()
-
-        handleIntent()
-
         initSpinnerAdapter()
+        handleIntent()
+    }
+
+    private fun initActivity() {
+        binding = ActivityAddHabitBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     private fun handleIntent() {
-        intent?.apply {
-            val habit = getParcelableExtra<Habit>(IntentKeys.Habit)
+        intent?.getParcelableExtra<Habit>(IntentKeys.Habit)?.let {
+            fillForm(it)
+        }
+    }
 
-            habit?.let {
-                binding.habitName.setText(it.name)
-                binding.habitDescription.setText(it.description)
-                binding.habitPriority.setSelection(it.priority.ordinal)
+    private fun fillForm(habit: Habit) {
+        with(binding) {
+            habitName.editText?.setText(habit.name)
+            habitDescription.editText?.setText(habit.description)
+            habitPriority.setSelection(habit.priority.ordinal)
 
-                if(it.type.ordinal == 0)
-                    binding.radioGroup.check(R.id.first_type)
-                else
-                    binding.radioGroup.check(R.id.second_type)
-
-                binding.count.setText(it.count.toString())
-                binding.periodicity.setText(it.periodicity)
+            when(habit.type){
+                HabitType.REGULAR -> radioGroup.check(R.id.type_regular)
+                HabitType.HARMFUL -> radioGroup.check(R.id.type_harmful)
             }
+
+            count.editText?.setText(habit.count.toString())
+            periodicity.editText?.setText(habit.periodicity)
         }
     }
 
@@ -49,11 +54,6 @@ class AddHabitActivity: AppCompatActivity() {
             setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.habitPriority.adapter = this
         }
-    }
-
-    private fun initActivity() {
-        binding = ActivityAddHabitBinding.inflate(layoutInflater)
-        setContentView(binding.root)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -69,7 +69,7 @@ class AddHabitActivity: AppCompatActivity() {
     }
 
     private fun handleCreateHabitSelection(): Boolean {
-        if(!isFormFilled()) {
+        if(!isMinimalFormFilled()) {
             Snackbar
                 .make(binding.root, getString(R.string.add_habit_empty_name), Snackbar.LENGTH_LONG)
                 .show()
@@ -80,8 +80,9 @@ class AddHabitActivity: AppCompatActivity() {
         return true
     }
 
+    private fun isMinimalFormFilled() = binding.habitName.editText?.text.toString().isNotEmpty()
+
     private fun createNewHabit() {
-        getSelectedType()
         val habit = buildHabit()
         val newIntent = Intent().apply {
             putExtra(IntentKeys.Habit, habit)
@@ -96,11 +97,11 @@ class AddHabitActivity: AppCompatActivity() {
 
     private fun buildHabit() =
         Habit(
-            name = binding.habitName.text.toString(),
-            description = binding.habitDescription.text.toString(),
+            name = binding.habitName.editText?.text.toString(),
+            description = binding.habitDescription.editText?.text.toString(),
             priority = getPriority(),
             type = getSelectedType(),
-            periodicity = binding.periodicity.text.toString(),
+            periodicity = binding.periodicity.editText?.text.toString(),
             color = R.color.purple_500,
             count = getCount()
         )
@@ -110,19 +111,17 @@ class AddHabitActivity: AppCompatActivity() {
         return Priority.valueOf(text.uppercase())
     }
 
-    private fun getCount(): Int {
-        if(binding.count.text.toString().isEmpty())
-            return 0
-        return binding.count.text.toString().toInt()
-    }
-
     private fun getSelectedType(): HabitType {
         return when(binding.radioGroup.checkedRadioButtonId) {
-            R.id.first_type -> HabitType.HARMFUL
-            R.id.second_type -> HabitType.REGULAR
+            R.id.type_harmful -> HabitType.HARMFUL
+            R.id.type_regular -> HabitType.REGULAR
             else -> throw IllegalStateException("Incorrect habit type")
         }
     }
 
-    private fun isFormFilled() = binding.habitName.text.toString().isNotEmpty()
+    private fun getCount(): Int {
+        if(binding.count.editText?.text.toString().isEmpty())
+            return 0
+        return binding.count.editText?.text.toString().toInt()
+    }
 }

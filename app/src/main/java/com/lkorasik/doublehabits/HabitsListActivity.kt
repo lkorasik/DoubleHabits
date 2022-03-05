@@ -14,20 +14,6 @@ class HabitsListActivity : AppCompatActivity() {
     private var habits: MutableList<Habit> = mutableListOf()
     private lateinit var adapter: HabitRecycleViewAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        binding.addHabit.setOnClickListener {
-            val intent = Intent(this, AddHabitActivity::class.java)
-            getNewHabit.launch(intent)
-        }
-
-        binding.habitsList.layoutManager = LinearLayoutManager(this)
-        setAdapter()
-    }
-
     private val getNewHabit = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if(it.resultCode == Activity.RESULT_OK) {
             val habit = it.data?.getParcelableExtra<Habit>(IntentKeys.Habit) as Habit
@@ -43,6 +29,28 @@ class HabitsListActivity : AppCompatActivity() {
 
             habits[position!!] = habit
             adapter.notifyItemChanged(position)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initActivity()
+        initViews()
+    }
+
+    private fun initActivity() {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
+    private fun initViews() {
+        binding.let {
+            it.addHabit.setOnClickListener {
+                val intent = Intent(this, AddHabitActivity::class.java)
+                getNewHabit.launch(intent)
+            }
+            it.habitsList.layoutManager = LinearLayoutManager(this)
+            setAdapter()
         }
     }
 

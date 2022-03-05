@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 class HabitRecycleViewAdapter(
     private val list: MutableList<Habit>,
     private val context: Context,
-    private val onItemClicked: (Habit, Int) -> Unit
+    private val onItemClick: (Habit, Int) -> Unit
 ): RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -24,7 +24,7 @@ class HabitRecycleViewAdapter(
             bind(context, list[position])
 
             itemView.setOnClickListener {
-                onItemClicked(list[position], position)
+                onItemClick(list[position], position)
             }
         }
     }

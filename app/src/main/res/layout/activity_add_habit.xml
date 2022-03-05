@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,41 +13,92 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/habit_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/add_habit.habit_name"
             android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
             android:layout_marginVertical="@dimen/add_habit.vertical_margin"
-            android:hint="@string/add_habit.habit_name"
-            android:importantForAutofill="no"
-            android:inputType="text|textCapSentences"
-            android:lines="1"
             app:layout_constraintTop_toTopOf="@id/base_element"
-            tools:layout_editor_absoluteX="10dp" />
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textCapSentences"
+                android:importantForAutofill="no"
+                android:lines="1"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/habit_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/add_habit.vertical_margin"
             android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
             android:hint="@string/add_habit.habit_description"
-            android:inputType="text|textCapSentences"
-            android:maxLines="2"
-            android:importantForAutofill="no"
-            app:layout_constraintTop_toBottomOf="@id/habit_name" />
+            app:layout_constraintTop_toBottomOf="@id/habit_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textCapSentences"
+                android:importantForAutofill="no"
+                android:maxLines="2"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/add_habit.vertical_margin"
+            android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
+            android:hint="@string/add_habit.habit_count"
+            app:layout_constraintTop_toBottomOf="@id/habit_description"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:importantForAutofill="no"
+                android:lines="1"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/periodicity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/add_habit.vertical_margin"
+            android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
+            android:hint="@string/add_habit.habit_periodicity"
+            app:layout_constraintTop_toBottomOf="@id/count"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textCapSentences"
+                android:importantForAutofill="no"
+                android:lines="1"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
-            android:id="@+id/container"
+            android:id="@+id/habit_types_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/habit_description">
+            app:layout_constraintTop_toBottomOf="@id/periodicity">
 
             <TextView
                 android:text="@string/add_habit.habit_priority"
-                android:textSize="17sp"
+                android:textSize="@dimen/add_habit.title_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/add_habit.vertical_margin"
@@ -70,53 +120,29 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/add_habit.vertical_margin"
             android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
-            android:checkedButton="@id/first_type"
-            app:layout_constraintTop_toBottomOf="@id/container">
+            android:checkedButton="@id/type_regular"
+            app:layout_constraintTop_toBottomOf="@id/habit_types_container">
 
             <TextView
                 android:text="@string/add_habit.habit_type"
-                android:textSize="17sp"
+                android:textSize="@dimen/add_habit.title_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/add_habit.horizontal_margin"/>
 
             <RadioButton
-                android:id="@+id/first_type"
-                android:text="@string/add_habit.habit_type_1"
+                android:id="@+id/type_regular"
+                android:text="@string/add_habit.habit_type_regular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <RadioButton
-                android:id="@+id/second_type"
-                android:text="@string/add_habit.habit_type_2"
+                android:id="@+id/type_harmful"
+                android:text="@string/add_habit.habit_type_harmful"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         </RadioGroup>
-
-        <EditText
-            android:id="@+id/count"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/add_habit.vertical_margin"
-            android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
-            app:layout_constraintTop_toBottomOf="@id/radio_group"
-            android:hint="@string/add_habit.habit_count"
-            android:inputType="number"
-            android:lines="1"
-            android:importantForAutofill="no" />
-
-        <EditText
-            android:id="@+id/periodicity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/add_habit.vertical_margin"
-            android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
-            app:layout_constraintTop_toBottomOf="@id/count"
-            android:hint="@string/add_habit.habit_periodicity"
-            android:inputType="text"
-            android:lines="1"
-            android:importantForAutofill="no" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
