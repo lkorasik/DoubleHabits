@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
-import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.lkorasik.doublehabits.databinding.ActivityAddHabitBinding
@@ -32,10 +31,10 @@ class AddHabitActivity: AppCompatActivity() {
                 binding.habitDescription.setText(it.description)
                 binding.habitPriority.setSelection(it.priority.ordinal)
 
-                if(it.type == "Type 2")
-                    binding.radioGroup.check(R.id.second_type)
-                else
+                if(it.type.ordinal == 0)
                     binding.radioGroup.check(R.id.first_type)
+                else
+                    binding.radioGroup.check(R.id.second_type)
 
                 binding.count.setText(it.count.toString())
                 binding.periodicity.setText(it.periodicity)
@@ -82,6 +81,7 @@ class AddHabitActivity: AppCompatActivity() {
     }
 
     private fun createNewHabit() {
+        getSelectedType()
         val habit = buildHabit()
         val newIntent = Intent().apply {
             putExtra(IntentKeys.Habit, habit)
@@ -116,10 +116,12 @@ class AddHabitActivity: AppCompatActivity() {
         return binding.count.text.toString().toInt()
     }
 
-    private fun getSelectedType(): String {
-        val radioButtonID = binding.radioGroup.checkedRadioButtonId
-        val radioButton: RadioButton = binding.radioGroup.findViewById(radioButtonID)
-        return radioButton.text.toString()
+    private fun getSelectedType(): HabitType {
+        return when(binding.radioGroup.checkedRadioButtonId) {
+            R.id.first_type -> HabitType.HARMFUL
+            R.id.second_type -> HabitType.REGULAR
+            else -> throw IllegalStateException("Incorrect habit type")
+        }
     }
 
     private fun isFormFilled() = binding.habitName.text.toString().isNotEmpty()

@@ -7,8 +7,8 @@ data class Habit(
     val name: String,
     val description: String,
     val priority: Priority,
-    val type: String, //TODO: Какой тип должен быть?
-    val periodicity: String, //TODO: Какой тип должен быть?
+    val type: HabitType,
+    val periodicity: String, //TODO: Измени тип на Periodicity
     val color: Int,
     val count: Int
 ): Parcelable {
@@ -17,7 +17,7 @@ data class Habit(
         parcel.readString().orEmpty(),
         parcel.readString().orEmpty(),
         Priority.values()[parcel.readInt()],
-        parcel.readString().orEmpty(),
+        HabitType.values()[parcel.readInt()],
         parcel.readString().orEmpty(),
         parcel.readInt(),
         parcel.readInt()
@@ -27,7 +27,7 @@ data class Habit(
         parcel.writeString(name)
         parcel.writeString(description)
         parcel.writeInt(priority.ordinal)
-        parcel.writeString(type)
+        parcel.writeInt(type.ordinal)
         parcel.writeString(periodicity)
         parcel.writeInt(color)
         parcel.writeInt(count)
