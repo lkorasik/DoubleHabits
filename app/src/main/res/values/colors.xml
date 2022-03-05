@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="chalet_green">#556934</color>
+    <color name="fern_green">#63873E</color>
+    <color name="conifer">#B3D760</color>
+    <color name="manz">#D9F07A</color>
+    <color name="turmeric">#C8CF53</color>
+    <color name="olive_green">#A7AE4A</color>
 </resources>
