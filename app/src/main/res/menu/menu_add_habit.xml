@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/create_habit"
-        android:title="Add habit"
+        android:title="@string/add_habit_menu.add_habit"
         android:icon="@drawable/ic_accept"
         app:showAsAction="always" />
 </menu>

@@ -11,8 +11,8 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             this.habitType
             habitName.text = habit.name
             habitDescription.text = habit.description
-            habitType.text = habit.type.name
-            habitPriority.text = habit.priority.toString()
+            habitType.text = habit.type.getRepresentation(context)
+            habitPriority.text = habit.priority.getRepresentation(context)
             coloredPanel.setBackgroundColor(context.getColor(habit.color))
             habitPeriodicity.text = habit.periodicity
         }

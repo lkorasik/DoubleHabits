@@ -107,8 +107,7 @@ class AddHabitActivity: AppCompatActivity() {
         )
 
     private fun getPriority(): Priority {
-        val text = binding.habitPriority.selectedItem.toString()
-        return Priority.valueOf(text.uppercase())
+        return Priority.values()[binding.habitPriority.selectedItemPosition]
     }
 
     private fun getSelectedType(): HabitType {
