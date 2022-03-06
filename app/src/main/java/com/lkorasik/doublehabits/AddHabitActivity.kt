@@ -76,9 +76,23 @@ class AddHabitActivity: AppCompatActivity() {
     }
 
     private fun handleIntent() {
-        intent?.getParcelableExtra<Habit>(IntentKeys.Habit)?.let {
-            fillForm(it)
+        val habit = intent?.getParcelableExtra<Habit>(IntentKeys.Habit)
+
+        if(habit != null){
+            fillForm(habit)
+            setActivityTitleEdit()
         }
+        else {
+            setActivityTitleCreate()
+        }
+    }
+
+    private fun setActivityTitleEdit() {
+        title = getString(R.string.add_habit_activity_edit_title)
+    }
+
+    private fun setActivityTitleCreate() {
+        title = getString(R.string.add_habit_activity_create_title)
     }
 
     private fun fillForm(habit: Habit) {
