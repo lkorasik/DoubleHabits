@@ -9,11 +9,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.lkorasik.doublehabits.colorpicker.ScrollableColorPicker
 import com.lkorasik.doublehabits.databinding.ActivityAddHabitBinding
+import java.math.RoundingMode
 
 
 class AddHabitActivity: AppCompatActivity() {
@@ -52,9 +54,25 @@ class AddHabitActivity: AppCompatActivity() {
             back.setColor(selected)
             var temp = selected
 
+            val rgb = view.findViewById<TextView>(R.id.rgb)
+            val hsv = view.findViewById<TextView>(R.id.hsv)
+
             val picker = view.findViewById<ScrollableColorPicker>(R.id.scrollable_color_picker)
             picker.setOnColorSelectListener {
                 back.setColor(it)
+
+                val red = Color.red(it)
+                val green = Color.green(it)
+                val blue = Color.blue(it)
+                rgb.text = getString(R.string.dialog_color_picker_rgb).format(red, green, blue)
+
+                val hsvArray = floatArrayOf(0f, 0f, 0f)
+                Color.colorToHSV(it, hsvArray)
+                val hue = hsvArray[0].toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
+                val saturation = hsvArray[1].toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
+                val value = hsvArray[2].toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
+                hsv.text = getString(R.string.dialog_color_picker_hsv).format(hue, saturation, value)
+
                 selected = it
             }
 
