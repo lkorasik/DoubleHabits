@@ -30,7 +30,7 @@
             android:paddingHorizontal="@dimen/add_habit.horizontal_margin"
             android:text="@string/dialog_color_picker.current_color" />
 
-        <ImageView
+        <View
             android:id="@+id/current_color"
             android:background="@drawable/color_selector_preview_background"
             android:layout_margin="10dp"

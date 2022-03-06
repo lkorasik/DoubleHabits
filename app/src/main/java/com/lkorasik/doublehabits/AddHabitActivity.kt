@@ -3,6 +3,7 @@ package com.lkorasik.doublehabits
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -30,7 +31,10 @@ class AddHabitActivity: AppCompatActivity() {
 
         handleIntent()
 
-        binding.currentColor.setBackgroundColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
+//        binding.currentColor.setBackgroundColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
+        (binding.currentColor.background as GradientDrawable).apply {
+            setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
+        }
 
         binding.chose.setOnClickListener {
             colorPickerDialog.show()
@@ -45,17 +49,23 @@ class AddHabitActivity: AppCompatActivity() {
             it.setTitle("Select color")
 
             var selected = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
-            view.findViewById<View>(R.id.current_color).setBackgroundColor(selected)
+            val back = view.findViewById<View>(R.id.current_color).background as GradientDrawable
+            back.setColor(selected)
+//            view.findViewById<View>(R.id.current_color).setBackgroundColor(selected)
             var temp = selected
 
             val picker = view.findViewById<ScrollableColorPicker>(R.id.scrollable_color_picker)
             picker.setOnColorSelectListener {
-                view.findViewById<View>(R.id.current_color).setBackgroundColor(it)
+//                view.findViewById<View>(R.id.current_color).setBackgroundColor(it)
+                back.setColor(it)
                 selected = it
             }
 
             it.setPositiveButton("Ok") { dialog, which ->
-                binding.currentColor.setBackgroundColor(selected)
+//                binding.currentColor.setBackgroundColor(selected)
+                (binding.currentColor.background as GradientDrawable).apply {
+                    setColor(selected)
+                }
                 temp = selected
                 selectedColor = selected
                 dialog.dismiss()
@@ -63,7 +73,8 @@ class AddHabitActivity: AppCompatActivity() {
 
             it.setNegativeButton("Cancel") { dialog, which ->
                 selected = selectedColor
-                view.findViewById<View>(R.id.current_color).setBackgroundColor(temp)
+//                view.findViewById<View>(R.id.current_color).setBackgroundColor(temp)
+                back.setColor(temp)
             }
 
             it.create()

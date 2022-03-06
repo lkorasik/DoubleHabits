@@ -173,7 +173,8 @@
                     android:id="@+id/current_color"
                     android:layout_margin="20dp"
                     android:layout_width="80dp"
-                    android:layout_height="80dp"/>
+                    android:layout_height="80dp"
+                    android:background="@drawable/color_selector_preview_background"/>
 
                 <Button
                     android:id="@+id/chose"
