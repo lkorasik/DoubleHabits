@@ -13,7 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import com.lkorasik.doublehabits.colorpicker.ScrollableColorPicker
+import com.lkorasik.doublehabits.color_picker.ScrollableColorPicker
 import com.lkorasik.doublehabits.databinding.ActivityAddHabitBinding
 import java.math.RoundingMode
 
@@ -35,6 +35,25 @@ class AddHabitActivity: AppCompatActivity() {
 
         binding.chose.setOnClickListener {
             colorPickerDialog.show()
+        }
+    }
+
+    private fun initActivity() {
+        binding = ActivityAddHabitBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        (binding.currentColor.background as GradientDrawable).apply {
+            setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
+        }
+    }
+
+    private fun initSpinnerAdapter() {
+        val source = R.array.priority_enum
+        val view = android.R.layout.simple_spinner_item
+
+        ArrayAdapter.createFromResource(this, source, view).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.habitPriority.adapter = this
         }
     }
 
@@ -102,15 +121,6 @@ class AddHabitActivity: AppCompatActivity() {
         }
     }
 
-    private fun initActivity() {
-        binding = ActivityAddHabitBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        (binding.currentColor.background as GradientDrawable).apply {
-            setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
-        }
-    }
-
     private fun handleIntent() {
         val habit = intent?.getParcelableExtra<Habit>(IntentKeys.Habit)
 
@@ -147,15 +157,6 @@ class AddHabitActivity: AppCompatActivity() {
             (currentColor.background as GradientDrawable).apply {
                 setColor(habit.color)
             }
-        }
-    }
-
-    private fun initSpinnerAdapter() {
-        val source = R.array.priority_enum
-        val view = android.R.layout.simple_spinner_item
-        ArrayAdapter.createFromResource(this, source, view).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.habitPriority.adapter = this
         }
     }
 

@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lkorasik.doublehabits.databinding.ActivityMainBinding
+import com.lkorasik.doublehabits.habit_adapter.HabitRecycleViewAdapter
 
 class HabitsListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -55,7 +56,8 @@ class HabitsListActivity : AppCompatActivity() {
     }
 
     private fun setAdapter() {
-        adapter = HabitRecycleViewAdapter(habits, this) { data, position ->
+        adapter = HabitRecycleViewAdapter(habits, this)
+        adapter.setOnItemClick { data, position ->
             val intent = Intent(this, AddHabitActivity::class.java).apply {
                 putExtra(IntentKeys.Habit, data)
                 putExtra(IntentKeys.Position, position)

@@ -1,18 +1,17 @@
-package com.lkorasik.doublehabits.colorpicker
+package com.lkorasik.doublehabits.color_picker
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import androidx.core.content.ContextCompat
 import com.lkorasik.doublehabits.R
 
 
 class ScrollableColorPicker : FrameLayout {
+    private var onColorSelectedListener: OnColorSelected? = null
+
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
         initView()
     }
@@ -25,16 +24,6 @@ class ScrollableColorPicker : FrameLayout {
         initView()
     }
 
-    private var onColorSelectedListener: OnColorSelected? = null
-
-    fun setOnColorSelectListener(listener: OnColorSelected) {
-        onColorSelectedListener = listener
-    }
-
-    fun setOnColorSelectListener(listener: (color: Int) -> Unit) {
-        onColorSelectedListener = OnColorSelected { color -> listener(color) }
-    }
-
     private fun initView() {
         inflate(context, R.layout.scrollable_color_picker, this)
 
@@ -44,27 +33,19 @@ class ScrollableColorPicker : FrameLayout {
             R.id.item14, R.id.item15
         )
 
-        for(i in 0 until ids.size){
-            findViewById<View>(ids[i]).setOnClickListener {
-                val hsv = floatArrayOf(getMiddle(i), 1f, 1f)
-                val color = Color.HSVToColor(hsv)
-                onColorSelectedListener?.onColorSelected(color)
-            }
-        }
+        setOnColorSelectedListeners(ids)
 
         findViewById<View>(R.id.view1).background = generateBackground()
         initSelectors(ids)
     }
 
-    private fun getMiddle(i: Int) = 360f / 16f * (i + 1) - 360f / 16f / 2f
-
-    private fun initSelectors(ids: List<Int>) {
-        for(i in ids.indices) {
-            val hsv = floatArrayOf(getMiddle(i), 1f, 1f)
-            val color = Color.HSVToColor(hsv)
-
-            val back = findViewById<View>(ids[i]).background as GradientDrawable
-            back.setColor(color)
+    private fun setOnColorSelectedListeners(ids: List<Int>){
+        for(i in ids.indices){
+            findViewById<View>(ids[i]).setOnClickListener {
+                val hsv = floatArrayOf(getMiddle(i), 1f, 1f)
+                val color = Color.HSVToColor(hsv)
+                onColorSelectedListener?.onColorSelected(color)
+            }
         }
     }
 
@@ -76,5 +57,25 @@ class ScrollableColorPicker : FrameLayout {
             .toIntArray()
 
         return GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
+    }
+
+    private fun initSelectors(ids: List<Int>) {
+        for(i in ids.indices) {
+            val hsv = floatArrayOf(getMiddle(i), 1f, 1f)
+            val color = Color.HSVToColor(hsv)
+
+            (findViewById<View>(ids[i]).background as GradientDrawable).setColor(color)
+        }
+    }
+
+    /**
+     * Get the middle of the square.
+     * 1) Get square coordinates
+     * 2) Get middle
+     */
+    private fun getMiddle(position: Int) = 360f / 16f * (position + 1) - 360f / 16f / 2f
+
+    fun setOnColorSelectListener(listener: (color: Int) -> Unit) {
+        onColorSelectedListener = OnColorSelected { color -> listener(color) }
     }
 }

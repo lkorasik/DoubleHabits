@@ -68,7 +68,7 @@
 
     </LinearLayout>
 
-    <com.lkorasik.doublehabits.colorpicker.ScrollableColorPicker
+    <com.lkorasik.doublehabits.color_picker.ScrollableColorPicker
         android:id="@+id/scrollable_color_picker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
