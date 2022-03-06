@@ -33,10 +33,6 @@ class AddHabitActivity: AppCompatActivity() {
 
         handleIntent()
 
-        (binding.currentColor.background as GradientDrawable).apply {
-            setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
-        }
-
         binding.chose.setOnClickListener {
             colorPickerDialog.show()
         }
@@ -56,6 +52,18 @@ class AddHabitActivity: AppCompatActivity() {
 
             val rgb = view.findViewById<TextView>(R.id.rgb)
             val hsv = view.findViewById<TextView>(R.id.hsv)
+
+            val red = Color.red(selected)
+            val green = Color.green(selected)
+            val blue = Color.blue(selected)
+            rgb.text = getString(R.string.dialog_color_picker_rgb).format(red, green, blue)
+
+            val hsvArray = floatArrayOf(0f, 0f, 0f)
+            Color.colorToHSV(selected, hsvArray)
+            val hue = hsvArray[0].toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
+            val saturation = hsvArray[1].toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
+            val value = hsvArray[2].toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
+            hsv.text = getString(R.string.dialog_color_picker_hsv).format(hue, saturation, value)
 
             val picker = view.findViewById<ScrollableColorPicker>(R.id.scrollable_color_picker)
             picker.setOnColorSelectListener {
@@ -97,6 +105,10 @@ class AddHabitActivity: AppCompatActivity() {
     private fun initActivity() {
         binding = ActivityAddHabitBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        (binding.currentColor.background as GradientDrawable).apply {
+            setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
+        }
     }
 
     private fun handleIntent() {
@@ -125,13 +137,16 @@ class AddHabitActivity: AppCompatActivity() {
             habitDescription.editText?.setText(habit.description)
             habitPriority.setSelection(habit.priority.ordinal)
 
-            when(habit.type){
+            when(habit.type) {
                 HabitType.REGULAR -> radioGroup.check(R.id.type_regular)
                 HabitType.HARMFUL -> radioGroup.check(R.id.type_harmful)
             }
 
             count.editText?.setText(habit.count.toString())
             periodicity.editText?.setText(habit.periodicity)
+            (currentColor.background as GradientDrawable).apply {
+                setColor(habit.color)
+            }
         }
     }
 
@@ -190,7 +205,6 @@ class AddHabitActivity: AppCompatActivity() {
             priority = getPriority(),
             type = getSelectedType(),
             periodicity = binding.periodicity.editText?.text.toString(),
-//            color = binding.currentColor.solidColor,
             color = selectedColor,
             count = getCount()
         )
