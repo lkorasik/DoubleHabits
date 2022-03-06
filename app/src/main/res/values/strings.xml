@@ -10,8 +10,11 @@
     <string name="add_habit.habit_type_regular">Regular</string>
     <string name="add_habit.habit_type_harmful">Harmful</string>
     <string name="add_habit.empty_name">You must write habit\'s name</string>
-    <string name="add_habit_menu.add_habit">Add habit</string>
     <string name="add_habit.habit_priority.low">Low</string>
     <string name="add_habit.habit_priority.medium">Medium</string>
     <string name="add_habit.habit_priority.high">High</string>
+    <string name="add_habit.habit_color">Habits color</string>
+    <string name="add_habit.change_color">Change color</string>
+
+    <string name="add_habit_menu.add_habit">Add habit</string>
 </resources>

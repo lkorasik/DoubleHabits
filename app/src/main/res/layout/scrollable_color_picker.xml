@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/horizontal_scroll"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="1760dp"
+                android:layout_height="110dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="@color/teal_700"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="1760dp"
+                android:layout_height="110dp">
+
+                <View
+                    android:id="@+id/item0"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background"/>
+
+                <View
+                    android:id="@+id/item1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background" />
+
+                <View
+                    android:id="@+id/item2"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background" />
+
+                <View
+                    android:id="@+id/item3"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background" />
+
+                <View
+                    android:id="@+id/item4"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background" />
+
+                <View
+                    android:id="@+id/item5"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background" />
+
+                <View
+                    android:id="@+id/item6"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background" />
+
+                <View
+                    android:id="@+id/item7"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background" />
+
+                <View
+                    android:id="@+id/item8"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background" />
+
+                <View
+                    android:id="@+id/item9"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background" />
+
+                <View
+                    android:id="@+id/item10"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background" />
+
+                <View
+                    android:id="@+id/item11"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background" />
+
+                <View
+                    android:id="@+id/item12"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background" />
+
+                <View
+                    android:id="@+id/item13"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background" />
+
+                <View
+                    android:id="@+id/item14"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background" />
+
+                <View
+                    android:id="@+id/item15"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/color_selector_background" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </HorizontalScrollView>

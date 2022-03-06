@@ -2,22 +2,71 @@ package com.lkorasik.doublehabits
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.lkorasik.doublehabits.colorpicker.ScrollableColorPicker
 import com.lkorasik.doublehabits.databinding.ActivityAddHabitBinding
+
 
 class AddHabitActivity: AppCompatActivity() {
     private lateinit var binding: ActivityAddHabitBinding
+    private lateinit var colorPickerDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         initActivity()
         initSpinnerAdapter()
+        initColorPickerDialog()
+
         handleIntent()
+
+        binding.currentColor.setBackgroundColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
+
+        binding.chose.setOnClickListener {
+            colorPickerDialog.show()
+        }
+    }
+
+    private fun initColorPickerDialog() {
+        colorPickerDialog = AlertDialog.Builder(this).let {
+            val view = layoutInflater.inflate(R.layout.dialog_color_picker, null)
+            it.setView(view)
+
+            it.setTitle("Select color")
+
+            var selected = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
+            view.findViewById<View>(R.id.current_color).setBackgroundColor(selected)
+            var temp = selected
+
+            val picker = view.findViewById<ScrollableColorPicker>(R.id.scrollable_color_picker)
+            picker.setOnColorSelectListener {
+                view.findViewById<View>(R.id.current_color).setBackgroundColor(it)
+                selected = it
+            }
+
+            it.setPositiveButton("Ok") { dialog, which ->
+                binding.currentColor.setBackgroundColor(selected)
+                temp = selected
+                dialog.dismiss()
+            }
+
+            it.setNegativeButton("Cancel") { dialog, which ->
+                selected = binding.currentColor.solidColor
+                view.findViewById<View>(R.id.current_color).setBackgroundColor(temp)
+            }
+
+            it.create()
+        }
     }
 
     private fun initActivity() {
@@ -102,7 +151,7 @@ class AddHabitActivity: AppCompatActivity() {
             priority = getPriority(),
             type = getSelectedType(),
             periodicity = binding.periodicity.editText?.text.toString(),
-            color = R.color.purple_500,
+            color = binding.currentColor.solidColor,
             count = getCount()
         )
 

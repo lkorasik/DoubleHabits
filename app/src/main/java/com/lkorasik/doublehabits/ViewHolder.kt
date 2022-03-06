@@ -13,7 +13,7 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             habitDescription.text = habit.description
             habitType.text = habit.type.getRepresentation(context)
             habitPriority.text = habit.priority.getRepresentation(context)
-            coloredPanel.setBackgroundColor(context.getColor(habit.color))
+            coloredPanel.setBackgroundColor(habit.color)
             habitPeriodicity.text = habit.periodicity
         }
     }
