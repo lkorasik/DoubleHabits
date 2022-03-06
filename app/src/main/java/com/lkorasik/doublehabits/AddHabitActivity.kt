@@ -8,8 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -20,6 +18,8 @@ import com.lkorasik.doublehabits.databinding.ActivityAddHabitBinding
 class AddHabitActivity: AppCompatActivity() {
     private lateinit var binding: ActivityAddHabitBinding
     private lateinit var colorPickerDialog: AlertDialog
+
+    private var selectedColor: Int = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,11 +57,12 @@ class AddHabitActivity: AppCompatActivity() {
             it.setPositiveButton("Ok") { dialog, which ->
                 binding.currentColor.setBackgroundColor(selected)
                 temp = selected
+                selectedColor = selected
                 dialog.dismiss()
             }
 
             it.setNegativeButton("Cancel") { dialog, which ->
-                selected = binding.currentColor.solidColor
+                selected = selectedColor
                 view.findViewById<View>(R.id.current_color).setBackgroundColor(temp)
             }
 
@@ -151,7 +152,8 @@ class AddHabitActivity: AppCompatActivity() {
             priority = getPriority(),
             type = getSelectedType(),
             periodicity = binding.periodicity.editText?.text.toString(),
-            color = binding.currentColor.solidColor,
+//            color = binding.currentColor.solidColor,
+            color = selectedColor,
             count = getCount()
         )
 

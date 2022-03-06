@@ -14,7 +14,8 @@
     <string name="add_habit.habit_priority.medium">Medium</string>
     <string name="add_habit.habit_priority.high">High</string>
     <string name="add_habit.habit_color">Habits color</string>
-    <string name="add_habit.change_color">Change color</string>
+    <string name="add_habit.select_color">Select color</string>
+    <string name="dialog_color_picker.current_color">Current color</string>
 
     <string name="add_habit_menu.add_habit">Add habit</string>
 </resources>
