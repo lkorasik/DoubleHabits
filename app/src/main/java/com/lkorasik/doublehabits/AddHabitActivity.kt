@@ -31,7 +31,6 @@ class AddHabitActivity: AppCompatActivity() {
 
         handleIntent()
 
-//        binding.currentColor.setBackgroundColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
         (binding.currentColor.background as GradientDrawable).apply {
             setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
         }
@@ -51,18 +50,15 @@ class AddHabitActivity: AppCompatActivity() {
             var selected = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
             val back = view.findViewById<View>(R.id.current_color).background as GradientDrawable
             back.setColor(selected)
-//            view.findViewById<View>(R.id.current_color).setBackgroundColor(selected)
             var temp = selected
 
             val picker = view.findViewById<ScrollableColorPicker>(R.id.scrollable_color_picker)
             picker.setOnColorSelectListener {
-//                view.findViewById<View>(R.id.current_color).setBackgroundColor(it)
                 back.setColor(it)
                 selected = it
             }
 
             it.setPositiveButton("Ok") { dialog, which ->
-//                binding.currentColor.setBackgroundColor(selected)
                 (binding.currentColor.background as GradientDrawable).apply {
                     setColor(selected)
                 }
@@ -73,7 +69,6 @@ class AddHabitActivity: AppCompatActivity() {
 
             it.setNegativeButton("Cancel") { dialog, which ->
                 selected = selectedColor
-//                view.findViewById<View>(R.id.current_color).setBackgroundColor(temp)
                 back.setColor(temp)
             }
 
