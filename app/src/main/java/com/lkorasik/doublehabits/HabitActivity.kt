@@ -38,11 +38,6 @@ class HabitActivity: AppCompatActivity() {
     private fun initActivity() {
         binding = ActivityAddHabitBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        (binding.currentColor.background as GradientDrawable).apply {
-            setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
-            colorPickerDialog.setSelected(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
-        }
     }
 
     private fun initSpinnerAdapter() {
@@ -57,6 +52,12 @@ class HabitActivity: AppCompatActivity() {
 
     private fun initColorPickerDialog() {
         colorPickerDialog = ColorPickerDialogBuilder(this, layoutInflater, binding.currentColor) { selectedColor = it }
+
+
+        (binding.currentColor.background as GradientDrawable).apply {
+            setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
+            colorPickerDialog.setSelected(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
+        }
     }
 
     private fun handleIntent() {
