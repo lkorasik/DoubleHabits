@@ -47,7 +47,7 @@ class HabitsListActivity : AppCompatActivity() {
     private fun initViews() {
         binding.let {
             it.addHabit.setOnClickListener {
-                val intent = Intent(this, AddHabitActivity::class.java)
+                val intent = Intent(this, HabitActivity::class.java)
                 getNewHabit.launch(intent)
             }
             it.habitsList.layoutManager = LinearLayoutManager(this)
@@ -58,7 +58,7 @@ class HabitsListActivity : AppCompatActivity() {
     private fun setAdapter() {
         adapter = HabitRecycleViewAdapter(habits, this)
         adapter.setOnItemClick { data, position ->
-            val intent = Intent(this, AddHabitActivity::class.java).apply {
+            val intent = Intent(this, HabitActivity::class.java).apply {
                 putExtra(IntentKeys.Habit, data)
                 putExtra(IntentKeys.Position, position)
             }

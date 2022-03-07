@@ -8,19 +8,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.lkorasik.doublehabits.color_picker.ColorPickerDialogBuilder
-import com.lkorasik.doublehabits.color_picker.ScrollableColorPicker
 import com.lkorasik.doublehabits.databinding.ActivityAddHabitBinding
-import java.math.RoundingMode
 
 
-class AddHabitActivity: AppCompatActivity() {
+class HabitActivity: AppCompatActivity() {
     private lateinit var binding: ActivityAddHabitBinding
     private lateinit var colorPickerDialog: ColorPickerDialogBuilder
 
@@ -46,6 +41,7 @@ class AddHabitActivity: AppCompatActivity() {
 
         (binding.currentColor.background as GradientDrawable).apply {
             setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
+            colorPickerDialog.setSelected(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
         }
     }
 

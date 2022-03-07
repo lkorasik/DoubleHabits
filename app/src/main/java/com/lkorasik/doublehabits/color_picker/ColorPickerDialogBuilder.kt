@@ -13,16 +13,17 @@ import java.math.RoundingMode
 
 class ColorPickerDialogBuilder(context: Context, layoutInflater: LayoutInflater, private val currentColor: View, private val callback: (Int) -> Unit) {
     private val view = layoutInflater.inflate(R.layout.dialog_color_picker, null)
-    private val title = context.getString(R.string.dialog_color_picker_title)
-    private val rgbPattern = context.getString(R.string.dialog_color_picker_rgb)
-    private val hsvPattern = context.getString(R.string.dialog_color_picker_hsv)
-    private val ok = context.getString(R.string.dialog_color_picker_ok)
-    private val cancel = context.getString(R.string.dialog_color_picker_cancel)
 
     private val previewBackground = view.findViewById<View>(R.id.current_color).background as GradientDrawable
     private val rgb = view.findViewById<TextView>(R.id.rgb)
     private val hsv = view.findViewById<TextView>(R.id.hsv)
     private val picker = view.findViewById<ScrollableColorPicker>(R.id.scrollable_color_picker)
+
+    private val title = context.getString(R.string.dialog_color_picker_title)
+    private val rgbPattern = context.getString(R.string.dialog_color_picker_rgb)
+    private val hsvPattern = context.getString(R.string.dialog_color_picker_hsv)
+    private val ok = context.getString(R.string.dialog_color_picker_ok)
+    private val cancel = context.getString(R.string.dialog_color_picker_cancel)
 
     private var selected = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
     private var temp = selected
