@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -13,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.lkorasik.doublehabits.color_picker.ColorPickerDialogBuilder
 import com.lkorasik.doublehabits.color_picker.ScrollableColorPicker
 import com.lkorasik.doublehabits.databinding.ActivityAddHabitBinding
 import java.math.RoundingMode
@@ -20,7 +22,7 @@ import java.math.RoundingMode
 
 class AddHabitActivity: AppCompatActivity() {
     private lateinit var binding: ActivityAddHabitBinding
-    private lateinit var colorPickerDialog: AlertDialog
+    private lateinit var colorPickerDialog: ColorPickerDialogBuilder
 
     private var selectedColor: Int = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
 
@@ -58,67 +60,7 @@ class AddHabitActivity: AppCompatActivity() {
     }
 
     private fun initColorPickerDialog() {
-        colorPickerDialog = AlertDialog.Builder(this).let {
-            val view = layoutInflater.inflate(R.layout.dialog_color_picker, null)
-            it.setView(view)
-
-            it.setTitle("Select color")
-
-            var selected = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
-            val back = view.findViewById<View>(R.id.current_color).background as GradientDrawable
-            back.setColor(selected)
-            var temp = selected
-
-            val rgb = view.findViewById<TextView>(R.id.rgb)
-            val hsv = view.findViewById<TextView>(R.id.hsv)
-
-            val red = Color.red(selected)
-            val green = Color.green(selected)
-            val blue = Color.blue(selected)
-            rgb.text = getString(R.string.dialog_color_picker_rgb).format(red, green, blue)
-
-            val hsvArray = floatArrayOf(0f, 0f, 0f)
-            Color.colorToHSV(selected, hsvArray)
-            val hue = hsvArray[0].toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
-            val saturation = hsvArray[1].toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
-            val value = hsvArray[2].toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
-            hsv.text = getString(R.string.dialog_color_picker_hsv).format(hue, saturation, value)
-
-            val picker = view.findViewById<ScrollableColorPicker>(R.id.scrollable_color_picker)
-            picker.setOnColorSelectListener {
-                back.setColor(it)
-
-                val red = Color.red(it)
-                val green = Color.green(it)
-                val blue = Color.blue(it)
-                rgb.text = getString(R.string.dialog_color_picker_rgb).format(red, green, blue)
-
-                val hsvArray = floatArrayOf(0f, 0f, 0f)
-                Color.colorToHSV(it, hsvArray)
-                val hue = hsvArray[0].toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
-                val saturation = hsvArray[1].toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
-                val value = hsvArray[2].toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
-                hsv.text = getString(R.string.dialog_color_picker_hsv).format(hue, saturation, value)
-
-                selected = it
-            }
-
-            it.setPositiveButton("Ok") { dialog, which ->
-                (binding.currentColor.background as GradientDrawable).apply {
-                    setColor(selected)
-                }
-                temp = selected
-                selectedColor = selected
-                dialog.dismiss()
-            }
-
-            it.setNegativeButton("Cancel") { dialog, which ->
-                selected = selectedColor
-                back.setColor(temp)
-            }
-
-            it.create()
-        }
+        colorPickerDialog = ColorPickerDialogBuilder(this, layoutInflater, binding.currentColor) { selectedColor = it }
     }
 
     private fun handleIntent() {
@@ -126,6 +68,7 @@ class AddHabitActivity: AppCompatActivity() {
 
         if(habit != null){
             fillForm(habit)
+            colorPickerDialog.setSelected(habit.color)
             setActivityTitleEdit()
         }
         else {
