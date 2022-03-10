@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
@@ -53,10 +52,9 @@ class HabitActivity: AppCompatActivity() {
     private fun initColorPickerDialog() {
         colorPickerDialog = ColorPickerDialogBuilder(this, layoutInflater, binding.currentColor) { selectedColor = it }
 
-
         (binding.currentColor.background as GradientDrawable).apply {
             setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
-            colorPickerDialog.setSelected(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
+            colorPickerDialog.setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
         }
     }
 
@@ -65,7 +63,8 @@ class HabitActivity: AppCompatActivity() {
 
         if(habit != null){
             fillForm(habit)
-            colorPickerDialog.setSelected(habit.color)
+            selectedColor = habit.color
+            colorPickerDialog.setColor(habit.color)
             setActivityTitleEdit()
         }
         else {
