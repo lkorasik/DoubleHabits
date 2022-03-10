@@ -9,15 +9,13 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.lkorasik.doublehabits.R
+import com.lkorasik.doublehabits.databinding.DialogColorPickerBinding
 import java.math.RoundingMode
 
-class ColorPickerDialogBuilder(context: Context, layoutInflater: LayoutInflater) {
-    private val view = layoutInflater.inflate(R.layout.dialog_color_picker, null)
+class ColorPickerDialogBuilder(context: Context) {
+    private val view = DialogColorPickerBinding.inflate(LayoutInflater.from(context))
 
-    private val previewBackground = view.findViewById<View>(R.id.current_color).background as GradientDrawable
-    private val rgb = view.findViewById<TextView>(R.id.rgb)
-    private val hsv = view.findViewById<TextView>(R.id.hsv)
-    private val picker = view.findViewById<ScrollableColorPicker>(R.id.scrollable_color_picker)
+    private val previewBackground = view.preview.background as GradientDrawable
 
     private val title = context.getString(R.string.dialog_color_picker_title)
     private val rgbPattern = context.getString(R.string.dialog_color_picker_rgb)
@@ -39,7 +37,7 @@ class ColorPickerDialogBuilder(context: Context, layoutInflater: LayoutInflater)
     init {
         initDialogBuilder()
 
-        picker.setOnColorSelectListener {
+        view.colorPicker.setOnColorSelectListener {
             selected = it
             setColorOnView()
         }
@@ -49,7 +47,7 @@ class ColorPickerDialogBuilder(context: Context, layoutInflater: LayoutInflater)
 
     private fun initDialogBuilder() {
         with(dialogBuilder) {
-            setView(view)
+            setView(view.root)
             setTitle(title)
 
             setPositiveButton(ok) { dialog, _ -> positiveAction(dialog) }
@@ -93,7 +91,7 @@ class ColorPickerDialogBuilder(context: Context, layoutInflater: LayoutInflater)
         val green = Color.green(color)
         val blue = Color.blue(color)
 
-        rgb.text = rgbPattern.format(red, green, blue)
+        view.rgb.text = rgbPattern.format(red, green, blue)
     }
 
     private fun setHSV(color: Int) {
@@ -104,7 +102,7 @@ class ColorPickerDialogBuilder(context: Context, layoutInflater: LayoutInflater)
         val saturation = hsvArray[1].round()
         val value = hsvArray[2].round()
 
-        hsv.text = hsvPattern.format(hue, saturation, value)
+        view.hsv.text = hsvPattern.format(hue, saturation, value)
     }
 
     private fun Float.round() = this.toBigDecimal().setScale(2, RoundingMode.UP).toDouble()

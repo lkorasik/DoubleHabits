@@ -50,13 +50,13 @@ class HabitActivity: AppCompatActivity() {
     }
 
     private fun initColorPickerDialog() {
-        colorPickerDialog = ColorPickerDialogBuilder(this, layoutInflater)
+        colorPickerDialog = ColorPickerDialogBuilder(this)
         colorPickerDialog.setColorSelectedListener {
             selectedColor = it
-            (binding.currentColor.background as GradientDrawable).setColor(it)
+            (binding.preview.background as GradientDrawable).setColor(it)
         }
 
-        (binding.currentColor.background as GradientDrawable).apply {
+        (binding.preview.background as GradientDrawable).apply {
             setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
             colorPickerDialog.setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
         }
@@ -97,7 +97,7 @@ class HabitActivity: AppCompatActivity() {
 
             count.editText?.setText(habit.count.toString())
             periodicity.editText?.setText(habit.periodicity)
-            (currentColor.background as GradientDrawable).apply {
+            (preview.background as GradientDrawable).apply {
                 setColor(habit.color)
             }
         }
