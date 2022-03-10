@@ -5,17 +5,15 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.DialogColorPickerBinding
 import java.math.RoundingMode
 
 class ColorPickerDialogBuilder(context: Context) {
-    private val view = DialogColorPickerBinding.inflate(LayoutInflater.from(context))
+    private val binding = DialogColorPickerBinding.inflate(LayoutInflater.from(context))
 
-    private val previewBackground = view.preview.background as GradientDrawable
+    private val previewBackground = binding.preview.background as GradientDrawable
 
     private val title = context.getString(R.string.dialog_color_picker_title)
     private val rgbPattern = context.getString(R.string.dialog_color_picker_rgb)
@@ -37,7 +35,7 @@ class ColorPickerDialogBuilder(context: Context) {
     init {
         initDialogBuilder()
 
-        view.colorPicker.setOnColorSelectListener {
+        binding.colorPicker.setOnColorSelectListener {
             selected = it
             setColorOnView()
         }
@@ -47,7 +45,7 @@ class ColorPickerDialogBuilder(context: Context) {
 
     private fun initDialogBuilder() {
         with(dialogBuilder) {
-            setView(view.root)
+            setView(binding.root)
             setTitle(title)
 
             setPositiveButton(ok) { dialog, _ -> positiveAction(dialog) }
@@ -91,7 +89,7 @@ class ColorPickerDialogBuilder(context: Context) {
         val green = Color.green(color)
         val blue = Color.blue(color)
 
-        view.rgb.text = rgbPattern.format(red, green, blue)
+        binding.rgb.text = rgbPattern.format(red, green, blue)
     }
 
     private fun setHSV(color: Int) {
@@ -102,7 +100,7 @@ class ColorPickerDialogBuilder(context: Context) {
         val saturation = hsvArray[1].round()
         val value = hsvArray[2].round()
 
-        view.hsv.text = hsvPattern.format(hue, saturation, value)
+        binding.hsv.text = hsvPattern.format(hue, saturation, value)
     }
 
     private fun Float.round() = this.toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
