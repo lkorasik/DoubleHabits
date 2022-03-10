@@ -123,9 +123,25 @@ class HabitActivity: AppCompatActivity() {
             return false
         }
 
+        if(!isCorrect()) {
+            Snackbar
+                .make(binding.root, getString(R.string.add_habit_incorrect_count), Snackbar.LENGTH_LONG)
+                .show()
+            return false
+        }
+
         createNewHabit()
         return true
     }
+
+    private fun isCorrect(): Boolean {
+        if(binding.count.editText?.text.isNullOrEmpty())
+            return false
+
+        return binding.count.editText?.text.toString().toInt() > 0
+    }
+
+    private fun isNegative() = binding.count.editText?.text.toString().toInt() < 0
 
     private fun isMinimalFormFilled() = binding.habitName.editText?.text.toString().isNotEmpty()
 
