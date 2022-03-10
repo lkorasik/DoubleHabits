@@ -12,15 +12,15 @@ import com.lkorasik.doublehabits.R
 class ScrollableColorPicker : FrameLayout {
     private var onColorSelectedListener: OnColorSelected? = null
 
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
+    constructor(ctx: Context, attrs: AttributeSet, defStyle: Int) : super(ctx, attrs, defStyle) {
         initView()
     }
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+    constructor(ctx: Context, attrs: AttributeSet) : super(ctx, attrs) {
         initView()
     }
 
-    constructor(context: Context) : super(context) {
+    constructor(ctx: Context) : super(ctx) {
         initView()
     }
 
@@ -40,7 +40,7 @@ class ScrollableColorPicker : FrameLayout {
     }
 
     private fun setOnColorSelectedListeners(ids: List<Int>){
-        for(i in ids.indices){
+        for(i in ids.indices) {
             findViewById<View>(ids[i]).setOnClickListener {
                 val hsv = floatArrayOf(getMiddle(i), 1f, 1f)
                 val color = Color.HSVToColor(hsv)
@@ -70,8 +70,8 @@ class ScrollableColorPicker : FrameLayout {
 
     /**
      * Get the middle of the square.
-     * 1) Get square coordinates
-     * 2) Get middle
+     * 1) Get coordinates of square
+     * 2) Get middle of square
      */
     private fun getMiddle(position: Int) = 360f / 16f * (position + 1) - 360f / 16f / 2f
 

@@ -28,10 +28,6 @@ class ColorPickerDialogBuilder(context: Context) {
 
     private var colorSelectedListener: OnColorSelected? = null
 
-    fun setColorSelectedListener(listener: OnColorSelected) {
-        colorSelectedListener = listener
-    }
-
     init {
         initDialogBuilder()
 
@@ -41,6 +37,10 @@ class ColorPickerDialogBuilder(context: Context) {
         }
 
         dialog = dialogBuilder.create()
+    }
+
+    fun setColorSelectedListener(listener: OnColorSelected) {
+        colorSelectedListener = listener
     }
 
     private fun initDialogBuilder() {
