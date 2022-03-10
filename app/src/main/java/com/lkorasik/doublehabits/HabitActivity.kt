@@ -50,7 +50,8 @@ class HabitActivity: AppCompatActivity() {
     }
 
     private fun initColorPickerDialog() {
-        colorPickerDialog = ColorPickerDialogBuilder(this, layoutInflater, binding.currentColor) { selectedColor = it }
+        colorPickerDialog = ColorPickerDialogBuilder(this, layoutInflater, binding.currentColor)
+        colorPickerDialog.setColorSelectedListener { selectedColor = it }
 
         (binding.currentColor.background as GradientDrawable).apply {
             setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))

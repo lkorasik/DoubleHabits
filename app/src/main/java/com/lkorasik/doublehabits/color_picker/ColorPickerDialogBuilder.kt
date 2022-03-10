@@ -11,7 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import com.lkorasik.doublehabits.R
 import java.math.RoundingMode
 
-class ColorPickerDialogBuilder(context: Context, layoutInflater: LayoutInflater, private val currentColor: View, private val callback: (Int) -> Unit) {
+class ColorPickerDialogBuilder(context: Context, layoutInflater: LayoutInflater, private val currentColor: View) {
     private val view = layoutInflater.inflate(R.layout.dialog_color_picker, null)
 
     private val previewBackground = view.findViewById<View>(R.id.current_color).background as GradientDrawable
@@ -29,6 +29,12 @@ class ColorPickerDialogBuilder(context: Context, layoutInflater: LayoutInflater,
     private var temp = selected
     private val dialogBuilder = AlertDialog.Builder(context)
     private var dialog: AlertDialog
+
+    private var colorSelectedListener: OnColorSelected? = null
+
+    fun setColorSelectedListener(listener: OnColorSelected) {
+        colorSelectedListener = listener
+    }
 
     init {
         initDialogBuilder()
@@ -64,7 +70,7 @@ class ColorPickerDialogBuilder(context: Context, layoutInflater: LayoutInflater,
         (currentColor.background as GradientDrawable).setColor(selected)
 
         temp = selected
-        callback(selected)
+        colorSelectedListener?.onColorSelected(selected)
 
         dialog.dismiss()
     }
