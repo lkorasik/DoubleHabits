@@ -141,8 +141,6 @@ class HabitActivity: AppCompatActivity() {
         return binding.count.editText?.text.toString().toInt() > 0
     }
 
-    private fun isNegative() = binding.count.editText?.text.toString().toInt() < 0
-
     private fun isMinimalFormFilled() = binding.habitName.editText?.text.toString().isNotEmpty()
 
     private fun createNewHabit() {
