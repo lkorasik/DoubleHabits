@@ -2,22 +2,36 @@ package com.lkorasik.doublehabits
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.lkorasik.doublehabits.color_picker.ColorPickerDialogBuilder
 import com.lkorasik.doublehabits.databinding.ActivityAddHabitBinding
 
-class AddHabitActivity: AppCompatActivity() {
+
+class HabitActivity: AppCompatActivity() {
     private lateinit var binding: ActivityAddHabitBinding
+    private lateinit var colorPickerDialog: ColorPickerDialogBuilder
+
+    private var selectedColor: Int = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         initActivity()
         initSpinnerAdapter()
+        initColorPickerDialog()
+
         handleIntent()
+
+        binding.chose.setOnClickListener {
+            colorPickerDialog.show()
+        }
     }
 
     private fun initActivity() {
@@ -25,10 +39,49 @@ class AddHabitActivity: AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    private fun handleIntent() {
-        intent?.getParcelableExtra<Habit>(IntentKeys.Habit)?.let {
-            fillForm(it)
+    private fun initSpinnerAdapter() {
+        val source = R.array.priority_enum
+        val view = android.R.layout.simple_spinner_item
+
+        ArrayAdapter.createFromResource(this, source, view).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.habitPriority.adapter = this
         }
+    }
+
+    private fun initColorPickerDialog() {
+        colorPickerDialog = ColorPickerDialogBuilder(this)
+        colorPickerDialog.setColorSelectedListener {
+            selectedColor = it
+            (binding.preview.background as GradientDrawable).setColor(it)
+        }
+
+        (binding.preview.background as GradientDrawable).apply {
+            setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
+            colorPickerDialog.setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
+        }
+    }
+
+    private fun handleIntent() {
+        val habit = intent?.getParcelableExtra<Habit>(IntentKeys.Habit)
+
+        if(habit != null){
+            fillForm(habit)
+            selectedColor = habit.color
+            colorPickerDialog.setColor(habit.color)
+            setActivityTitleEdit()
+        }
+        else {
+            setActivityTitleCreate()
+        }
+    }
+
+    private fun setActivityTitleEdit() {
+        title = getString(R.string.add_habit_activity_edit_title)
+    }
+
+    private fun setActivityTitleCreate() {
+        title = getString(R.string.add_habit_activity_create_title)
     }
 
     private fun fillForm(habit: Habit) {
@@ -37,22 +90,16 @@ class AddHabitActivity: AppCompatActivity() {
             habitDescription.editText?.setText(habit.description)
             habitPriority.setSelection(habit.priority.ordinal)
 
-            when(habit.type){
+            when(habit.type) {
                 HabitType.REGULAR -> radioGroup.check(R.id.type_regular)
                 HabitType.HARMFUL -> radioGroup.check(R.id.type_harmful)
             }
 
             count.editText?.setText(habit.count.toString())
             periodicity.editText?.setText(habit.periodicity)
-        }
-    }
-
-    private fun initSpinnerAdapter() {
-        val source = R.array.priority_enum
-        val view = android.R.layout.simple_spinner_item
-        ArrayAdapter.createFromResource(this, source, view).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.habitPriority.adapter = this
+            (preview.background as GradientDrawable).apply {
+                setColor(habit.color)
+            }
         }
     }
 
@@ -102,7 +149,7 @@ class AddHabitActivity: AppCompatActivity() {
             priority = getPriority(),
             type = getSelectedType(),
             periodicity = binding.periodicity.editText?.text.toString(),
-            color = R.color.purple_500,
+            color = selectedColor,
             count = getCount()
         )
 
