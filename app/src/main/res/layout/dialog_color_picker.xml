@@ -53,6 +53,7 @@
             android:textSize="@dimen/add_habit.title_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginVertical="@dimen/add_habit.vertical_margin"
             android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
             android:paddingHorizontal="@dimen/add_habit.horizontal_margin"/>
@@ -60,6 +61,7 @@
         <TextView
             android:id="@+id/hsv"
             android:textSize="@dimen/add_habit.title_size"
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/add_habit.vertical_margin"
