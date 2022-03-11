@@ -10,6 +10,7 @@ import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.DialogColorPickerBinding
 import java.math.RoundingMode
 
+//TODO: create new dialog and extends Dialog or AlertDialog, etc...
 class ColorPickerDialogBuilder(context: Context) {
     private val binding = DialogColorPickerBinding.inflate(LayoutInflater.from(context))
 
@@ -19,7 +20,7 @@ class ColorPickerDialogBuilder(context: Context) {
     private val rgbPattern = context.getString(R.string.dialog_color_picker_rgb)
     private val hsvPattern = context.getString(R.string.dialog_color_picker_hsv)
     private val ok = context.getString(R.string.dialog_color_picker_ok)
-    private val cancel = context.getString(R.string.dialog_color_picker_cancel)
+    private val cancel = context.getString(R.string.dialog_color_picker_cancel) //TODO: убери
 
     private var selected = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
     private var temp = selected

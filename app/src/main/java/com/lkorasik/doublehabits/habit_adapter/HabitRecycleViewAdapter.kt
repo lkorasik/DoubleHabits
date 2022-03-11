@@ -14,6 +14,8 @@ class HabitRecycleViewAdapter(
 
     private var onItemClick: OnItemClicked? = null
 
+        //TODO: Почитай про viewBinding
+    //TODO: получай слушатель, в конструктор
     fun setOnItemClick(listener: (habit: Habit, position: Int) -> Unit) {
         onItemClick = OnItemClicked { habit, position -> listener(habit, position) }
     }

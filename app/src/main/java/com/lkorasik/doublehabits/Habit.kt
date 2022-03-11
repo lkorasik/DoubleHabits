@@ -34,7 +34,7 @@ data class Habit(
     }
 
     override fun describeContents(): Int {
-        return 0
+        return 0 //TODO:
     }
 
     companion object CREATOR : Parcelable.Creator<Habit> {

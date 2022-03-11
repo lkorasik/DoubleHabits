@@ -33,6 +33,9 @@ class ScrollableColorPicker : FrameLayout {
             R.id.item14, R.id.item15
         )
 
+        //TODO: Попробуй переписать через адаптер для Horizontal scroll view
+        //TODO: почитай sealed class, но он не нужен в этом таске
+
         setOnColorSelectedListeners(ids)
 
         findViewById<View>(R.id.view1).background = generateBackground()
