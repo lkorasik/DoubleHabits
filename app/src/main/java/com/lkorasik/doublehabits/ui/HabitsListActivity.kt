@@ -1,4 +1,4 @@
-package com.lkorasik.doublehabits
+package com.lkorasik.doublehabits.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -6,6 +6,8 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.lkorasik.doublehabits.Habit
+import com.lkorasik.doublehabits.IntentKeys
 import com.lkorasik.doublehabits.databinding.ActivityMainBinding
 import com.lkorasik.doublehabits.habit_adapter.HabitRecycleViewAdapter
 
@@ -28,6 +30,8 @@ class HabitsListActivity : AppCompatActivity() {
             val habit = it.data?.getParcelableExtra<Habit>(IntentKeys.Habit) as Habit
             val position = it.data?.getIntExtra(IntentKeys.Position, -1)
 
+            //TODO: юзай diffUtils, он эффективно обновляет
+            //TODO: notify в адаптер
             habits[position!!] = habit
             adapter.notifyItemChanged(position)
         }

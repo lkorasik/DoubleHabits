@@ -1,4 +1,4 @@
-package com.lkorasik.doublehabits
+package com.lkorasik.doublehabits.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.lkorasik.doublehabits.*
 import com.lkorasik.doublehabits.color_picker.ColorPickerDialogBuilder
 import com.lkorasik.doublehabits.databinding.ActivityAddHabitBinding
 
@@ -175,7 +176,7 @@ class HabitActivity: AppCompatActivity() {
         return when(binding.radioGroup.checkedRadioButtonId) {
             R.id.type_harmful -> HabitType.HARMFUL
             R.id.type_regular -> HabitType.REGULAR
-            else -> throw IllegalStateException("Incorrect habit type")
+            else -> throw IllegalStateException("Incorrect habit type") //TODO: подумай, может все таки стоит переписать
         }
     }
 
