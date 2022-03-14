@@ -8,7 +8,7 @@ data class Habit(
     val description: String,
     val priority: Priority,
     val type: HabitType,
-    val periodicity: String, //TODO: Измени тип на Periodicity
+    val periodicity: String,
     val color: Int,
     val count: Int
 ): Parcelable {
