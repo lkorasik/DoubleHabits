@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.lkorasik.doublehabits.Habit
 import com.lkorasik.doublehabits.R
-import java.text.FieldPosition
 
 class MainActivity: AppCompatActivity() {
     private lateinit var habitsListFragment: HabitsListFragment
