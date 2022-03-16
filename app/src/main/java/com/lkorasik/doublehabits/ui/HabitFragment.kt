@@ -31,30 +31,32 @@ class HabitFragment: Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
-            R.id.create_habit -> {
-                if(!isMinimalFormFilled()) {
-                    Snackbar
-                        .make(binding.root, getString(R.string.add_habit_empty_name), Snackbar.LENGTH_LONG)
-                        .show()
-                    return false
-                }
-
-                if(!isCorrect()) {
-                    Snackbar
-                        .make(binding.root, getString(R.string.add_habit_incorrect_count), Snackbar.LENGTH_LONG)
-                        .show()
-                    return false
-                }
-
-                if(position == null)
-                    (activity as MainActivity).saveHabit(buildHabit())
-                else
-                    (activity as MainActivity).saveHabit(buildHabit(), position!!)
-
-                true
-            }
+            R.id.create_habit -> handleSaveMenuItem()
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun handleSaveMenuItem(): Boolean {
+        if(!isMinimalFormFilled()) {
+            Snackbar
+                .make(binding.root, getString(R.string.add_habit_empty_name), Snackbar.LENGTH_LONG)
+                .show()
+            return false
+        }
+
+        if(!isCorrect()) {
+            Snackbar
+                .make(binding.root, getString(R.string.add_habit_incorrect_count), Snackbar.LENGTH_LONG)
+                .show()
+            return false
+        }
+
+        if(position == null)
+            (activity as MainActivity).saveHabit(buildHabit())
+        else
+            (activity as MainActivity).saveHabit(buildHabit(), position!!)
+
+        return true
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
