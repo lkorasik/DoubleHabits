@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.lkorasik.doublehabits.*
 import com.lkorasik.doublehabits.color_picker.ColorPickerDialogBuilder
 import com.lkorasik.doublehabits.databinding.ActivityAddHabitBinding
+import com.lkorasik.doublehabits.model.Habit
 
 class HabitFragment: Fragment() {
     private lateinit var binding: ActivityAddHabitBinding

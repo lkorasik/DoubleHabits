@@ -1,7 +1,9 @@
-package com.lkorasik.doublehabits
+package com.lkorasik.doublehabits.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.lkorasik.doublehabits.HabitType
+import com.lkorasik.doublehabits.Priority
 
 data class Habit(
     val name: String,

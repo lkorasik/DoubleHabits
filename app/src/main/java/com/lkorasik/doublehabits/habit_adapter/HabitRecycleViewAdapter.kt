@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.lkorasik.doublehabits.Habit
+import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.R
 
 class HabitRecycleViewAdapter(
