@@ -5,6 +5,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.ActivityMainRBinding
@@ -25,11 +26,14 @@ class MainActivity: AppCompatActivity(), HabitSaver {
         configureNavigationDrawer()
         configureToolbar()
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                addToBackStack(null)
-                add(R.id.fragment_host, habitsListFragment)
-            }
+        if (savedInstanceState == null)
+            initFragmentManager()
+    }
+
+    private fun initFragmentManager() {
+        supportFragmentManager.commit {
+            addToBackStack(null)
+            add(R.id.fragment_host, habitsListFragment)
         }
     }
 
@@ -43,20 +47,16 @@ class MainActivity: AppCompatActivity(), HabitSaver {
             val fragment = when(menuItem.itemId) {
                 R.id.home -> habitsListFragment
                 R.id.about -> aboutFragment
-                else -> null
+                else -> return@setNavigationItemSelectedListener false
             }
 
-            fragment?.let {
-                supportFragmentManager.commit {
-                    replace(R.id.fragment_host, it)
-                }
-
-                binding.drawerLayout.closeDrawers()
-
-                return@setNavigationItemSelectedListener true
+            supportFragmentManager.commit {
+                replace(R.id.fragment_host, fragment)
             }
 
-            return@setNavigationItemSelectedListener false
+            binding.drawerLayout.closeDrawers()
+
+            return@setNavigationItemSelectedListener true
         }
     }
 
@@ -72,6 +72,11 @@ class MainActivity: AppCompatActivity(), HabitSaver {
         return toggle
     }
 
+    private fun configureToolbar() {
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -79,37 +84,40 @@ class MainActivity: AppCompatActivity(), HabitSaver {
                 true
             }
             else -> {
-                supportFragmentManager.findFragmentByTag("Editor")?.onOptionsItemSelected(item)!!
+                //TODO: Есть варианты как передать по-другому управление во фрагмент
+                val fragment = supportFragmentManager.findFragmentByTag(EDITOR_FRAGMENT_TAG)
+                fragment?.onOptionsItemSelected(item) ?: super.onOptionsItemSelected(item)
             }
         }
     }
 
-    private fun configureToolbar() {
-        val toolbar = binding.toolbar
-        setSupportActionBar(toolbar)
-        val actionBar = supportActionBar
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
     override fun onBackPressed() {
+        val drawer = binding.drawerLayout
+
         when {
-            binding.drawerLayout.isDrawerOpen(GravityCompat.START) -> binding.drawerLayout.closeDrawer(GravityCompat.START)
+            drawer.isDrawerOpen(GravityCompat.START) -> drawer.closeDrawer(GravityCompat.START)
             supportFragmentManager.backStackEntryCount == 1 -> finish()
             else -> super.onBackPressed()
         }
     }
 
     fun createHabit() {
+        val host = R.id.fragment_host
+        val fragment = HabitEditorFragment.newInstance()
+
         supportFragmentManager.commit {
             addToBackStack(null)
-            replace(R.id.fragment_host, HabitEditorFragment.newInstance(), "Editor")
+            replace(host, fragment, EDITOR_FRAGMENT_TAG)
         }
     }
 
     fun editHabit(habit: Habit, position: Int) {
+        val host = R.id.fragment_host
+        val fragment = HabitEditorFragment.newInstance(habit, position)
+
         supportFragmentManager.commit {
             addToBackStack(null)
-            replace(R.id.fragment_host, HabitEditorFragment.newInstance(habit, position), "Editor")
+            replace(host, fragment, EDITOR_FRAGMENT_TAG)
         }
     }
 
@@ -121,5 +129,9 @@ class MainActivity: AppCompatActivity(), HabitSaver {
     override fun saveHabit(habit: Habit) {
         supportFragmentManager.popBackStack()
         habitsListFragment.addHabit(habit)
+    }
+
+    companion object {
+        private const val EDITOR_FRAGMENT_TAG = "Editor"
     }
 }
