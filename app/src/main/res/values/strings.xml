@@ -36,4 +36,7 @@
 
     <string name="navigation.home">Home</string>
     <string name="navigation.about">About</string>
+
+    <string name="main_activity.open_navigation_drawer">Open navigation</string>
+    <string name="main_activity.close_navigation_drawer">Close navigation</string>
 </resources>

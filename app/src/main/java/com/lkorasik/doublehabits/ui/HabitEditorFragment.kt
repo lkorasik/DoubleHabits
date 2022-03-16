@@ -13,7 +13,7 @@ import com.lkorasik.doublehabits.color_picker.ColorPickerDialogBuilder
 import com.lkorasik.doublehabits.databinding.ActivityAddHabitBinding
 import com.lkorasik.doublehabits.model.Habit
 
-class HabitFragment: Fragment() {
+class HabitEditorFragment: Fragment() {
     private lateinit var binding: ActivityAddHabitBinding
     private lateinit var colorPickerDialog: ColorPickerDialogBuilder
 
@@ -196,13 +196,13 @@ class HabitFragment: Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(): HabitFragment {
-            return HabitFragment()
+        fun newInstance(): HabitEditorFragment {
+            return HabitEditorFragment()
         }
 
         @JvmStatic
-        fun newInstance(habit: Habit, position: Int): HabitFragment {
-            return HabitFragment().apply {
+        fun newInstance(habit: Habit, position: Int): HabitEditorFragment {
+            return HabitEditorFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(IntentKeys.Habit, habit)
                     putInt(IntentKeys.Position, position)
