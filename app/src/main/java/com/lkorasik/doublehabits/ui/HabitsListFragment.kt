@@ -16,6 +16,24 @@ class HabitsListFragment: Fragment() {
     private var habits: MutableList<Habit> = mutableListOf()
     private lateinit var adapter: HabitRecycleViewAdapter
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = ActivityMainBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.let {
+            it.addHabit.setOnClickListener {
+                (activity as MainActivity).createHabit()
+            }
+
+            it.habitsList.layoutManager = LinearLayoutManager(binding.root.context)
+            setAdapter()
+        }
+    }
+
     //TODO: юзай diffUtils, он эффективно обновляет
     //TODO: notify в адаптер
     fun editHabit(habit: Habit, position: Int) {
@@ -28,33 +46,16 @@ class HabitsListFragment: Fragment() {
         adapter.notifyItemInserted(habits.size - 1)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = ActivityMainBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.let {
-            it.addHabit.setOnClickListener {
-                (activity as MainActivity).createHabit()
-            }
-            it.habitsList.layoutManager = LinearLayoutManager(binding.root.context)
-            setAdapter()
-        }
-    }
-
     private fun setAdapter() {
         adapter = HabitRecycleViewAdapter(habits, binding.root.context)
         adapter.setOnItemClick { data, position ->
             (activity as MainActivity).editHabit(data, position)
         }
+
         binding.habitsList.adapter = adapter
     }
 
     companion object {
-        //TODO: Зачем тут метод, который по сути конструктор?
-        //TODO: Это же фабричный метод?
         fun newInstance(): HabitsListFragment {
             return HabitsListFragment()
         }
