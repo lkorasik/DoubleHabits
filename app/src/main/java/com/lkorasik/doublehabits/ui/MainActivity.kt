@@ -49,13 +49,15 @@ class MainActivity: AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             android.R.id.home -> {
                 drawerLayout.openDrawer(GravityCompat.START)
-                return true
+                true
+            }
+            else -> {
+                supportFragmentManager.findFragmentByTag("Editor")?.onOptionsItemSelected(item)!!
             }
         }
-        return true
     }
 
     private fun configureNavigationDrawer() {
@@ -110,14 +112,14 @@ class MainActivity: AppCompatActivity() {
     fun createHabit() {
         supportFragmentManager.commit {
             addToBackStack(null)
-            replace(R.id.fragment_host, HabitFragment.newInstance())
+            replace(R.id.fragment_host, HabitFragment.newInstance(), "Editor")
         }
     }
 
     fun editHabit(habit: Habit, position: Int) {
         supportFragmentManager.commit {
             addToBackStack(null)
-            replace(R.id.fragment_host, HabitFragment.newInstance(habit, position))
+            replace(R.id.fragment_host, HabitFragment.newInstance(habit, position), "Editor")
         }
     }
 
