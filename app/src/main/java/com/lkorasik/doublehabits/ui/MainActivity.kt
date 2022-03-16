@@ -9,12 +9,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.navigation.NavigationView
-import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.ActivityMainRBinding
+import com.lkorasik.doublehabits.model.Habit
 
 
-class MainActivity: AppCompatActivity() {
+class MainActivity: AppCompatActivity(), HabitSaver {
     private lateinit var habitsListFragment: HabitsListFragment
     private lateinit var binding: ActivityMainRBinding
     private lateinit var drawerLayout: DrawerLayout
@@ -70,6 +70,8 @@ class MainActivity: AppCompatActivity() {
         binding.drawerLayout.addDrawerListener(drawerToggle)
 
         navView.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { menuItem ->
+            navView.setCheckedItem(menuItem)
+
             var f: Fragment? = null
             val itemId = menuItem.itemId
 
@@ -99,11 +101,10 @@ class MainActivity: AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 1){
-            finish()
-        }
-        else {
-            super.onBackPressed()
+        when {
+            drawerLayout.isDrawerOpen(GravityCompat.START) -> drawerLayout.closeDrawer(GravityCompat.START)
+            supportFragmentManager.backStackEntryCount == 1 -> finish()
+            else -> super.onBackPressed()
         }
     }
 
@@ -121,12 +122,12 @@ class MainActivity: AppCompatActivity() {
         }
     }
 
-    fun saveHabit(habit: Habit, position: Int) {
+    override fun saveHabit(habit: Habit, position: Int) {
         supportFragmentManager.popBackStack()
         habitsListFragment.editHabit(habit, position)
     }
 
-    fun saveHabit(habit: Habit) {
+    override fun saveHabit(habit: Habit) {
         supportFragmentManager.popBackStack()
         habitsListFragment.addHabit(habit)
     }

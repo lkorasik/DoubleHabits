@@ -12,11 +12,9 @@ import com.lkorasik.doublehabits.databinding.FragmentAboutBinding
 class AboutFragment: Fragment() {
     private lateinit var binding: FragmentAboutBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentAboutBinding.inflate(inflater, container, false)
-
         binding.version.text = getString(R.string.about_version).format(BuildConfig.VERSION_NAME)
-
         return binding.root
     }
 

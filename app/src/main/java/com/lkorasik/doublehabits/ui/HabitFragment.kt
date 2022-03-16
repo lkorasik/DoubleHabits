@@ -5,6 +5,7 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.lkorasik.doublehabits.*
@@ -15,8 +16,8 @@ import com.lkorasik.doublehabits.model.Habit
 class HabitFragment: Fragment() {
     private lateinit var binding: ActivityAddHabitBinding
     private lateinit var colorPickerDialog: ColorPickerDialogBuilder
-    private var position: Int? = null
 
+    private var position: Int? = null
     private var selectedColor: Int = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -32,32 +33,57 @@ class HabitFragment: Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
-            R.id.create_habit -> handleSaveMenuItem()
+            R.id.create_habit -> handleSaveItemSelected()
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    fun handleSaveMenuItem(): Boolean {
-        if(!isMinimalFormFilled()) {
-            Snackbar
-                .make(binding.root, getString(R.string.add_habit_empty_name), Snackbar.LENGTH_LONG)
-                .show()
+    private fun handleSaveItemSelected(): Boolean {
+        if(!isValidInput())
             return false
-        }
 
-        if(!isCorrect()) {
-            Snackbar
-                .make(binding.root, getString(R.string.add_habit_incorrect_count), Snackbar.LENGTH_LONG)
-                .show()
-            return false
-        }
-
-        if(position == null)
-            (activity as MainActivity).saveHabit(buildHabit())
-        else
-            (activity as MainActivity).saveHabit(buildHabit(), position!!)
+        saveHabit()
 
         return true
+    }
+
+    private fun isValidInput(): Boolean {
+        if(!isCorrectHabitName()) {
+            showMessage(getString(R.string.add_habit_empty_name))
+            return false
+        }
+        else if(!isCorrectCount()) {
+            showMessage(getString(R.string.add_habit_incorrect_count))
+            return false
+        }
+
+        return true
+    }
+
+    private fun isCorrectHabitName(): Boolean {
+        return binding.habitName.editText?.text.toString().isNotBlank()
+    }
+
+    private fun isCorrectCount(): Boolean {
+        if(binding.count.editText?.text.isNullOrEmpty())
+            return false
+
+        return binding.count.editText?.text.toString().toInt() > 0
+    }
+
+    private fun showMessage(message: String) {
+        Snackbar
+            .make(binding.root, message, Snackbar.LENGTH_LONG)
+            .show()
+    }
+
+    private fun saveHabit() {
+        (activity as? HabitSaver)?.apply {
+            if(position == null)
+                saveHabit(buildHabit())
+            else
+                saveHabit(buildHabit(), position!!)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,8 +117,9 @@ class HabitFragment: Fragment() {
         }
 
         (binding.preview.background as GradientDrawable).apply {
-            setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
-            colorPickerDialog.setColor(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
+            val color = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
+            setColor(color)
+            colorPickerDialog.setColor(color)
         }
     }
 
@@ -109,16 +136,6 @@ class HabitFragment: Fragment() {
         else {
             setActivityTitleCreate()
         }
-    }
-
-    private fun setActivityTitleEdit() {
-        val title = getString(R.string.add_habit_activity_edit_title)
-        (activity as MainActivity).setTitle(title)
-    }
-
-    private fun setActivityTitleCreate() {
-        val title = getString(R.string.add_habit_activity_create_title)
-        (activity as MainActivity).setTitle(title)
     }
 
     private fun fillForm(habit: Habit) {
@@ -140,14 +157,13 @@ class HabitFragment: Fragment() {
         }
     }
 
-    private fun isCorrect(): Boolean {
-        if(binding.count.editText?.text.isNullOrEmpty())
-            return false
-
-        return binding.count.editText?.text.toString().toInt() > 0
+    private fun setActivityTitleEdit() {
+        (activity as AppCompatActivity).title = getString(R.string.add_habit_activity_edit_title)
     }
 
-    private fun isMinimalFormFilled() = binding.habitName.editText?.text.toString().isNotEmpty()
+    private fun setActivityTitleCreate() {
+        (activity as AppCompatActivity).title = getString(R.string.add_habit_activity_create_title)
+    }
 
     private fun buildHabit() =
         Habit(
