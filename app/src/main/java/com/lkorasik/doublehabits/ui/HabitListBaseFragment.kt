@@ -39,13 +39,11 @@ class HabitListBaseFragment: Fragment() {
     }
 
     fun editHabit(habit: Habit, position: Int) {
-        habits[position] = habit
-        adapter.notifyItemInserted(position)
+        adapter.editHabit(habit, position)
     }
 
     fun addHabit(habit: Habit) {
-        habits.add(habit)
-        adapter.notifyItemInserted(habits.size - 1)
+        adapter.addHabit(habit)
     }
 
     companion object {

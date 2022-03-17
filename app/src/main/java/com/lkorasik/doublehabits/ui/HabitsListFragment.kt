@@ -31,18 +31,6 @@ class HabitsListFragment(private val habits: MutableList<Habit>, private val ada
         binding.habitsList.adapter = adapter
     }
 
-    //TODO: юзай diffUtils, он эффективно обновляет
-    //TODO: notify в адаптер
-    fun editHabit(habit: Habit, position: Int) {
-        habits[position] = habit
-        adapter.notifyItemChanged(position)
-    }
-
-    fun addHabit(habit: Habit) {
-        habits.add(habit)
-        adapter.notifyItemInserted(habits.size - 1)
-    }
-
     companion object {
         fun newInstance(habits: MutableList<Habit>, adapter: HabitRecycleViewAdapter): HabitsListFragment {
             return HabitsListFragment(habits, adapter)
