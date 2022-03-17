@@ -9,16 +9,11 @@ import com.lkorasik.doublehabits.R
 
 class HabitRecycleViewAdapter(
     private val list: MutableList<Habit>,
-    private val context: Context
+    private val context: Context,
+    private val onItemClicked: OnItemClicked
 ): RecyclerView.Adapter<ViewHolder>() {
 
-    private var onItemClick: OnItemClicked? = null
-
-        //TODO: Почитай про viewBinding
-    //TODO: получай слушатель, в конструктор
-    fun setOnItemClick(listener: (habit: Habit, position: Int) -> Unit) {
-        onItemClick = OnItemClicked { habit, position -> listener(habit, position) }
-    }
+    //TODO: Почитай про viewBinding
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater
@@ -33,7 +28,7 @@ class HabitRecycleViewAdapter(
             bind(context, list[position])
 
             itemView.setOnClickListener {
-                onItemClick?.onClick(list[position], position)
+                onItemClicked.onClick(list[position], position)
             }
         }
     }

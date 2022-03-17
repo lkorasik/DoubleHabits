@@ -47,8 +47,7 @@ class HabitsListFragment(private val habits: MutableList<Habit>): Fragment() {
     }
 
     private fun setAdapter() {
-        adapter = HabitRecycleViewAdapter(habits, binding.root.context)
-        adapter.setOnItemClick { data, position ->
+        adapter = HabitRecycleViewAdapter(habits, binding.root.context) { data, position ->
             (activity as MainActivity).editHabit(data, position)
         }
 
