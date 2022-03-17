@@ -10,18 +10,18 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.lkorasik.doublehabits.*
 import com.lkorasik.doublehabits.color_picker.ColorPickerDialogBuilder
-import com.lkorasik.doublehabits.databinding.ActivityAddHabitBinding
+import com.lkorasik.doublehabits.databinding.FragmentViewHabitBinding
 import com.lkorasik.doublehabits.model.Habit
 
 class HabitEditorFragment: Fragment() {
-    private lateinit var binding: ActivityAddHabitBinding
+    private lateinit var binding: FragmentViewHabitBinding
     private lateinit var colorPickerDialog: ColorPickerDialogBuilder
 
     private var position: Int? = null
     private var selectedColor: Int = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = ActivityAddHabitBinding.inflate(inflater, container, false)
+        binding = FragmentViewHabitBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
         return binding.root
     }

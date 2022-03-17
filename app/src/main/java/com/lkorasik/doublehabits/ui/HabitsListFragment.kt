@@ -8,16 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.databinding.ActivityMainBinding
+import com.lkorasik.doublehabits.databinding.FragmentHabitListBinding
 import com.lkorasik.doublehabits.habit_adapter.HabitRecycleViewAdapter
 
-class HabitsListFragment: Fragment() {
-    private lateinit var binding: ActivityMainBinding
+class HabitsListFragment(private val habits: MutableList<Habit>): Fragment() {
+    private lateinit var binding: FragmentHabitListBinding
 
-    private var habits: MutableList<Habit> = mutableListOf()
+//    private lateinit var habits: MutableList<Habit> = mutableListOf()
     private lateinit var adapter: HabitRecycleViewAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = ActivityMainBinding.inflate(inflater, container, false)
+        binding = FragmentHabitListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -56,8 +57,8 @@ class HabitsListFragment: Fragment() {
     }
 
     companion object {
-        fun newInstance(): HabitsListFragment {
-            return HabitsListFragment()
+        fun newInstance(habits: MutableList<Habit>): HabitsListFragment {
+            return HabitsListFragment(habits)
         }
     }
 }

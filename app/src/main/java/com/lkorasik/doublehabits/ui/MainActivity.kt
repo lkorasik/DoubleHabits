@@ -8,19 +8,20 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.lkorasik.doublehabits.R
-import com.lkorasik.doublehabits.databinding.ActivityMainRBinding
+import com.lkorasik.doublehabits.databinding.ActivityMainBinding
 import com.lkorasik.doublehabits.model.Habit
 
 
 class MainActivity: AppCompatActivity(), HabitSaver {
-    private lateinit var binding: ActivityMainRBinding
+    private lateinit var binding: ActivityMainBinding
 
-    private val habitsListFragment: HabitsListFragment = HabitsListFragment.newInstance()
+//    private val habitsListFragment: HabitsListFragment = HabitsListFragment.newInstance()
+    private val habitsVP: HabitListBaseFragment = HabitListBaseFragment.newInstance()
     private val aboutFragment: AboutFragment = AboutFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainRBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         configureNavigationDrawer()
@@ -33,7 +34,8 @@ class MainActivity: AppCompatActivity(), HabitSaver {
     private fun initFragmentManager() {
         supportFragmentManager.commit {
             addToBackStack(null)
-            add(R.id.fragment_host, habitsListFragment)
+//            add(R.id.fragment_host, habitsListFragment)
+            add(R.id.fragment_host, habitsVP)
         }
     }
 
@@ -45,7 +47,8 @@ class MainActivity: AppCompatActivity(), HabitSaver {
             binding.navigationView.setCheckedItem(menuItem)
 
             val fragment = when(menuItem.itemId) {
-                R.id.home -> habitsListFragment
+//                R.id.home -> habitsListFragment
+                R.id.home -> habitsVP
                 R.id.about -> aboutFragment
                 else -> return@setNavigationItemSelectedListener false
             }
@@ -123,12 +126,14 @@ class MainActivity: AppCompatActivity(), HabitSaver {
 
     override fun saveHabit(habit: Habit, position: Int) {
         supportFragmentManager.popBackStack()
-        habitsListFragment.editHabit(habit, position)
+        habitsVP.editHabit(habit, position)
+//        habitsListFragment.editHabit(habit, position)
     }
 
     override fun saveHabit(habit: Habit) {
         supportFragmentManager.popBackStack()
-        habitsListFragment.addHabit(habit)
+        habitsVP.addHabit(habit)
+//        habitsListFragment.addHabit(habit)
     }
 
     companion object {
