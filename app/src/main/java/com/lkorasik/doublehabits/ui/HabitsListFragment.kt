@@ -12,10 +12,8 @@ import com.lkorasik.doublehabits.databinding.ActivityMainBinding
 import com.lkorasik.doublehabits.databinding.FragmentHabitListBinding
 import com.lkorasik.doublehabits.habit_adapter.HabitRecycleViewAdapter
 
-class HabitsListFragment(private val habits: MutableList<Habit>): Fragment() {
+class HabitsListFragment(private val habits: MutableList<Habit>, private val adapter: HabitRecycleViewAdapter): Fragment() {
     private lateinit var binding: FragmentHabitListBinding
-
-    private lateinit var adapter: HabitRecycleViewAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentHabitListBinding.inflate(inflater, container, false)
@@ -30,7 +28,7 @@ class HabitsListFragment(private val habits: MutableList<Habit>): Fragment() {
         }
 
         binding.habitsList.layoutManager = LinearLayoutManager(binding.root.context)
-        setAdapter()
+        binding.habitsList.adapter = adapter
     }
 
     //TODO: юзай diffUtils, он эффективно обновляет
@@ -45,17 +43,9 @@ class HabitsListFragment(private val habits: MutableList<Habit>): Fragment() {
         adapter.notifyItemInserted(habits.size - 1)
     }
 
-    private fun setAdapter() {
-        adapter = HabitRecycleViewAdapter(habits, binding.root.context) { data, position ->
-            (activity as MainActivity).editHabit(data, position)
-        }
-
-        binding.habitsList.adapter = adapter
-    }
-
     companion object {
-        fun newInstance(habits: MutableList<Habit>): HabitsListFragment {
-            return HabitsListFragment(habits)
+        fun newInstance(habits: MutableList<Habit>, adapter: HabitRecycleViewAdapter): HabitsListFragment {
+            return HabitsListFragment(habits, adapter)
         }
     }
 }
