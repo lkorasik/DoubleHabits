@@ -1,18 +1,16 @@
 package com.lkorasik.doublehabits.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lkorasik.doublehabits.model.Habit
-import com.lkorasik.doublehabits.databinding.ActivityMainBinding
 import com.lkorasik.doublehabits.databinding.FragmentHabitListBinding
 import com.lkorasik.doublehabits.habit_adapter.HabitRecycleViewAdapter
 
-class HabitsListFragment(private val habits: MutableList<Habit>, private val adapter: HabitRecycleViewAdapter): Fragment() {
+class HabitsListFragment(private val adapter: HabitRecycleViewAdapter): Fragment() {
     private var fragmentHabitListBinding: FragmentHabitListBinding? = null
     private val binding
         get() = fragmentHabitListBinding!!
@@ -39,8 +37,8 @@ class HabitsListFragment(private val habits: MutableList<Habit>, private val ada
     }
 
     companion object {
-        fun newInstance(habits: MutableList<Habit>, adapter: HabitRecycleViewAdapter): HabitsListFragment {
-            return HabitsListFragment(habits, adapter)
+        fun newInstance(adapter: HabitRecycleViewAdapter): HabitsListFragment {
+            return HabitsListFragment(adapter)
         }
     }
 }
