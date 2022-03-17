@@ -78,7 +78,7 @@ class HabitEditorFragment: Fragment() {
     }
 
     private fun saveHabit() {
-        (activity as? HabitSaver)?.apply {
+        (activity as? MainActivity)?.apply {
             if(position == null)
                 saveHabit(buildHabit())
             else

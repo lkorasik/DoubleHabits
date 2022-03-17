@@ -11,7 +11,7 @@ import com.lkorasik.doublehabits.databinding.ActivityMainBinding
 import com.lkorasik.doublehabits.model.Habit
 
 
-class MainActivity: AppCompatActivity(), HabitSaver {
+class MainActivity: AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val habitListBaseFragment = HabitListBaseFragment.newInstance()
@@ -121,12 +121,12 @@ class MainActivity: AppCompatActivity(), HabitSaver {
         }
     }
 
-    override fun saveHabit(habit: Habit, position: Int) {
+    fun saveHabit(habit: Habit, position: Int) {
         supportFragmentManager.popBackStack()
         habitListBaseFragment.editHabit(habit, position)
     }
 
-    override fun saveHabit(habit: Habit) {
+    fun saveHabit(habit: Habit) {
         supportFragmentManager.popBackStack()
         habitListBaseFragment.addHabit(habit)
     }
