@@ -16,7 +16,7 @@ class HabitsListFragment: Fragment() {
     private var habits: MutableList<Habit> = mutableListOf()
     private lateinit var adapter: HabitRecycleViewAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = ActivityMainBinding.inflate(inflater, container, false)
         return binding.root
     }
