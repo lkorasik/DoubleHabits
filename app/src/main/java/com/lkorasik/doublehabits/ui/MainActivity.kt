@@ -5,7 +5,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.ActivityMainBinding
@@ -15,9 +14,8 @@ import com.lkorasik.doublehabits.model.Habit
 class MainActivity: AppCompatActivity(), HabitSaver {
     private lateinit var binding: ActivityMainBinding
 
-//    private val habitsListFragment: HabitsListFragment = HabitsListFragment.newInstance()
-    private val habitsVP: HabitListBaseFragment = HabitListBaseFragment.newInstance()
-    private val aboutFragment: AboutFragment = AboutFragment.newInstance()
+    private val habitListBaseFragment = HabitListBaseFragment.newInstance()
+    private val aboutFragment = AboutFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +32,7 @@ class MainActivity: AppCompatActivity(), HabitSaver {
     private fun initFragmentManager() {
         supportFragmentManager.commit {
             addToBackStack(null)
-//            add(R.id.fragment_host, habitsListFragment)
-            add(R.id.fragment_host, habitsVP)
+            add(R.id.fragment_host, habitListBaseFragment)
         }
     }
 
@@ -47,8 +44,7 @@ class MainActivity: AppCompatActivity(), HabitSaver {
             binding.navigationView.setCheckedItem(menuItem)
 
             val fragment = when(menuItem.itemId) {
-//                R.id.home -> habitsListFragment
-                R.id.home -> habitsVP
+                R.id.home -> habitListBaseFragment
                 R.id.about -> aboutFragment
                 else -> return@setNavigationItemSelectedListener false
             }
@@ -106,6 +102,7 @@ class MainActivity: AppCompatActivity(), HabitSaver {
 
     fun createHabit() {
         val host = R.id.fragment_host
+        //TODO: Попробуй переиспользовать фрагмент редактора привычки
         val fragment = HabitEditorFragment.newInstance()
 
         supportFragmentManager.commit {
@@ -126,14 +123,12 @@ class MainActivity: AppCompatActivity(), HabitSaver {
 
     override fun saveHabit(habit: Habit, position: Int) {
         supportFragmentManager.popBackStack()
-        habitsVP.editHabit(habit, position)
-//        habitsListFragment.editHabit(habit, position)
+        habitListBaseFragment.editHabit(habit, position)
     }
 
     override fun saveHabit(habit: Habit) {
         supportFragmentManager.popBackStack()
-        habitsVP.addHabit(habit)
-//        habitsListFragment.addHabit(habit)
+        habitListBaseFragment.addHabit(habit)
     }
 
     companion object {
