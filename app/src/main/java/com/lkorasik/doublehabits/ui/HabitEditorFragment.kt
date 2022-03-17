@@ -14,14 +14,17 @@ import com.lkorasik.doublehabits.databinding.FragmentViewHabitBinding
 import com.lkorasik.doublehabits.model.Habit
 
 class HabitEditorFragment: Fragment() {
-    private lateinit var binding: FragmentViewHabitBinding
+    private var fragmentViewHabitBinding: FragmentViewHabitBinding? = null
+    private val binding
+        get() = fragmentViewHabitBinding!!
+
     private lateinit var colorPickerDialog: ColorPickerDialogBuilder
 
     private var position: Int? = null
     private var selectedColor: Int = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentViewHabitBinding.inflate(inflater, container, false)
+        fragmentViewHabitBinding = FragmentViewHabitBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -192,6 +195,11 @@ class HabitEditorFragment: Fragment() {
         if(binding.count.editText?.text.toString().isEmpty())
             return 0
         return binding.count.editText?.text.toString().toInt()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        fragmentViewHabitBinding = null
     }
 
     companion object {

@@ -10,12 +10,19 @@ import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentAboutBinding
 
 class AboutFragment: Fragment() {
-    private lateinit var binding: FragmentAboutBinding
+    private var fragmentAboutBinding: FragmentAboutBinding? = null
+    private val binding
+        get() = fragmentAboutBinding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentAboutBinding.inflate(inflater, container, false)
+        fragmentAboutBinding = FragmentAboutBinding.inflate(inflater, container, false)
         binding.version.text = getString(R.string.about_version).format(BuildConfig.VERSION_NAME)
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        fragmentAboutBinding = null
     }
 
     companion object {

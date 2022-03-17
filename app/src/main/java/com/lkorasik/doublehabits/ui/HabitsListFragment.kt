@@ -13,10 +13,12 @@ import com.lkorasik.doublehabits.databinding.FragmentHabitListBinding
 import com.lkorasik.doublehabits.habit_adapter.HabitRecycleViewAdapter
 
 class HabitsListFragment(private val habits: MutableList<Habit>, private val adapter: HabitRecycleViewAdapter): Fragment() {
-    private lateinit var binding: FragmentHabitListBinding
+    private var fragmentHabitListBinding: FragmentHabitListBinding? = null
+    private val binding
+        get() = fragmentHabitListBinding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentHabitListBinding.inflate(inflater, container, false)
+        fragmentHabitListBinding = FragmentHabitListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -29,6 +31,11 @@ class HabitsListFragment(private val habits: MutableList<Habit>, private val ada
 
         binding.habitsList.layoutManager = LinearLayoutManager(binding.root.context)
         binding.habitsList.adapter = adapter
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        fragmentHabitListBinding = null
     }
 
     companion object {

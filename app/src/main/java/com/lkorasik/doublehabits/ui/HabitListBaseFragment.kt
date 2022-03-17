@@ -13,13 +13,15 @@ import com.lkorasik.doublehabits.habit_adapter.HabitRecycleViewAdapter
 import com.lkorasik.doublehabits.model.Habit
 
 class HabitListBaseFragment: Fragment() {
-    private lateinit var binding: FragmentHabitBaseBinding
+    private var fragmentAboutBinding: FragmentHabitBaseBinding? = null
+    private val binding
+        get() = fragmentAboutBinding!!
 
     private var habits: MutableList<Habit> = mutableListOf()
     private lateinit var adapter: HabitRecycleViewAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentHabitBaseBinding.inflate(inflater, container, false)
+        fragmentAboutBinding = FragmentHabitBaseBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,6 +46,11 @@ class HabitListBaseFragment: Fragment() {
 
     fun addHabit(habit: Habit) {
         adapter.addHabit(habit)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        fragmentAboutBinding = null
     }
 
     companion object {
