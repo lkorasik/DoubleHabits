@@ -1,6 +1,7 @@
 package com.lkorasik.doublehabits.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,14 +25,12 @@ class HabitsListFragment(private val habits: MutableList<Habit>): Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.let {
-            it.addHabit.setOnClickListener {
-                (activity as MainActivity).createHabit()
-            }
-
-            it.habitsList.layoutManager = LinearLayoutManager(binding.root.context)
-            setAdapter()
+        binding.addHabit.setOnClickListener {
+            (activity as MainActivity).createHabit()
         }
+
+        binding.habitsList.layoutManager = LinearLayoutManager(binding.root.context)
+        setAdapter()
     }
 
     //TODO: юзай diffUtils, он эффективно обновляет
