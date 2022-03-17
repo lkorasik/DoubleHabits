@@ -14,7 +14,6 @@ import com.lkorasik.doublehabits.habit_adapter.HabitRecycleViewAdapter
 class HabitsListFragment(private val habits: MutableList<Habit>): Fragment() {
     private lateinit var binding: FragmentHabitListBinding
 
-//    private lateinit var habits: MutableList<Habit> = mutableListOf()
     private lateinit var adapter: HabitRecycleViewAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

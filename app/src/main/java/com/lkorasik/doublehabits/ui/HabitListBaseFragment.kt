@@ -36,7 +36,6 @@ class HabitListBaseFragment: Fragment() {
 
     fun editHabit(habit: Habit, position: Int) {
         first.editHabit(habit, position)
-
 //        habits[position] = habit
 //        adapter.notifyItemChanged(position)
     }
