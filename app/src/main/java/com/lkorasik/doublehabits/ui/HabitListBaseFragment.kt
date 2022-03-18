@@ -32,6 +32,7 @@ class HabitListBaseFragment: Fragment() {
         }
 
         val pagerAdapter = ScreenSlidePagerAdapter(adapter, this)
+        binding.pager.offscreenPageLimit = 1
         binding.pager.adapter = pagerAdapter
 
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
