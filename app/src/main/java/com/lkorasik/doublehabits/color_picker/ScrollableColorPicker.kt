@@ -25,7 +25,7 @@ class ScrollableColorPicker : FrameLayout {
     }
 
     private fun initView() {
-        inflate(context, R.layout.scrollable_color_picker, this)
+        inflate(context, R.layout.widget_color_picker, this)
 
         val ids = arrayListOf(
             R.id.item0, R.id.item1, R.id.item2, R.id.item3, R.id.item4, R.id.item5, R.id.item6,
