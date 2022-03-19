@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import com.lkorasik.doublehabits.R
 
 
+//TODO: Попробуй переписать через адаптер для Horizontal scroll view
 class ScrollableColorPicker : FrameLayout {
     private var onColorSelectedListener: OnColorSelected? = null
 
@@ -32,8 +33,6 @@ class ScrollableColorPicker : FrameLayout {
             R.id.item7, R.id.item8, R.id.item9, R.id.item10, R.id.item11, R.id.item12, R.id.item13,
             R.id.item14, R.id.item15
         )
-
-        //TODO: Попробуй переписать через адаптер для Horizontal scroll view
 
         setOnColorSelectedListeners(ids)
 
