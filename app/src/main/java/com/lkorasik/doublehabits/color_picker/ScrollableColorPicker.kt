@@ -34,7 +34,6 @@ class ScrollableColorPicker : FrameLayout {
         )
 
         //TODO: Попробуй переписать через адаптер для Horizontal scroll view
-        //TODO: почитай sealed class, но он не нужен в этом таске
 
         setOnColorSelectedListeners(ids)
 

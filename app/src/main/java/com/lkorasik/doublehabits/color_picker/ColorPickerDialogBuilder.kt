@@ -11,16 +11,10 @@ import com.lkorasik.doublehabits.databinding.DialogColorPickerBinding
 import java.math.RoundingMode
 
 //TODO: create new dialog and extends Dialog or AlertDialog, etc...
-class ColorPickerDialogBuilder(context: Context) {
+class ColorPickerDialogBuilder(private val context: Context) {
     private val binding = DialogColorPickerBinding.inflate(LayoutInflater.from(context))
 
     private val previewBackground = binding.preview.background as GradientDrawable
-
-    private val title = context.getString(R.string.dialog_color_picker_title)
-    private val rgbPattern = context.getString(R.string.dialog_color_picker_rgb)
-    private val hsvPattern = context.getString(R.string.dialog_color_picker_hsv)
-    private val ok = context.getString(R.string.dialog_color_picker_ok)
-    private val cancel = context.getString(R.string.dialog_color_picker_cancel) //TODO: убери
 
     private var selected = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
     private var temp = selected
@@ -47,10 +41,10 @@ class ColorPickerDialogBuilder(context: Context) {
     private fun initDialogBuilder() {
         with(dialogBuilder) {
             setView(binding.root)
-            setTitle(title)
+            setTitle(context.getString(R.string.dialog_color_picker_title))
 
-            setPositiveButton(ok) { dialog, _ -> positiveAction(dialog) }
-            setNegativeButton(cancel) { dialog, _ -> negativeAction(dialog) }
+            setPositiveButton(context.getString(R.string.dialog_color_picker_ok)) { dialog, _ -> positiveAction(dialog) }
+            setNegativeButton(context.getString(R.string.dialog_color_picker_cancel)) { dialog, _ -> negativeAction(dialog) }
         }
 
         setColorOnView()
@@ -90,7 +84,7 @@ class ColorPickerDialogBuilder(context: Context) {
         val green = Color.green(color)
         val blue = Color.blue(color)
 
-        binding.rgb.text = rgbPattern.format(red, green, blue)
+        binding.rgb.text = context.getString(R.string.dialog_color_picker_rgb).format(red, green, blue)
     }
 
     private fun setHSV(color: Int) {
@@ -101,7 +95,7 @@ class ColorPickerDialogBuilder(context: Context) {
         val saturation = hsvArray[1].round()
         val value = hsvArray[2].round()
 
-        binding.hsv.text = hsvPattern.format(hue, saturation, value)
+        binding.hsv.text = context.getString(R.string.dialog_color_picker_hsv).format(hue, saturation, value)
     }
 
     private fun Float.round() = this.toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
