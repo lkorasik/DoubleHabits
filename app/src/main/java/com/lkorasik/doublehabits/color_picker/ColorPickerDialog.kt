@@ -19,17 +19,18 @@ class ColorPickerDialog: DialogFragment() {
         get() = _binding!!
 
     private lateinit var ctx: Context
-    private lateinit var previewBackground: GradientDrawable
     private var inited = false
+
+    private var selected = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
+    private var temp = selected
+
+    private var colorSelectedListener: OnColorSelected? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         ctx = context
-
         _binding = DialogColorPickerBinding.inflate(LayoutInflater.from(ctx))
-
-        previewBackground = binding.preview.background as GradientDrawable
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -53,17 +54,17 @@ class ColorPickerDialog: DialogFragment() {
         return dialog
     }
 
-    private var selected = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
-    private var temp = selected
-
-    private var colorSelectedListener: OnColorSelected? = null
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
     fun setColorSelectedListener(listener: OnColorSelected) {
         colorSelectedListener = listener
     }
 
     private fun setColorOnView() {
-        previewBackground.setColor(selected)
+        (binding.preview.background as GradientDrawable).setColor(selected)
 
         setRGB(selected)
         setHSV(selected)
@@ -77,7 +78,7 @@ class ColorPickerDialog: DialogFragment() {
     }
 
     private fun negativeAction(dialog: DialogInterface) {
-        previewBackground.setColor(temp)
+        (binding.preview.background as GradientDrawable).setColor(temp)
         dialog.dismiss()
     }
 
@@ -106,11 +107,6 @@ class ColorPickerDialog: DialogFragment() {
         val value = hsvArray[2].round()
 
         binding.hsv.text = ctx.getString(R.string.dialog_color_picker_hsv).format(hue, saturation, value)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
     private fun Float.round() = this.toBigDecimal().setScale(2, RoundingMode.UP).toDouble()
