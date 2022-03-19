@@ -15,9 +15,7 @@ class HabitListBaseFragment: Fragment() {
     private var fragmentAboutBinding: FragmentHabitBaseBinding? = null
     private val binding
         get() = fragmentAboutBinding!!
-
-    private var habits: MutableList<Habit> = mutableListOf()
-    private lateinit var adapter: HabitRecycleViewAdapter
+    private lateinit var pagerAdapter: ScreenSlidePagerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentAboutBinding = FragmentHabitBaseBinding.inflate(inflater, container, false)
@@ -27,15 +25,11 @@ class HabitListBaseFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = HabitRecycleViewAdapter(binding.root.context) { data, position ->
-            (activity as MainActivity).editHabit(data, position)
-        }
-
         binding.addHabit.setOnClickListener {
             (activity as MainActivity).createHabit()
         }
 
-        val pagerAdapter = ScreenSlidePagerAdapter(adapter, this)
+        pagerAdapter = ScreenSlidePagerAdapter(this)
         binding.pager.offscreenPageLimit = 1
         binding.pager.adapter = pagerAdapter
 
@@ -44,15 +38,15 @@ class HabitListBaseFragment: Fragment() {
         }.attach()
     }
 
-    fun editHabit(habit: Habit, position: Int) {
-        habits[position] = habit
-        adapter.submitList(habits)
-    }
-
-    fun addHabit(habit: Habit) {
-        habits.add(habit)
-        adapter.submitList(habits)
-    }
+//    fun editHabit(habit: Habit, position: Int) {
+//        val frag = pagerAdapter.getFragment(habit.type)
+//        frag.editHabit(habit, position)
+//    }
+//
+//    fun addHabit(habit: Habit) {
+//        val frag = pagerAdapter.getFragment(habit.type)
+//        frag.addHabit(habit)
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

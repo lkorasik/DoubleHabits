@@ -6,6 +6,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.commit
+import com.lkorasik.doublehabits.HabitType
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.ActivityMainBinding
 import com.lkorasik.doublehabits.model.Habit
@@ -16,6 +17,9 @@ class MainActivity: AppCompatActivity() {
 
     private val habitListBaseFragment = HabitListBaseFragment.newInstance()
     private val aboutFragment = AboutFragment.newInstance()
+
+    var habitsRegular: MutableList<Habit> = mutableListOf()
+    var habitsHarmful: MutableList<Habit> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,13 +126,21 @@ class MainActivity: AppCompatActivity() {
     }
 
     fun saveHabit(habit: Habit, position: Int) {
+        when(habit.type) {
+            HabitType.REGULAR -> habitsRegular[position] = habit
+            HabitType.HARMFUL -> habitsHarmful[position] = habit
+        }
         supportFragmentManager.popBackStack()
-        habitListBaseFragment.editHabit(habit, position)
+//        habitListBaseFragment.editHabit(habit, position)
     }
 
     fun saveHabit(habit: Habit) {
+        when(habit.type) {
+            HabitType.REGULAR -> habitsRegular.add(habit)
+            HabitType.HARMFUL -> habitsHarmful.add(habit)
+        }
         supportFragmentManager.popBackStack()
-        habitListBaseFragment.addHabit(habit)
+//        habitListBaseFragment.addHabit(habit)
     }
 
     companion object {
