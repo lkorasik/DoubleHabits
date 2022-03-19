@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.lkorasik.doublehabits.*
-import com.lkorasik.doublehabits.color_picker.ColorPickerDialogBuilder
+import com.lkorasik.doublehabits.color_picker.ColorPickerDialog
 import com.lkorasik.doublehabits.databinding.FragmentViewHabitBinding
 import com.lkorasik.doublehabits.model.Habit
 
@@ -18,7 +18,8 @@ class HabitEditorFragment: Fragment() {
     private val binding
         get() = fragmentViewHabitBinding!!
 
-    private lateinit var colorPickerDialog: ColorPickerDialogBuilder
+//    private lateinit var colorPickerDialog: ColorPickerDialogBuilder
+    private lateinit var colorPickerDialog: ColorPickerDialog
 
     private var position: Int? = null
     private var selectedColor: Int = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
@@ -98,7 +99,8 @@ class HabitEditorFragment: Fragment() {
         handleIntent()
 
         binding.chose.setOnClickListener {
-            colorPickerDialog.show()
+//            colorPickerDialog.show()
+            colorPickerDialog.show(parentFragmentManager, "Dialog")
         }
     }
 
@@ -113,7 +115,9 @@ class HabitEditorFragment: Fragment() {
     }
 
     private fun initColorPickerDialog() {
-        colorPickerDialog = ColorPickerDialogBuilder(binding.root.context)
+//        colorPickerDialog = ColorPickerDialogBuilder(binding.root.context)
+        colorPickerDialog = ColorPickerDialog()
+
         colorPickerDialog.setColorSelectedListener {
             selectedColor = it
             (binding.preview.background as GradientDrawable).setColor(it)
