@@ -18,9 +18,9 @@ class HabitEditorFragment: Fragment() {
     private val binding
         get() = fragmentViewHabitBinding!!
 
-//    private lateinit var colorPickerDialog: ColorPickerDialogBuilder
     private lateinit var colorPickerDialog: ColorPickerDialog
 
+    private var old: HabitType? = null
     private var position: Int? = null
     private var selectedColor: Int = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
 
@@ -85,8 +85,12 @@ class HabitEditorFragment: Fragment() {
         (activity as? MainActivity)?.apply {
             if(position == null)
                 saveHabit(buildHabit())
-            else
+            else {
+                if((old != null) && (old != buildHabit().type))
+                    position = move(old!!, position!!)
+
                 saveHabit(buildHabit(), position!!)
+            }
         }
     }
 
@@ -99,7 +103,6 @@ class HabitEditorFragment: Fragment() {
         handleIntent()
 
         binding.chose.setOnClickListener {
-//            colorPickerDialog.show()
             colorPickerDialog.show(parentFragmentManager, "Dialog")
         }
     }
@@ -115,7 +118,6 @@ class HabitEditorFragment: Fragment() {
     }
 
     private fun initColorPickerDialog() {
-//        colorPickerDialog = ColorPickerDialogBuilder(binding.root.context)
         colorPickerDialog = ColorPickerDialog()
 
         colorPickerDialog.setColorSelectedListener {
@@ -133,6 +135,9 @@ class HabitEditorFragment: Fragment() {
     private fun handleIntent() {
         val habit = arguments?.getParcelable<Habit>(IntentKeys.Habit)
         position = arguments?.getInt(IntentKeys.Position)
+
+        if(position != null)
+            old = habit?.type
 
         if(habit != null){
             fillForm(habit)

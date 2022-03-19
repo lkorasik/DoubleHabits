@@ -133,6 +133,23 @@ class MainActivity: AppCompatActivity() {
         supportFragmentManager.popBackStack()
     }
 
+    fun move(type: HabitType, position: Int): Int {
+        return when(type) {
+            HabitType.REGULAR -> {
+                val habit = habitsRegular[position]
+                habitsRegular.removeAt(position)
+                habitsHarmful.add(habit)
+                habitsHarmful.indexOf(habit)
+            }
+            HabitType.HARMFUL -> {
+                val habit = habitsHarmful[position]
+                habitsHarmful.removeAt(position)
+                habitsRegular.add(habit)
+                habitsRegular.indexOf(habit)
+            }
+        }
+    }
+
     fun saveHabit(habit: Habit) {
         when(habit.type) {
             HabitType.REGULAR -> habitsRegular.add(habit)
