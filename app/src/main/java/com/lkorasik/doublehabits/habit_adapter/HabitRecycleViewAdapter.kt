@@ -12,8 +12,6 @@ class HabitRecycleViewAdapter(
     private val onItemClicked: OnItemClicked
 ): ListAdapter<Habit, ViewHolder>(HabitDiffCallBack()) {
 
-    //TODO: Почитай про viewBinding
-
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater
             .from(viewGroup.context)

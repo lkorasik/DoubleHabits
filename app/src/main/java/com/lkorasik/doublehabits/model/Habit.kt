@@ -36,7 +36,7 @@ data class Habit(
     }
 
     override fun describeContents(): Int {
-        return 0 //TODO: Прочитай почему так
+        return 0 //Ноль, если в классе нет специальных объектов, типа дескриптора файла
     }
 
     companion object CREATOR : Parcelable.Creator<Habit> {

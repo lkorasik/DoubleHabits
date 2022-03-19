@@ -146,7 +146,22 @@ class HabitEditorFragment: Fragment() {
             setActivityTitleEdit()
         }
         else {
+            clearForm()
             setActivityTitleCreate()
+        }
+    }
+
+    private fun clearForm() {
+        with(binding) {
+            habitName.editText?.setText("")
+            habitDescription.editText?.setText("")
+            habitPriority.setSelection(Priority.HIGH.ordinal)
+            radioGroup.check(R.id.type_regular)
+            count.editText?.setText("1")
+            periodicity.editText?.setText("")
+            (preview.background as GradientDrawable).apply {
+                setColor(selectedColor)
+            }
         }
     }
 

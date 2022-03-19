@@ -17,6 +17,7 @@ class MainActivity: AppCompatActivity() {
 
     private val habitListBaseFragment = HabitListBaseFragment.newInstance()
     private val aboutFragment = AboutFragment.newInstance()
+    private val editorFragment = HabitEditorFragment.newInstance()
 
     var habitsRegular: MutableList<Habit> = mutableListOf()
     var habitsHarmful: MutableList<Habit> = mutableListOf()
@@ -87,7 +88,6 @@ class MainActivity: AppCompatActivity() {
                 true
             }
             else -> {
-                //TODO: Есть варианты как передать по-другому управление во фрагмент
                 val fragment = supportFragmentManager.findFragmentByTag(EDITOR_FRAGMENT_TAG)
                 fragment?.onOptionsItemSelected(item) ?: super.onOptionsItemSelected(item)
             }
@@ -105,23 +105,18 @@ class MainActivity: AppCompatActivity() {
     }
 
     fun createHabit() {
-        val host = R.id.fragment_host
-        //TODO: Попробуй переиспользовать фрагмент редактора привычки
-        val fragment = HabitEditorFragment.newInstance()
-
         supportFragmentManager.commit {
             addToBackStack(null)
-            replace(host, fragment, EDITOR_FRAGMENT_TAG)
+            replace(R.id.fragment_host, editorFragment, EDITOR_FRAGMENT_TAG)
         }
     }
 
     fun editHabit(habit: Habit, position: Int) {
-        val host = R.id.fragment_host
         val fragment = HabitEditorFragment.newInstance(habit, position)
 
         supportFragmentManager.commit {
             addToBackStack(null)
-            replace(host, fragment, EDITOR_FRAGMENT_TAG)
+            replace(R.id.fragment_host, fragment, EDITOR_FRAGMENT_TAG)
         }
     }
 
