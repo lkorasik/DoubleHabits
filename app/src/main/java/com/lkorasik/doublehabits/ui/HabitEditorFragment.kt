@@ -12,6 +12,8 @@ import com.lkorasik.doublehabits.*
 import com.lkorasik.doublehabits.color_picker.ColorPickerDialog
 import com.lkorasik.doublehabits.databinding.FragmentViewHabitBinding
 import com.lkorasik.doublehabits.model.Habit
+import com.lkorasik.doublehabits.model.HabitPriority
+import com.lkorasik.doublehabits.model.HabitType
 
 class HabitEditorFragment: Fragment() {
     private var fragmentViewHabitBinding: FragmentViewHabitBinding? = null
@@ -155,7 +157,7 @@ class HabitEditorFragment: Fragment() {
         with(binding) {
             habitName.editText?.setText("")
             habitDescription.editText?.setText("")
-            habitPriority.setSelection(Priority.HIGH.ordinal)
+            habitPriority.setSelection(HabitPriority.HIGH.ordinal)
             radioGroup.check(R.id.type_regular)
             count.editText?.setText("1")
             periodicity.editText?.setText("")
@@ -203,8 +205,8 @@ class HabitEditorFragment: Fragment() {
             count = getCount()
         )
 
-    private fun getPriority(): Priority {
-        return Priority.values()[binding.habitPriority.selectedItemPosition]
+    private fun getPriority(): HabitPriority {
+        return HabitPriority.values()[binding.habitPriority.selectedItemPosition]
     }
 
     private fun getSelectedType(): HabitType {

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
-import com.lkorasik.doublehabits.HabitType
+import com.lkorasik.doublehabits.model.HabitType
 import com.lkorasik.doublehabits.databinding.FragmentHabitBaseBinding
 
 class HabitListBaseFragment: Fragment() {

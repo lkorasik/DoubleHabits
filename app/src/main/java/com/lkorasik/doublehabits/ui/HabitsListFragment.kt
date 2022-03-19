@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.lkorasik.doublehabits.HabitType
+import com.lkorasik.doublehabits.model.HabitType
 import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.databinding.FragmentHabitListBinding
 import com.lkorasik.doublehabits.habit_adapter.HabitRecycleViewAdapter

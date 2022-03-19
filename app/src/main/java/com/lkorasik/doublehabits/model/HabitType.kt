@@ -1,6 +1,7 @@
-package com.lkorasik.doublehabits
+package com.lkorasik.doublehabits.model
 
 import android.content.Context
+import com.lkorasik.doublehabits.R
 
 enum class HabitType {
     REGULAR, HARMFUL;

@@ -1,8 +1,9 @@
-package com.lkorasik.doublehabits
+package com.lkorasik.doublehabits.model
 
 import android.content.Context
+import com.lkorasik.doublehabits.R
 
-enum class Priority {
+enum class HabitPriority {
     LOW, MEDIUM, HIGH;
 
     fun getRepresentation(context: Context): String {

@@ -2,13 +2,11 @@ package com.lkorasik.doublehabits.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.lkorasik.doublehabits.HabitType
-import com.lkorasik.doublehabits.Priority
 
 data class Habit(
     val name: String,
     val description: String,
-    val priority: Priority,
+    val priority: HabitPriority,
     val type: HabitType,
     val periodicity: String,
     val color: Int,
@@ -18,7 +16,7 @@ data class Habit(
     constructor(parcel: Parcel) : this(
         parcel.readString().orEmpty(),
         parcel.readString().orEmpty(),
-        Priority.values()[parcel.readInt()],
+        HabitPriority.values()[parcel.readInt()],
         HabitType.values()[parcel.readInt()],
         parcel.readString().orEmpty(),
         parcel.readInt(),
