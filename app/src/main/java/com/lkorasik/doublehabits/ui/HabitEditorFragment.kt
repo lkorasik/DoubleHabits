@@ -193,11 +193,8 @@ class HabitEditorFragment: Fragment() {
     }
 
     private fun getSelectedType(): HabitType {
-        return when(binding.radioGroup.checkedRadioButtonId) {
-            R.id.type_harmful -> HabitType.HARMFUL
-            R.id.type_regular -> HabitType.REGULAR
-            else -> throw IllegalStateException("Incorrect habit type") //TODO: подумай, может все таки стоит переписать
-        }
+        val selected = binding.radioGroup.checkedRadioButtonId
+        return if(selected == R.id.type_harmful) HabitType.HARMFUL else HabitType.REGULAR
     }
 
     private fun getCount(): Int {
