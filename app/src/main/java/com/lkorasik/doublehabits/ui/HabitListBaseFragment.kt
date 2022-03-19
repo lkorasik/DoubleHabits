@@ -31,6 +31,10 @@ class HabitListBaseFragment: Fragment() {
             (activity as MainActivity).editHabit(data, position)
         }
 
+        binding.addHabit.setOnClickListener {
+            (activity as MainActivity).createHabit()
+        }
+
         val pagerAdapter = ScreenSlidePagerAdapter(adapter, this)
         binding.pager.offscreenPageLimit = 1
         binding.pager.adapter = pagerAdapter

@@ -24,10 +24,6 @@ class HabitsListFragment(private val adapter: HabitRecycleViewAdapter): Fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.addHabit.setOnClickListener {
-            (activity as MainActivity).createHabit()
-        }
-
         binding.habitsList.layoutManager = LinearLayoutManager(binding.root.context)
         binding.habitsList.adapter = adapter
     }
