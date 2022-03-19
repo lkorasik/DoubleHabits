@@ -131,7 +131,6 @@ class MainActivity: AppCompatActivity() {
             HabitType.HARMFUL -> habitsHarmful[position] = habit
         }
         supportFragmentManager.popBackStack()
-//        habitListBaseFragment.editHabit(habit, position)
     }
 
     fun saveHabit(habit: Habit) {
@@ -140,7 +139,6 @@ class MainActivity: AppCompatActivity() {
             HabitType.HARMFUL -> habitsHarmful.add(habit)
         }
         supportFragmentManager.popBackStack()
-//        habitListBaseFragment.addHabit(habit)
     }
 
     companion object {

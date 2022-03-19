@@ -41,18 +41,6 @@ class HabitsListFragment(private val mode: HabitType): Fragment() {
         return binding.root
     }
 
-//    fun editHabit(habit: Habit, position: Int) {
-//        Log.i("DT", "Edit, $mode")
-//        habits[position] = habit
-//        adapter.submitList(habits)
-//    }
-//
-//    fun addHabit(habit: Habit) {
-//        Log.i("DT", "Add, $mode")
-//        habits.add(habit)
-//        adapter.submitList(habits)
-//    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         fragmentHabitListBinding = null

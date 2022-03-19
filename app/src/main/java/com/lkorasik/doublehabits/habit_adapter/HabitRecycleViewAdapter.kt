@@ -2,15 +2,10 @@ package com.lkorasik.doublehabits.habit_adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.lkorasik.doublehabits.HabitType
-import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.R
-import com.lkorasik.doublehabits.databinding.WidgetHabitBinding
+import com.lkorasik.doublehabits.model.Habit
 
 class HabitRecycleViewAdapter(
     private val context: Context,
