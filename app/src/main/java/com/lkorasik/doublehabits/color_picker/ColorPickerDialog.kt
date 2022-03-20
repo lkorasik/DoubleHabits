@@ -14,9 +14,9 @@ import com.lkorasik.doublehabits.databinding.DialogColorPickerBinding
 import java.math.RoundingMode
 
 class ColorPickerDialog: DialogFragment() {
-    private var _binding: DialogColorPickerBinding? = null
+    private var dialogColorPickerBinding: DialogColorPickerBinding? = null
     private val binding
-        get() = _binding!!
+        get() = dialogColorPickerBinding!!
 
     private lateinit var ctx: Context
     private var inited = false
@@ -30,7 +30,7 @@ class ColorPickerDialog: DialogFragment() {
         super.onAttach(context)
 
         ctx = context
-        _binding = DialogColorPickerBinding.inflate(LayoutInflater.from(ctx))
+        dialogColorPickerBinding = DialogColorPickerBinding.inflate(LayoutInflater.from(ctx))
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -42,14 +42,14 @@ class ColorPickerDialog: DialogFragment() {
             .setNegativeButton(ctx.getString(R.string.dialog_color_picker_cancel)) { dialog, _ -> negativeAction(dialog) }
             .create()
 
-        inited = true
-
         setColorOnView()
 
         binding.colorPicker.setOnColorSelectListener {
             selected = it
             setColorOnView()
         }
+
+        inited = true
 
         return dialog
     }
@@ -82,7 +82,7 @@ class ColorPickerDialog: DialogFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
+        dialogColorPickerBinding = null
     }
 
     fun setColorSelectedListener(listener: OnColorSelected) {
