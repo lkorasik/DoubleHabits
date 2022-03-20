@@ -3,22 +3,14 @@ package com.lkorasik.doublehabits.habit_adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.lkorasik.doublehabits.Habit
+import androidx.recyclerview.widget.ListAdapter
 import com.lkorasik.doublehabits.R
+import com.lkorasik.doublehabits.model.Habit
 
 class HabitRecycleViewAdapter(
-    private val list: MutableList<Habit>,
-    private val context: Context
-): RecyclerView.Adapter<ViewHolder>() {
-
-    private var onItemClick: OnItemClicked? = null
-
-        //TODO: Почитай про viewBinding
-    //TODO: получай слушатель, в конструктор
-    fun setOnItemClick(listener: (habit: Habit, position: Int) -> Unit) {
-        onItemClick = OnItemClicked { habit, position -> listener(habit, position) }
-    }
+    private val context: Context,
+    private val onItemClicked: OnItemClicked
+): ListAdapter<Habit, ViewHolder>(HabitDiffCallBack()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater
@@ -30,13 +22,11 @@ class HabitRecycleViewAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.apply {
-            bind(context, list[position])
+            bind(context, getItem(position))
 
             itemView.setOnClickListener {
-                onItemClick?.onClick(list[position], position)
+                onItemClicked.onClick(getItem(position), position)
             }
         }
     }
-
-    override fun getItemCount() = list.size
 }

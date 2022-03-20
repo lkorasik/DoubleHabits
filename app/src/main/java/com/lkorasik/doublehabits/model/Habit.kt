@@ -1,4 +1,4 @@
-package com.lkorasik.doublehabits
+package com.lkorasik.doublehabits.model
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -6,9 +6,9 @@ import android.os.Parcelable
 data class Habit(
     val name: String,
     val description: String,
-    val priority: Priority,
+    val priority: HabitPriority,
     val type: HabitType,
-    val periodicity: String, //TODO: Измени тип на Periodicity
+    val periodicity: String,
     val color: Int,
     val count: Int
 ): Parcelable {
@@ -16,7 +16,7 @@ data class Habit(
     constructor(parcel: Parcel) : this(
         parcel.readString().orEmpty(),
         parcel.readString().orEmpty(),
-        Priority.values()[parcel.readInt()],
+        HabitPriority.values()[parcel.readInt()],
         HabitType.values()[parcel.readInt()],
         parcel.readString().orEmpty(),
         parcel.readInt(),
@@ -34,7 +34,7 @@ data class Habit(
     }
 
     override fun describeContents(): Int {
-        return 0 //TODO:
+        return 0 //Ноль, если в классе нет специальных объектов, типа дескриптора файла
     }
 
     companion object CREATOR : Parcelable.Creator<Habit> {

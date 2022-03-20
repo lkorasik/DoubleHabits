@@ -2,83 +2,82 @@
 <ScrollView
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/preview_color_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/text"
+        <LinearLayout
+            android:id="@+id/preview_color_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:textSize="@dimen/add_habit.title_size"
-            android:paddingHorizontal="@dimen/add_habit.horizontal_margin"
-            android:text="@string/dialog_color_picker.current_color" />
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <View
-            android:id="@+id/preview"
-            android:background="@drawable/color_selector_preview_background"
-            android:layout_margin="10dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"/>
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:textSize="@dimen/add_habit.title_size"
+                android:paddingHorizontal="@dimen/add_habit.horizontal_margin"
+                android:text="@string/dialog_color_picker.current_color" />
 
-    </LinearLayout>
+            <View
+                android:id="@+id/preview"
+                android:background="@drawable/color_selector_preview_background"
+                android:layout_margin="10dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
 
-    <LinearLayout
-        android:id="@+id/color_info_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/preview_color_container">
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/rgb"
-            android:textSize="@dimen/add_habit.title_size"
+        <LinearLayout
+            android:id="@+id/color_info_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/preview_color_container">
+
+            <TextView
+                android:id="@+id/rgb"
+                android:textSize="@dimen/add_habit.title_size"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/add_habit.vertical_margin"
+                android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
+                android:paddingHorizontal="@dimen/add_habit.horizontal_margin"/>
+
+            <TextView
+                android:id="@+id/hsv"
+                android:textSize="@dimen/add_habit.title_size"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/add_habit.vertical_margin"
+                android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
+                android:paddingHorizontal="@dimen/add_habit.horizontal_margin"/>
+
+        </LinearLayout>
+
+        <com.lkorasik.doublehabits.color_picker.ScrollableColorPicker
+            android:id="@+id/color_picker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginVertical="@dimen/add_habit.vertical_margin"
-            android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
-            android:paddingHorizontal="@dimen/add_habit.horizontal_margin"/>
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/color_info_container"/>
 
-        <TextView
-            android:id="@+id/hsv"
-            android:textSize="@dimen/add_habit.title_size"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/add_habit.vertical_margin"
-            android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
-            android:paddingHorizontal="@dimen/add_habit.horizontal_margin"/>
-
-    </LinearLayout>
-
-    <com.lkorasik.doublehabits.color_picker.ScrollableColorPicker
-        android:id="@+id/color_picker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/color_info_container"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

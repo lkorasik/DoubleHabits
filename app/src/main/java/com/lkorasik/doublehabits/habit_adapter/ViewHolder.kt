@@ -3,7 +3,7 @@ package com.lkorasik.doublehabits.habit_adapter
 import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.lkorasik.doublehabits.Habit
+import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.databinding.WidgetHabitBinding
 
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
