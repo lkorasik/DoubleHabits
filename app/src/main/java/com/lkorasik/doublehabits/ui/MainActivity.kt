@@ -6,6 +6,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.commit
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.lkorasik.doublehabits.model.HabitType
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.ActivityMainBinding
@@ -18,6 +20,8 @@ class MainActivity: AppCompatActivity() {
     private val habitListBaseFragment = HabitListBaseFragment.newInstance()
     private val aboutFragment = AboutFragment.newInstance()
     private val editorFragment = HabitEditorFragment.newInstance()
+
+    private lateinit var navController: NavController
 
     var habitsRegular: MutableList<Habit> = mutableListOf()
     var habitsHarmful: MutableList<Habit> = mutableListOf()
@@ -32,36 +36,48 @@ class MainActivity: AppCompatActivity() {
 
         if (savedInstanceState == null)
             initFragmentManager()
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_host) as NavHostFragment
+        navController = navHostFragment.navController
     }
 
     private fun initFragmentManager() {
-        supportFragmentManager.commit {
-            addToBackStack(null)
-            add(R.id.fragment_host, habitListBaseFragment)
-        }
+//        supportFragmentManager.commit {
+//            addToBackStack(null)
+//            add(R.id.fragment_host, habitListBaseFragment)
+//        }
     }
 
     private fun configureNavigationDrawer() {
         val drawer = setupDrawerToggle()
         binding.drawerLayout.addDrawerListener(drawer)
 
-        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
-            binding.navigationView.setCheckedItem(menuItem)
-
-            val fragment = when(menuItem.itemId) {
-                R.id.home -> habitListBaseFragment
-                R.id.about -> aboutFragment
-                else -> return@setNavigationItemSelectedListener false
+        binding.navigationView.setNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.home -> navController.navigate(R.id.action_aboutFragment_to_habitListBaseFragment)
+                R.id.about -> navController.navigate(R.id.action_habitListBaseFragment_to_aboutFragment)
             }
-
-            supportFragmentManager.commit {
-                replace(R.id.fragment_host, fragment)
-            }
-
-            binding.drawerLayout.closeDrawers()
 
             return@setNavigationItemSelectedListener true
         }
+
+//        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
+//            binding.navigationView.setCheckedItem(menuItem)
+//
+//            val fragment = when(menuItem.itemId) {
+//                R.id.home -> habitListBaseFragment
+//                R.id.about -> aboutFragment
+//                else -> return@setNavigationItemSelectedListener false
+//            }
+//
+//            supportFragmentManager.commit {
+//                replace(R.id.fragment_host, fragment)
+//            }
+//
+//            binding.drawerLayout.closeDrawers()
+//
+//            return@setNavigationItemSelectedListener true
+//        }
     }
 
     private fun setupDrawerToggle(): ActionBarDrawerToggle {
@@ -105,19 +121,19 @@ class MainActivity: AppCompatActivity() {
     }
 
     fun createHabit() {
-        supportFragmentManager.commit {
-            addToBackStack(null)
-            replace(R.id.fragment_host, editorFragment, EDITOR_FRAGMENT_TAG)
-        }
+//        supportFragmentManager.commit {
+//            addToBackStack(null)
+//            replace(R.id.fragment_host, editorFragment, EDITOR_FRAGMENT_TAG)
+//        }
     }
 
     fun editHabit(habit: Habit, position: Int) {
         val fragment = HabitEditorFragment.newInstance(habit, position)
 
-        supportFragmentManager.commit {
-            addToBackStack(null)
-            replace(R.id.fragment_host, fragment, EDITOR_FRAGMENT_TAG)
-        }
+//        supportFragmentManager.commit {
+//            addToBackStack(null)
+//            replace(R.id.fragment_host, fragment, EDITOR_FRAGMENT_TAG)
+//        }
     }
 
     fun saveHabit(habit: Habit, position: Int) {
@@ -125,7 +141,7 @@ class MainActivity: AppCompatActivity() {
             HabitType.REGULAR -> habitsRegular[position] = habit
             HabitType.HARMFUL -> habitsHarmful[position] = habit
         }
-        supportFragmentManager.popBackStack()
+//        supportFragmentManager.popBackStack()
     }
 
     fun move(type: HabitType, position: Int): Int {
@@ -150,7 +166,7 @@ class MainActivity: AppCompatActivity() {
             HabitType.REGULAR -> habitsRegular.add(habit)
             HabitType.HARMFUL -> habitsHarmful.add(habit)
         }
-        supportFragmentManager.popBackStack()
+//        supportFragmentManager.popBackStack()
     }
 
     companion object {
