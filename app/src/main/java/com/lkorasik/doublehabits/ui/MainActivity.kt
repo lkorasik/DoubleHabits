@@ -8,6 +8,8 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.commit
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.lkorasik.doublehabits.model.HabitType
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.ActivityMainBinding
@@ -39,6 +41,8 @@ class MainActivity: AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_host) as NavHostFragment
         navController = navHostFragment.navController
+
+        binding.navigationView.setupWithNavController(navHostFragment.findNavController())
     }
 
     private fun initFragmentManager() {
@@ -49,17 +53,17 @@ class MainActivity: AppCompatActivity() {
     }
 
     private fun configureNavigationDrawer() {
-        val drawer = setupDrawerToggle()
-        binding.drawerLayout.addDrawerListener(drawer)
-
-        binding.navigationView.setNavigationItemSelectedListener {
-            when(it.itemId) {
-                R.id.home -> navController.navigate(R.id.action_aboutFragment_to_habitListBaseFragment)
-                R.id.about -> navController.navigate(R.id.action_habitListBaseFragment_to_aboutFragment)
-            }
-
-            return@setNavigationItemSelectedListener true
-        }
+//        val drawer = setupDrawerToggle()
+//        binding.drawerLayout.addDrawerListener(drawer)
+//
+//        binding.navigationView.setNavigationItemSelectedListener {
+//            when(it.itemId) {
+//                R.id.home -> navController.navigate(R.id.action_aboutFragment_to_habitListBaseFragment)
+//                R.id.about -> navController.navigate(R.id.action_habitListBaseFragment_to_aboutFragment)
+//            }
+//
+//            return@setNavigationItemSelectedListener true
+//        }
 
 //        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
 //            binding.navigationView.setCheckedItem(menuItem)
