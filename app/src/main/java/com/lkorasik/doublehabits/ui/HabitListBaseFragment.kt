@@ -40,10 +40,4 @@ class HabitListBaseFragment: Fragment() {
         super.onDestroyView()
         fragmentAboutBinding = null
     }
-
-    companion object {
-        fun newInstance(): HabitListBaseFragment {
-            return HabitListBaseFragment()
-        }
-    }
 }
