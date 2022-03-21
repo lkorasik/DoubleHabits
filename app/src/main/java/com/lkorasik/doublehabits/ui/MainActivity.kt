@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.commit
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.lkorasik.doublehabits.IntentKeys
 import com.lkorasik.doublehabits.model.HabitType
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.ActivityMainBinding
@@ -42,7 +45,10 @@ class MainActivity: AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_host) as NavHostFragment
         navController = navHostFragment.navController
 
-        binding.navigationView.setupWithNavController(navHostFragment.findNavController())
+        binding.navigationView.setupWithNavController(navController)
+
+        val appBarConfig = AppBarConfiguration(navController.graph, drawerLayout = binding.drawerLayout)
+        binding.toolbar.setupWithNavController(navController, appBarConfig)
     }
 
     private fun initFragmentManager() {
@@ -125,6 +131,7 @@ class MainActivity: AppCompatActivity() {
     }
 
     fun createHabit() {
+        navController.navigate(R.id.habitEditorFragment)
 //        supportFragmentManager.commit {
 //            addToBackStack(null)
 //            replace(R.id.fragment_host, editorFragment, EDITOR_FRAGMENT_TAG)
@@ -132,7 +139,8 @@ class MainActivity: AppCompatActivity() {
     }
 
     fun editHabit(habit: Habit, position: Int) {
-        val fragment = HabitEditorFragment.newInstance(habit, position)
+//        val fragment = HabitEditorFragment.newInstance(habit, position)
+        navController.navigate(R.id.habitEditorFragment, bundleOf(IntentKeys.Habit to habit, IntentKeys.Position to position))
 
 //        supportFragmentManager.commit {
 //            addToBackStack(null)
@@ -145,6 +153,7 @@ class MainActivity: AppCompatActivity() {
             HabitType.REGULAR -> habitsRegular[position] = habit
             HabitType.HARMFUL -> habitsHarmful[position] = habit
         }
+        navController.popBackStack()
 //        supportFragmentManager.popBackStack()
     }
 
@@ -170,6 +179,10 @@ class MainActivity: AppCompatActivity() {
             HabitType.REGULAR -> habitsRegular.add(habit)
             HabitType.HARMFUL -> habitsHarmful.add(habit)
         }
+        navController.popBackStack()
+//        navController.navigate(R.id.habitListBaseFragment)
+//        navController.clearBackStack(R.id.habitListBaseFragment)
+
 //        supportFragmentManager.popBackStack()
     }
 

@@ -22,4 +22,9 @@
             app:destination="@id/aboutFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/habitEditorFragment"
+        android:name="com.lkorasik.doublehabits.ui.HabitEditorFragment"
+        android:label="HabitEditorFragment" />
+
 </navigation>
