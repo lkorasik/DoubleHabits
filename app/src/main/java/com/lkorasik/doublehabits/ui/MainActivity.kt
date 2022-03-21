@@ -22,9 +22,9 @@ import com.lkorasik.doublehabits.model.Habit
 class MainActivity: AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private val habitListBaseFragment = HabitListBaseFragment.newInstance()
-    private val aboutFragment = AboutFragment.newInstance()
-    private val editorFragment = HabitEditorFragment.newInstance()
+//    private val habitListBaseFragment = HabitListBaseFragment.newInstance()
+//    private val aboutFragment = AboutFragment.newInstance()
+//    private val editorFragment = HabitEditorFragment.newInstance()
 
     private lateinit var navController: NavController
 

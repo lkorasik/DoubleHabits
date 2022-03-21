@@ -224,21 +224,4 @@ class HabitEditorFragment: Fragment() {
         super.onDestroyView()
         fragmentViewHabitBinding = null
     }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(): HabitEditorFragment {
-            return HabitEditorFragment()
-        }
-
-        @JvmStatic
-        fun newInstance(habit: Habit, position: Int): HabitEditorFragment {
-            return HabitEditorFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(IntentKeys.Habit, habit)
-                    putInt(IntentKeys.Position, position)
-                }
-            }
-        }
-    }
 }

@@ -24,11 +24,4 @@ class AboutFragment: Fragment() {
         super.onDestroyView()
         fragmentAboutBinding = null
     }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(): AboutFragment {
-            return AboutFragment()
-        }
-    }
 }
