@@ -27,13 +27,11 @@ class HabitsListFragment(private val mode: HabitType): Fragment() {
             (activity as MainActivity).editHabit(data, position)
         }
 
-        when(mode) {
-            HabitType.REGULAR -> habits = (activity as MainActivity).habitsRegular
-            HabitType.HARMFUL -> habits = (activity as MainActivity).habitsHarmful
+        habits = when(mode) {
+            HabitType.REGULAR -> (activity as MainActivity).habitsRegular
+            HabitType.HARMFUL -> (activity as MainActivity).habitsHarmful
         }
         adapter.submitList(habits)
-
-        Log.i("DT", "Adapter inited, $mode")
 
         binding.habitsList.layoutManager = LinearLayoutManager(binding.root.context)
         binding.habitsList.adapter = adapter
