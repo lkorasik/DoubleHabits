@@ -5,7 +5,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.model.HabitType
 
-class ScreenSlidePagerAdapter(base: Fragment) : FragmentStateAdapter(base) {
+class HabitListPagerAdapter(base: Fragment) : FragmentStateAdapter(base) {
     private val fragments = HabitListFragmentFactory.createFragments()
 //    private val fragments = listOf(
 //        HabitsListFragment.newInstance(HabitType.REGULAR),

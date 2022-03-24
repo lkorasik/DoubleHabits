@@ -13,7 +13,7 @@ class HabitListBaseFragment: Fragment() {
     private var fragmentAboutBinding: FragmentHabitBaseBinding? = null
     private val binding
         get() = fragmentAboutBinding!!
-    private lateinit var pagerAdapter: ScreenSlidePagerAdapter
+    private lateinit var pagerAdapter: HabitListPagerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentAboutBinding = FragmentHabitBaseBinding.inflate(inflater, container, false)
@@ -27,7 +27,7 @@ class HabitListBaseFragment: Fragment() {
             (activity as MainActivity).createHabit()
         }
 
-        pagerAdapter = ScreenSlidePagerAdapter(this)
+        pagerAdapter = HabitListPagerAdapter(this)
         binding.pager.offscreenPageLimit = 1
         binding.pager.adapter = pagerAdapter
 
