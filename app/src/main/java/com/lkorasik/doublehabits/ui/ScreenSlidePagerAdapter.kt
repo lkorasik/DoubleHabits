@@ -5,8 +5,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.lkorasik.doublehabits.model.HabitType
 
 class ScreenSlidePagerAdapter(base: Fragment) : FragmentStateAdapter(base) {
-    private val fragments = listOf(HabitsListFragment.newInstance(HabitType.REGULAR), HabitsListFragment.newInstance(
-        HabitType.HARMFUL))
+    private val fragments = listOf(HabitsListFragment.newInstance(HabitType.REGULAR), HabitsListFragment.newInstance(HabitType.HARMFUL))
 
     override fun getItemCount(): Int = 2
 
