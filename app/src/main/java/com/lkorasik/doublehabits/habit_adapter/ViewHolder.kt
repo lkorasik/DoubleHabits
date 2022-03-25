@@ -11,8 +11,8 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         with(WidgetHabitBinding.bind(itemView)) {
             habitName.text = habit.name
             habitDescription.text = habit.description
-            habitType.text = habit.type.getRepresentation(context)
-            habitPriority.text = habit.priority.getRepresentation(context)
+            habitType.text = context.getString(habit.type.resource)
+            habitPriority.text = context.getString(habit.priority.resource)
             coloredPanel.setBackgroundColor(habit.color)
             habitPeriodicity.text = habit.periodicity
         }

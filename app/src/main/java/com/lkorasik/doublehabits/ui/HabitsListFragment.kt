@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lkorasik.doublehabits.model.HabitType
@@ -27,13 +28,11 @@ class HabitsListFragment(private val mode: HabitType): Fragment() {
             (activity as MainActivity).editHabit(data, position)
         }
 
-        when(mode) {
-            HabitType.REGULAR -> habits = (activity as MainActivity).habitsRegular
-            HabitType.HARMFUL -> habits = (activity as MainActivity).habitsHarmful
+        habits = when(mode) {
+            HabitType.REGULAR -> (activity as MainActivity).habitsRegular
+            HabitType.HARMFUL -> (activity as MainActivity).habitsHarmful
         }
         adapter.submitList(habits)
-
-        Log.i("DT", "Adapter inited, $mode")
 
         binding.habitsList.layoutManager = LinearLayoutManager(binding.root.context)
         binding.habitsList.adapter = adapter
@@ -48,6 +47,10 @@ class HabitsListFragment(private val mode: HabitType): Fragment() {
 
     companion object {
         fun newInstance(mode: HabitType): HabitsListFragment {
+            //TODO: Сделай вот так: (и убери поле из конструктора)
+//            return HabitsListFragment().apply {
+//                arguments = bundleOf(...)
+//            }
             return HabitsListFragment(mode)
         }
     }

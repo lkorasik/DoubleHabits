@@ -135,8 +135,8 @@ class HabitEditorFragment: Fragment() {
     }
 
     private fun handleIntent() {
-        val habit = arguments?.getParcelable<Habit>(IntentKeys.Habit)
-        position = arguments?.getInt(IntentKeys.Position)
+        val habit = requireArguments().getParcelable<Habit>(IntentKeys.Habit)
+        position = requireArguments().getInt(IntentKeys.Position)
 
         if(position != null)
             old = habit?.type
@@ -209,6 +209,8 @@ class HabitEditorFragment: Fragment() {
         return HabitPriority.values()[binding.habitPriority.selectedItemPosition]
     }
 
+    //TODO: Попробуй сделать передачу данных через SafeArgs
+
     private fun getSelectedType(): HabitType {
         val selected = binding.radioGroup.checkedRadioButtonId
         return if(selected == R.id.type_harmful) HabitType.HARMFUL else HabitType.REGULAR
@@ -223,22 +225,5 @@ class HabitEditorFragment: Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         fragmentViewHabitBinding = null
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(): HabitEditorFragment {
-            return HabitEditorFragment()
-        }
-
-        @JvmStatic
-        fun newInstance(habit: Habit, position: Int): HabitEditorFragment {
-            return HabitEditorFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(IntentKeys.Habit, habit)
-                    putInt(IntentKeys.Position, position)
-                }
-            }
-        }
     }
 }

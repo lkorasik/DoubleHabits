@@ -18,13 +18,13 @@ class ColorPickerDialog: DialogFragment() {
     private val binding
         get() = dialogColorPickerBinding!!
 
+    private var colorSelectedListener: OnColorSelected? = null
+
     private lateinit var ctx: Context
     private var inited = false
 
     private var selected = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
     private var temp = selected
-
-    private var colorSelectedListener: OnColorSelected? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -34,14 +34,7 @@ class ColorPickerDialog: DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = AlertDialog
-            .Builder(ctx)
-            .setView(binding.root)
-            .setTitle(ctx.getString(R.string.dialog_color_picker_title))
-            .setPositiveButton(ctx.getString(R.string.dialog_color_picker_ok)) { dialog, _ -> positiveAction(dialog) }
-            .setNegativeButton(ctx.getString(R.string.dialog_color_picker_cancel)) { dialog, _ -> negativeAction(dialog) }
-            .create()
-
+        val dialog = createAlertDialog()
         setColorOnView()
 
         binding.colorPicker.setOnColorSelectListener {
@@ -54,24 +47,31 @@ class ColorPickerDialog: DialogFragment() {
         return dialog
     }
 
+    private fun createAlertDialog() = AlertDialog
+        .Builder(ctx)
+        .setView(binding.root)
+        .setTitle(ctx.getString(R.string.dialog_color_picker_title))
+        .setPositiveButton(ctx.getString(R.string.dialog_color_picker_ok)) { dialog, _ -> positiveAction(dialog) }
+        .setNegativeButton(ctx.getString(R.string.dialog_color_picker_cancel)) { dialog, _ -> negativeAction(dialog) }
+        .create()
+
     private fun setColorOnView() {
         (binding.preview.background as GradientDrawable).setColor(selected)
-
-        setRGB(selected)
-        setHSV(selected)
+        setRGB()
+        setHSV()
     }
 
-    private fun setRGB(color: Int) {
-        val red = Color.red(color)
-        val green = Color.green(color)
-        val blue = Color.blue(color)
+    private fun setRGB() {
+        val red = Color.red(selected)
+        val green = Color.green(selected)
+        val blue = Color.blue(selected)
 
         binding.rgb.text = ctx.getString(R.string.dialog_color_picker_rgb).format(red, green, blue)
     }
 
-    private fun setHSV(color: Int) {
+    private fun setHSV() {
         val hsvArray = floatArrayOf(0f, 0f, 0f)
-        Color.colorToHSV(color, hsvArray)
+        Color.colorToHSV(selected, hsvArray)
 
         val hue = hsvArray[0].round()
         val saturation = hsvArray[1].round()

@@ -10,7 +10,7 @@ import com.lkorasik.doublehabits.R
 
 
 //TODO: Попробуй переписать через адаптер для Horizontal scroll view
-class ScrollableColorPicker : FrameLayout {
+class ColorPicker : FrameLayout {
     private var onColorSelectedListener: OnColorSelected? = null
 
     constructor(ctx: Context, attrs: AttributeSet, defStyle: Int) : super(ctx, attrs, defStyle) {
