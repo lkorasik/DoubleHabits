@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lkorasik.doublehabits.model.HabitType
@@ -46,6 +47,10 @@ class HabitsListFragment(private val mode: HabitType): Fragment() {
 
     companion object {
         fun newInstance(mode: HabitType): HabitsListFragment {
+            //TODO: Сделай вот так: (и убери поле из конструктора)
+//            return HabitsListFragment().apply {
+//                arguments = bundleOf(...)
+//            }
             return HabitsListFragment(mode)
         }
     }

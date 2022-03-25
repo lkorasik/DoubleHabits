@@ -135,8 +135,8 @@ class HabitEditorFragment: Fragment() {
     }
 
     private fun handleIntent() {
-        val habit = arguments?.getParcelable<Habit>(IntentKeys.Habit)
-        position = arguments?.getInt(IntentKeys.Position)
+        val habit = requireArguments().getParcelable<Habit>(IntentKeys.Habit)
+        position = requireArguments().getInt(IntentKeys.Position)
 
         if(position != null)
             old = habit?.type
@@ -208,6 +208,8 @@ class HabitEditorFragment: Fragment() {
     private fun getPriority(): HabitPriority {
         return HabitPriority.values()[binding.habitPriority.selectedItemPosition]
     }
+
+    //TODO: Попробуй сделать передачу данных через SafeArgs
 
     private fun getSelectedType(): HabitType {
         val selected = binding.radioGroup.checkedRadioButtonId

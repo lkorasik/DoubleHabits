@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.viewpager.widget.ViewPager
 import com.lkorasik.doublehabits.IntentKeys
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.ActivityMainBinding
@@ -31,17 +34,22 @@ class MainActivity: AppCompatActivity() {
 
         configureToolbar()
 
+//        navController = findNavController(R.id.fragment_host)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_host) as NavHostFragment
         navController = navHostFragment.navController
 
         binding.navigationView.setupWithNavController(navController)
 
+        //TODO: Используй тут дефотный ActionBar, у активити есть setupWithNavController
+        //TODO: Toolbar должен быть над NavDrawer
+
         val appBarConfig = AppBarConfiguration(navController.graph, drawerLayout = binding.drawerLayout)
-        binding.toolbar.setupWithNavController(navController, appBarConfig)
+//        binding.toolbar.setupWithNavController(navController, appBarConfig)
+        setupActionBarWithNavController(navController, appBarConfig)
     }
 
     private fun configureToolbar() {
-        setSupportActionBar(binding.toolbar)
+//        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -73,9 +81,11 @@ class MainActivity: AppCompatActivity() {
     }
 
     fun editHabit(habit: Habit, position: Int) {
+        //TODO: Читай про SafeArgs
         navController.navigate(R.id.habitEditorFragment, bundleOf(IntentKeys.Habit to habit, IntentKeys.Position to position))
     }
 
+    //TODO: списки привычек в viewModel, который ц HabitListBaseFragment
     fun saveHabit(habit: Habit, position: Int) {
         when(habit.type) {
             HabitType.REGULAR -> habitsRegular[position] = habit
