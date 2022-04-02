@@ -40,17 +40,12 @@ data class Habit(
         parcel.writeLong(lastEditedAt.toEpochMilli())
     }
 
-    override fun describeContents(): Int {
-        return 0 //Ноль, если в классе нет специальных объектов, например, дескриптора файла
-    }
+    //Ноль, если в классе нет специальных объектов, например, дескриптора файла
+    override fun describeContents() = 0
 
     companion object CREATOR : Parcelable.Creator<Habit> {
-        override fun createFromParcel(parcel: Parcel): Habit {
-            return Habit(parcel)
-        }
+        override fun createFromParcel(parcel: Parcel) = Habit(parcel)
 
-        override fun newArray(size: Int): Array<Habit?> {
-            return arrayOfNulls(size)
-        }
+        override fun newArray(size: Int): Array<Habit?> = arrayOfNulls(size)
     }
 }

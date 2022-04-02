@@ -4,28 +4,28 @@ object HabitRepository {
     private val regularHabits = mutableListOf<Habit>()
     private val harmfulHabits = mutableListOf<Habit>()
 
-    private fun selectLiveData(type: HabitType): MutableList<Habit> {
+    private fun selectSource(type: HabitType): MutableList<Habit> {
         return when(type) {
             HabitType.REGULAR -> regularHabits
             HabitType.HARMFUL -> harmfulHabits
         }
     }
 
-    fun getHabits(type: HabitType): List<Habit> = selectLiveData(type)
+    fun getHabits(type: HabitType): List<Habit> = selectSource(type)
 
     fun addHabit(habit: Habit){
-        selectLiveData(habit.type).add(habit)
+        selectSource(habit.type).add(habit)
     }
 
     fun getHabit(type: HabitType, position: Int): Habit {
-        return selectLiveData(type)[position]
+        return selectSource(type)[position]
     }
 
     fun editHabit(habit: Habit, position: Int) {
-        selectLiveData(habit.type)[position] = habit
+        selectSource(habit.type)[position] = habit
     }
 
     fun deleteHabit(habit: Habit, position: Int) {
-        selectLiveData(habit.type).removeAt(position)
+        selectSource(habit.type).removeAt(position)
     }
 }
