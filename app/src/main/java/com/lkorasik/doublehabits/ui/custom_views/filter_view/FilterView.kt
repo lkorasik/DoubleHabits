@@ -11,12 +11,6 @@ import com.lkorasik.doublehabits.sort.SortComparatorFactory
 import com.lkorasik.doublehabits.sort.SortDirection
 
 class FilterView: LinearLayout {
-    private lateinit var button: Button
-    private lateinit var searchView: EditText
-    private lateinit var spinner: Spinner
-    private lateinit var sortDirectionSelector: RadioGroup
-    private lateinit var ignoreLetterCase: CheckBox
-
     private lateinit var binding: BottomSheetBinding
 
     constructor(ctx: Context, attrs: AttributeSet, defStyle: Int) : super(ctx, attrs, defStyle) {
@@ -33,38 +27,26 @@ class FilterView: LinearLayout {
 
     private fun initView() {
         binding = BottomSheetBinding.inflate(LayoutInflater.from(context), this, true)
-//        inflate(context, R.layout.bottom_sheet, this)
 
-        spinner = binding.selectFilter
-//        spinner = findViewById(R.id.select_filter)
         val source = R.array.sorting_types_enum
         val view = android.R.layout.simple_spinner_item
 
         ArrayAdapter.createFromResource(context, source, view).apply {
             setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.adapter = this
+            binding.selectFilter.adapter = this
         }
-
-//        button = findViewById(R.id.apply_filters)
-        button = binding.applyFilters
-//        searchView = findViewById(R.id.search_text)
-        searchView = binding.searchText
-//        sortDirectionSelector = findViewById(R.id.radio_group)
-        sortDirectionSelector = binding.radioGroup
-//        ignoreLetterCase = findViewById(R.id.case_flag)
-        ignoreLetterCase = binding.caseFlag
     }
 
     fun setOnAcceptListener(listener: OnAcceptListener) {
-        button.setOnClickListener {
-            val sortType = HabitSort.values()[spinner.selectedItemPosition]
-            val selected = sortDirectionSelector.checkedRadioButtonId
+        binding.applyFilters.setOnClickListener {
+            val sortType = HabitSort.values()[binding.selectFilter.selectedItemPosition]
+            val selected = binding.radioGroup.checkedRadioButtonId
             val sortDirection = if(selected == R.id.type_ascending) SortDirection.ASCENDING else SortDirection.DESCENDING
-            val checked = ignoreLetterCase.isChecked
+            val checked = binding.caseFlag.isChecked
 
             val comparator = SortComparatorFactory.build(sortType, sortDirection)
 
-            listener.onAcceptListener(searchView.text.toString(), comparator, checked)
+            listener.onAcceptListener(binding.searchText.text.toString(), comparator, checked)
         }
     }
 }
