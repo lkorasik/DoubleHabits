@@ -34,12 +34,10 @@ class MainActivity: AppCompatActivity() {
         //TODO: Toolbar должен быть над NavDrawer
 
         val appBarConfig = AppBarConfiguration(navController.graph, drawerLayout = binding.drawerLayout)
-//        binding.toolbar.setupWithNavController(navController, appBarConfig)
         setupActionBarWithNavController(navController, appBarConfig)
     }
 
     private fun configureToolbar() {
-//        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
