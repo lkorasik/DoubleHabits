@@ -7,7 +7,6 @@ import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.ActivityMainBinding
@@ -23,24 +22,13 @@ class MainActivity: AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        configureToolbar()
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_host) as NavHostFragment
         navController = navHostFragment.navController
 
         binding.navigationView.setupWithNavController(navController)
 
-        //TODO: Используй тут дефотный ActionBar, у активити есть setupWithNavController
-        //TODO: Toolbar должен быть над NavDrawer
-
-        val appBarConfig = AppBarConfiguration(navController.graph, drawerLayout = binding.drawerLayout)
-//        binding.toolbar.setupWithNavController(navController, appBarConfig)
-        setupActionBarWithNavController(navController, appBarConfig)
-    }
-
-    private fun configureToolbar() {
-//        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val appBarConfig = AppBarConfiguration(navController.graph, binding.drawerLayout)
+        binding.toolbar.setupWithNavController(navController, appBarConfig)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

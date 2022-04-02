@@ -3,10 +3,10 @@ package com.lkorasik.doublehabits.ui.custom_views.filter_view
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.*
-import com.lkorasik.doublehabits.HabitSort
+import com.lkorasik.doublehabits.sort.HabitSort
 import com.lkorasik.doublehabits.R
-import com.lkorasik.doublehabits.SortComparatorFactory
-import com.lkorasik.doublehabits.SortDirection
+import com.lkorasik.doublehabits.sort.SortComparatorFactory
+import com.lkorasik.doublehabits.sort.SortDirection
 
 class FilterView: LinearLayout {
     private lateinit var button: Button

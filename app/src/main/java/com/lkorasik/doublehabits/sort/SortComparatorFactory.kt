@@ -1,4 +1,4 @@
-package com.lkorasik.doublehabits
+package com.lkorasik.doublehabits.sort
 
 import com.lkorasik.doublehabits.model.Habit
 import java.lang.IllegalStateException

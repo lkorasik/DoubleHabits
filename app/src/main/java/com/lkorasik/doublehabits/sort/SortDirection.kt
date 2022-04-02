@@ -1,4 +1,4 @@
-package com.lkorasik.doublehabits
+package com.lkorasik.doublehabits.sort
 
 enum class SortDirection {
     ASCENDING, DESCENDING
