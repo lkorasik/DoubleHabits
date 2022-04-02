@@ -1,4 +1,4 @@
-package com.lkorasik.doublehabits.ui
+package com.lkorasik.doublehabits.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

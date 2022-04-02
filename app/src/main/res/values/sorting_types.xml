@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sorting_types_enum">
+        <item>@string/sort_type.no_sort</item>
+        <item>@string/sort_type.name</item>
+        <item>@string/sort_type.priority</item>
+        <item>@string/sort_type.date_creation</item>
+        <item>@string/sort_type.date_editing</item>
+    </string-array>
+</resources>

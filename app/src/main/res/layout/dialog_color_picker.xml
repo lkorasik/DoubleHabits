@@ -21,7 +21,7 @@
 
             <TextView
                 android:id="@+id/text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="center"
@@ -69,7 +69,7 @@
 
         </LinearLayout>
 
-        <com.lkorasik.doublehabits.color_picker.ColorPicker
+        <com.lkorasik.doublehabits.ui.custom_views.color_picker.ColorPicker
             android:id="@+id/color_picker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

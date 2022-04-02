@@ -1,4 +1,4 @@
-package com.lkorasik.doublehabits.ui
+package com.lkorasik.doublehabits.ui.fragments
 
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
@@ -7,13 +7,18 @@ import android.view.*
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.lkorasik.doublehabits.*
-import com.lkorasik.doublehabits.color_picker.ColorPickerDialog
+import com.lkorasik.doublehabits.IntentKeys
+import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentViewHabitBinding
+import com.lkorasik.doublehabits.ui.custom_views.color_picker.ColorPickerDialog
 import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.model.HabitPriority
 import com.lkorasik.doublehabits.model.HabitType
+import com.lkorasik.doublehabits.view_model.EditorViewModel
+import java.time.Instant
 
 class HabitEditorFragment: Fragment() {
     private var fragmentViewHabitBinding: FragmentViewHabitBinding? = null
@@ -22,12 +27,11 @@ class HabitEditorFragment: Fragment() {
 
     private lateinit var colorPickerDialog: ColorPickerDialog
 
-    private var old: HabitType? = null
-    private var position: Int? = null
-    private var selectedColor: Int = Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f))
+    private val editorViewModel: EditorViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentViewHabitBinding = FragmentViewHabitBinding.inflate(inflater, container, false)
+
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -49,6 +53,7 @@ class HabitEditorFragment: Fragment() {
             return false
 
         saveHabit()
+        findNavController().popBackStack()
 
         return true
     }
@@ -84,25 +89,32 @@ class HabitEditorFragment: Fragment() {
     }
 
     private fun saveHabit() {
-        (activity as? MainActivity)?.apply {
-            if(position == null)
-                saveHabit(buildHabit())
-            else {
-                if((old != null) && (old != buildHabit().type))
-                    position = move(old!!, position!!)
+        val habit = buildHabit()
 
-                saveHabit(buildHabit(), position!!)
-            }
+        if(editorViewModel.getPosition() == null) {
+            editorViewModel.addHabit(habit)
+        }
+        else {
+            if((editorViewModel.getType() != null) && (habit.type != editorViewModel.getType()))
+                editorViewModel.moveHabit(habit)
+            else
+                editorViewModel.editHabit(habit)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        editorViewModel.getSelectedHabit().observe(viewLifecycleOwner) { habit ->
+            habit?.let {
+                fillForm(it)
+            }
+        }
+
         initSpinnerAdapter()
         initColorPickerDialog()
 
-        handleIntent()
+        handleArguments()
 
         binding.chose.setOnClickListener {
             colorPickerDialog.show(parentFragmentManager, "Dialog")
@@ -123,7 +135,7 @@ class HabitEditorFragment: Fragment() {
         colorPickerDialog = ColorPickerDialog()
 
         colorPickerDialog.setColorSelectedListener {
-            selectedColor = it
+            editorViewModel.setSelectedColor(it)
             (binding.preview.background as GradientDrawable).setColor(it)
         }
 
@@ -134,16 +146,17 @@ class HabitEditorFragment: Fragment() {
         }
     }
 
-    private fun handleIntent() {
-        val habit = requireArguments().getParcelable<Habit>(IntentKeys.Habit)
-        position = requireArguments().getInt(IntentKeys.Position)
+    private fun handleArguments() {
+        //TODO: Пойми, тебе нужны аргументы сейчас? В таком ли виде
+        val habit = arguments?.getParcelable<Habit>(IntentKeys.Habit)
+        arguments?.getInt(IntentKeys.Position)?.let { editorViewModel.setPosition(it) }
 
-        if(position != null)
-            old = habit?.type
+        if(editorViewModel.getPosition() != null)
+            habit?.type?.let { editorViewModel.setHabitType(it) }
 
-        if(habit != null){
-            fillForm(habit)
-            selectedColor = habit.color
+        if(habit != null) {
+            editorViewModel.createdAt = habit.createdAt
+            editorViewModel.setSelectedColor(habit.color)
             colorPickerDialog.setColor(habit.color)
             setActivityTitleEdit()
         }
@@ -161,9 +174,6 @@ class HabitEditorFragment: Fragment() {
             radioGroup.check(R.id.type_regular)
             count.editText?.setText("1")
             periodicity.editText?.setText("")
-            (preview.background as GradientDrawable).apply {
-                setColor(selectedColor)
-            }
         }
     }
 
@@ -194,26 +204,29 @@ class HabitEditorFragment: Fragment() {
         (activity as AppCompatActivity).title = getString(R.string.add_habit_activity_create_title)
     }
 
-    private fun buildHabit() =
-        Habit(
+    //TODO: при возаращении на экран спичка привычек убирать клаву
+    private fun buildHabit(): Habit {
+        return Habit(
             name = binding.habitName.editText?.text.toString(),
             description = binding.habitDescription.editText?.text.toString(),
             priority = getPriority(),
             type = getSelectedType(),
             periodicity = binding.periodicity.editText?.text.toString(),
-            color = selectedColor,
-            count = getCount()
+            color = editorViewModel.getSelectedColor(),
+            count = getCount(),
+            createdAt = editorViewModel.createdAt ?: Instant.now(),
+            lastEditedAt = Instant.now()
         )
+    }
 
     private fun getPriority(): HabitPriority {
         return HabitPriority.values()[binding.habitPriority.selectedItemPosition]
     }
 
     //TODO: Попробуй сделать передачу данных через SafeArgs
-
     private fun getSelectedType(): HabitType {
         val selected = binding.radioGroup.checkedRadioButtonId
-        return if(selected == R.id.type_harmful) HabitType.HARMFUL else HabitType.REGULAR
+        return if(selected == R.id.type_regular) HabitType.REGULAR else HabitType.HARMFUL
     }
 
     private fun getCount(): Int {

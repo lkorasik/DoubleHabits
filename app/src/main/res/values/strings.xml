@@ -10,14 +10,15 @@
     <string name="add_habit.habit_type_regular">Regular</string>
     <string name="add_habit.habit_type_harmful">Harmful</string>
     <string name="add_habit.empty_name">You must write habit\'s name</string>
-    <string name="add_habit.habit_priority.low">Low</string>
-    <string name="add_habit.habit_priority.medium">Medium</string>
-    <string name="add_habit.habit_priority.high">High</string>
     <string name="add_habit.habit_color">Habits color</string>
     <string name="add_habit.select_color">Select color</string>
     <string name="add_habit.incorrect_count">Count must be positive number</string>
     <string name="add_habit.activity_create_title">Create habit</string>
     <string name="add_habit.activity_edit_title">Edit habit</string>
+
+    <string name="add_habit.habit_priority.low">Low</string>
+    <string name="add_habit.habit_priority.medium">Medium</string>
+    <string name="add_habit.habit_priority.high">High</string>
 
     <string name="add_habit_menu.add_habit">Add habit</string>
 
@@ -37,4 +38,17 @@
 
     <string name="main_activity.open_navigation_drawer">Open navigation</string>
     <string name="main_activity.close_navigation_drawer">Close navigation</string>
+
+    <string name="bottom_sheet.title">Filters and sorting</string>
+    <string name="bottom_sheet.button_text">Apply filters</string>
+    <string name="bottom_sheet.ascending">Ascending</string>
+    <string name="bottom_sheet.descending">Descending</string>
+    <string name="bottom_sheet.search_hint">Search by name…</string>
+    <string name="bottom_sheet.ignore_case">Ignore letter case</string>
+
+    <string name="sort_type.no_sort">No sort</string>
+    <string name="sort_type.name">Sort by name</string>
+    <string name="sort_type.priority">Sort by priority</string>
+    <string name="sort_type.date_creation">Sort by date of creation</string>
+    <string name="sort_type.date_editing">Sort by date of last editing</string>
 </resources>

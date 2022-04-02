@@ -1,16 +1,19 @@
-package com.lkorasik.doublehabits.color_picker
+package com.lkorasik.doublehabits.ui.custom_views.color_picker
 
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import com.lkorasik.doublehabits.R
+import com.lkorasik.doublehabits.databinding.WidgetColorPickerBinding
 
 
 //TODO: Попробуй переписать через адаптер для Horizontal scroll view
 class ColorPicker : FrameLayout {
+    private lateinit var binding: WidgetColorPickerBinding
     private var onColorSelectedListener: OnColorSelected? = null
 
     constructor(ctx: Context, attrs: AttributeSet, defStyle: Int) : super(ctx, attrs, defStyle) {
@@ -26,13 +29,14 @@ class ColorPicker : FrameLayout {
     }
 
     private fun initView() {
-        inflate(context, R.layout.widget_color_picker, this)
+        binding = WidgetColorPickerBinding
+            .inflate(LayoutInflater.from(context), this, true)
 
         val ids = arrayListOf(
-            R.id.item0, R.id.item1, R.id.item2, R.id.item3, R.id.item4, R.id.item5, R.id.item6,
-            R.id.item7, R.id.item8, R.id.item9, R.id.item10, R.id.item11, R.id.item12, R.id.item13,
-            R.id.item14, R.id.item15
-        )
+            binding.item0, binding.item1, binding.item2, binding.item3, binding.item4,
+            binding.item5, binding.item6, binding.item7, binding.item8, binding.item9,
+            binding.item10, binding.item11, binding.item12, binding.item13, binding.item14,
+            binding.item15)
 
         setOnColorSelectedListeners(ids)
 
@@ -40,9 +44,9 @@ class ColorPicker : FrameLayout {
         initSelectors(ids)
     }
 
-    private fun setOnColorSelectedListeners(ids: List<Int>){
+    private fun setOnColorSelectedListeners(ids: List<View>){
         for(i in ids.indices) {
-            findViewById<View>(ids[i]).setOnClickListener {
+            ids[i].setOnClickListener {
                 val hsv = floatArrayOf(getMiddle(i), 1f, 1f)
                 val color = Color.HSVToColor(hsv)
                 onColorSelectedListener?.onColorSelected(color)
@@ -60,12 +64,12 @@ class ColorPicker : FrameLayout {
         return GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
     }
 
-    private fun initSelectors(ids: List<Int>) {
+    private fun initSelectors(ids: List<View>) {
         for(i in ids.indices) {
             val hsv = floatArrayOf(getMiddle(i), 1f, 1f)
             val color = Color.HSVToColor(hsv)
 
-            (findViewById<View>(ids[i]).background as GradientDrawable).setColor(color)
+            (ids[i].background as GradientDrawable).setColor(color)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.lkorasik.doublehabits.habit_adapter
+package com.lkorasik.doublehabits.ui.adapters.habit_adapter
 
 import android.content.Context
 import android.view.View

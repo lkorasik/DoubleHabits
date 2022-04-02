@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="60dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/sage"
+        android:gravity="center"
+        android:text="@string/bottom_sheet.title"
+        android:textColor="@android:color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/search_text"
+                android:hint="@string/bottom_sheet.search_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/add_habit.horizontal_margin"/>
+
+            <CheckBox
+                android:id="@+id/case_flag"
+                android:checked="true"
+                android:text="@string/bottom_sheet.ignore_case"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <Spinner
+                android:id="@+id/select_filter"
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/add_habit.horizontal_margin"/>
+
+            <RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/add_habit.vertical_margin"
+                android:layout_marginHorizontal="@dimen/add_habit.horizontal_margin"
+                android:checkedButton="@id/type_ascending">
+
+                <RadioButton
+                    android:id="@+id/type_ascending"
+                    android:text="@string/bottom_sheet.ascending"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <RadioButton
+                    android:id="@+id/type_descending"
+                    android:text="@string/bottom_sheet.descending"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/apply_filters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/add_habit.horizontal_margin"
+                android:text="@string/bottom_sheet.button_text"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,4 +1,4 @@
-package com.lkorasik.doublehabits.color_picker
+package com.lkorasik.doublehabits.ui.custom_views.color_picker
 
 import android.app.Dialog
 import android.content.Context
