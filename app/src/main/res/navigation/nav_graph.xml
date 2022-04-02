@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="com.lkorasik.doublehabits.ui.AboutFragment"
+        android:name="com.lkorasik.doublehabits.ui.fragments.AboutFragment"
         android:label="AboutFragment" >
         <action
             android:id="@+id/action_aboutFragment_to_habitListBaseFragment"
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/habitListBaseFragment"
-        android:name="com.lkorasik.doublehabits.ui.HabitListBaseFragment"
+        android:name="com.lkorasik.doublehabits.ui.fragments.HabitListBaseFragment"
         android:label="HabitListBaseFragment" >
         <action
             android:id="@+id/action_habitListBaseFragment_to_aboutFragment"
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/habitEditorFragment"
-        android:name="com.lkorasik.doublehabits.ui.HabitEditorFragment"
+        android:name="com.lkorasik.doublehabits.ui.fragments.HabitEditorFragment"
         android:label="HabitEditorFragment" />
 
 </navigation>
