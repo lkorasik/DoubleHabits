@@ -3,7 +3,7 @@ package com.lkorasik.doublehabits.model
 import com.lkorasik.doublehabits.R
 
 enum class HabitPriority {
-    LOW, MEDIUM, HIGH;
+    HIGH, MEDIUM, LOW;
 
     val resource: Int
         get() {
