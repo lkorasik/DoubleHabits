@@ -54,7 +54,6 @@ class HabitsListFragment: Fragment() {
     }
 
     private fun editHabit(habit: Habit, position: Int) {
-        //TODO: Читай про SafeArgs
         val mode = arguments?.get(IntentKeys.Mode) as HabitType
         editorViewModel.loadHabit(mode, position)
         findNavController().navigate(R.id.habitEditorFragment, bundleOf(IntentKeys.Habit to habit, IntentKeys.Position to position))

@@ -30,10 +30,7 @@ class MainActivity: AppCompatActivity() {
 
         binding.navigationView.setupWithNavController(navController)
 
-        //TODO: Используй тут дефотный ActionBar, у активити есть setupWithNavController
-        //TODO: Toolbar должен быть над NavDrawer
-
-        val appBarConfig = AppBarConfiguration(navController.graph, drawerLayout = binding.drawerLayout)
+        val appBarConfig = AppBarConfiguration(navController.graph, binding.drawerLayout)
         setupActionBarWithNavController(navController, appBarConfig)
     }
 
