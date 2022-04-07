@@ -47,6 +47,10 @@ class HabitListBaseFragment: Fragment() {
             tab.text = HabitType.values()[position].toString()
         }.attach()
 
+        initFilterView(view)
+    }
+
+    private fun initFilterView(view: View) {
         val filterView = view.findViewById<FilterView>(R.id.filter)
         filterView.setOnAcceptListener { searchText, comparator, ignoreCase ->
             for(type in HabitType.values()){
@@ -58,9 +62,6 @@ class HabitListBaseFragment: Fragment() {
 
         val bottomSheetBehavior = BottomSheetBehavior.from(filterView)
 
-        //Если хотите, чтоб кнопка масштабировалась во время скрола, используйте это:
-
-        // настройка колбэков при изменениях
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback(){
             override fun onStateChanged(bottomSheet: View, newState: Int) {}
