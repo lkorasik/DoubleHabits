@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.*
-import com.lkorasik.doublehabits.sort.HabitSort
+import com.lkorasik.doublehabits.sort.SortTypes
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.WidgetFilterBinding
 import com.lkorasik.doublehabits.sort.SortComparatorFactory
@@ -39,7 +39,7 @@ class FilterView: LinearLayout {
 
     fun setOnAcceptListener(listener: OnAcceptListener) {
         binding.applyFilters.setOnClickListener {
-            val sortType = HabitSort.values()[binding.selectFilter.selectedItemPosition]
+            val sortType = SortTypes.values()[binding.selectFilter.selectedItemPosition]
             val selected = binding.radioGroup.checkedRadioButtonId
             val sortDirection = if(selected == R.id.type_ascending) SortDirection.ASCENDING else SortDirection.DESCENDING
             val checked = binding.caseFlag.isChecked
