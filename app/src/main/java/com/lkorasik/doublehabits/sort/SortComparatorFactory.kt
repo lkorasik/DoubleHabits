@@ -17,7 +17,7 @@ object SortComparatorFactory {
                 h1.createdAt.compareTo(h2.createdAt) * flag
             }
             HabitSort.DATE_EDITING -> Comparator { h1: Habit, h2: Habit ->
-                h1.lastEditedAt.compareTo(h2.lastEditedAt) * flag
+                h2.lastEditedAt.compareTo(h1.lastEditedAt) * flag
             }
             HabitSort.NO_SORT -> Comparator { _: Habit, _: Habit -> 0 }
         }

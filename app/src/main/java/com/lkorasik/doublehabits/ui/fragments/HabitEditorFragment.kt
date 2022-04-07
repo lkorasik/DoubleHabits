@@ -147,7 +147,6 @@ class HabitEditorFragment: Fragment() {
     }
 
     private fun handleArguments() {
-        //TODO: Пойми, тебе нужны аргументы сейчас? В таком ли виде
         val habit = arguments?.getParcelable<Habit>(IntentKeys.Habit)
         arguments?.getInt(IntentKeys.Position)?.let { editorViewModel.setPosition(it) }
 
@@ -204,7 +203,6 @@ class HabitEditorFragment: Fragment() {
         (activity as AppCompatActivity).title = getString(R.string.add_habit_activity_create_title)
     }
 
-    //TODO: при возаращении на экран спичка привычек убирать клаву
     private fun buildHabit(): Habit {
         return Habit(
             name = binding.habitName.editText?.text.toString(),
@@ -223,7 +221,6 @@ class HabitEditorFragment: Fragment() {
         return HabitPriority.values()[binding.habitPriority.selectedItemPosition]
     }
 
-    //TODO: Попробуй сделать передачу данных через SafeArgs
     private fun getSelectedType(): HabitType {
         val selected = binding.radioGroup.checkedRadioButtonId
         return if(selected == R.id.type_regular) HabitType.REGULAR else HabitType.HARMFUL

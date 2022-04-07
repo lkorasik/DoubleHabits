@@ -30,10 +30,7 @@ class MainActivity: AppCompatActivity() {
 
         binding.navigationView.setupWithNavController(navController)
 
-        //TODO: Используй тут дефотный ActionBar, у активити есть setupWithNavController
-        //TODO: Toolbar должен быть над NavDrawer
-
-        val appBarConfig = AppBarConfiguration(navController.graph, drawerLayout = binding.drawerLayout)
+        val appBarConfig = AppBarConfiguration(navController.graph, binding.drawerLayout)
         setupActionBarWithNavController(navController, appBarConfig)
     }
 
@@ -64,7 +61,6 @@ class MainActivity: AppCompatActivity() {
         }
     }
 
-    //TODO: списки привычек в viewModel, который ц HabitListBaseFragment
     companion object {
         private const val EDITOR_FRAGMENT_TAG = "Editor"
     }
