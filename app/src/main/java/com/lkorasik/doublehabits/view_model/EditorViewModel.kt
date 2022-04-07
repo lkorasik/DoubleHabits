@@ -34,6 +34,9 @@ class EditorViewModel: ViewModel() {
     }
 
     fun createHabit() {
+        old = null
+        position = null
+        createdAt = null
         selectedHabit.postValue(null)
     }
 

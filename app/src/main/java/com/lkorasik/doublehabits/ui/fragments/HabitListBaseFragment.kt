@@ -49,12 +49,11 @@ class HabitListBaseFragment: Fragment() {
 
         val filterView = view.findViewById<FilterView>(R.id.filter)
         filterView.setOnAcceptListener { searchText, comparator, ignoreCase ->
-            ViewModelProvider(requireActivity())[HabitType.REGULAR.name, HabitsListViewModel::class.java]
-                .setFilter { h -> h.name.contains(searchText, ignoreCase) }
-                .setHabitComparator(comparator)
-            ViewModelProvider(requireActivity())[HabitType.HARMFUL.name, HabitsListViewModel::class.java]
-                .setFilter { h -> h.name.contains(searchText, ignoreCase) }
-                .setHabitComparator(comparator)
+            for(type in HabitType.values()){
+                ViewModelProvider(requireActivity())[type.name, HabitsListViewModel::class.java]
+                    .setFilter { h -> h.name.contains(searchText, ignoreCase) }
+                    .setHabitComparator(comparator)
+            }
         }
 
         val bottomSheetBehavior = BottomSheetBehavior.from(filterView)
