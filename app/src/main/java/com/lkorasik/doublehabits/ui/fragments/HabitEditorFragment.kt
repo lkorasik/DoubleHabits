@@ -1,9 +1,11 @@
 package com.lkorasik.doublehabits.ui.fragments
 
+import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -13,12 +15,13 @@ import com.google.android.material.snackbar.Snackbar
 import com.lkorasik.doublehabits.IntentKeys
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentViewHabitBinding
-import com.lkorasik.doublehabits.ui.custom_views.color_picker.ColorPickerDialog
 import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.model.HabitPriority
 import com.lkorasik.doublehabits.model.HabitType
+import com.lkorasik.doublehabits.ui.custom_views.color_picker.ColorPickerDialog
 import com.lkorasik.doublehabits.view_model.EditorViewModel
 import java.time.Instant
+
 
 class HabitEditorFragment: Fragment() {
     private var fragmentViewHabitBinding: FragmentViewHabitBinding? = null
@@ -53,9 +56,15 @@ class HabitEditorFragment: Fragment() {
             return false
 
         saveHabit()
+        hideKeyboard()
         findNavController().popBackStack()
 
         return true
+    }
+
+    private fun hideKeyboard() {
+        val inputManager = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(binding.root.windowToken, 0)
     }
 
     private fun isValidInput(): Boolean {

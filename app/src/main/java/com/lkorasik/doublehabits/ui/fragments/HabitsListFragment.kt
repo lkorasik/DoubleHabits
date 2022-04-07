@@ -36,7 +36,7 @@ class HabitsListFragment: Fragment() {
             editHabit(data, position)
         }
 
-        val mode = arguments?.get("Mode") as HabitType
+        val mode = arguments?.get(IntentKeys.Mode) as HabitType
 
         vm = ViewModelProvider(requireActivity())[mode.name, HabitsListViewModel::class.java]
 
@@ -55,7 +55,7 @@ class HabitsListFragment: Fragment() {
 
     private fun editHabit(habit: Habit, position: Int) {
         //TODO: Читай про SafeArgs
-        val mode = arguments?.get("Mode") as HabitType
+        val mode = arguments?.get(IntentKeys.Mode) as HabitType
         editorViewModel.loadHabit(mode, position)
         findNavController().navigate(R.id.habitEditorFragment, bundleOf(IntentKeys.Habit to habit, IntentKeys.Position to position))
     }
@@ -68,7 +68,7 @@ class HabitsListFragment: Fragment() {
     companion object {
         fun newInstance(mode: HabitType): HabitsListFragment {
             return HabitsListFragment().apply {
-                arguments = bundleOf("Mode" to mode)
+                arguments = bundleOf(IntentKeys.Mode to mode)
             }
         }
     }
