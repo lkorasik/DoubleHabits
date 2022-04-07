@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.widget.*
 import com.lkorasik.doublehabits.sort.HabitSort
 import com.lkorasik.doublehabits.R
-import com.lkorasik.doublehabits.databinding.BottomSheetBinding
+import com.lkorasik.doublehabits.databinding.WidgetFilterBinding
 import com.lkorasik.doublehabits.sort.SortComparatorFactory
 import com.lkorasik.doublehabits.sort.SortDirection
 
 class FilterView: LinearLayout {
-    private lateinit var binding: BottomSheetBinding
+    private lateinit var binding: WidgetFilterBinding
 
     constructor(ctx: Context, attrs: AttributeSet, defStyle: Int) : super(ctx, attrs, defStyle) {
         initView()
@@ -26,7 +26,7 @@ class FilterView: LinearLayout {
     }
 
     private fun initView() {
-        binding = BottomSheetBinding.inflate(LayoutInflater.from(context), this, true)
+        binding = WidgetFilterBinding.inflate(LayoutInflater.from(context), this, true)
 
         val source = R.array.sorting_types_enum
         val view = android.R.layout.simple_spinner_item
