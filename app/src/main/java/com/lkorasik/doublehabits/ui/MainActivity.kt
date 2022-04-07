@@ -64,7 +64,6 @@ class MainActivity: AppCompatActivity() {
         }
     }
 
-    //TODO: списки привычек в viewModel, который ц HabitListBaseFragment
     companion object {
         private const val EDITOR_FRAGMENT_TAG = "Editor"
     }
