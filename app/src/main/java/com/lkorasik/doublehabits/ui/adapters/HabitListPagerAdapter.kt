@@ -11,7 +11,7 @@ class HabitListPagerAdapter(base: Fragment) : FragmentStateAdapter(base) {
         HabitType.values().forEach { add(HabitsListFragment.newInstance(it)) }
     }
 
-    override fun getItemCount(): Int = 2
+    override fun getItemCount(): Int = fragments.size
 
     override fun createFragment(position: Int): Fragment {
         return fragments[position]
