@@ -9,7 +9,7 @@ import com.lkorasik.doublehabits.model.HabitRepository
 import com.lkorasik.doublehabits.model.HabitType
 import java.time.Instant
 
-class EditorViewModel: ViewModel() {
+class EditorViewModel(private val repository: HabitRepository): ViewModel() {
     private val selectedHabit: MutableLiveData<Habit> = MutableLiveData(null)
     private val selectedColor = MutableLiveData(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
     private var old: HabitType? = null
@@ -18,7 +18,6 @@ class EditorViewModel: ViewModel() {
 
     fun getSelectedHabit(): LiveData<Habit> = selectedHabit
     fun getPosition() = position
-    fun getType() = old
 
     fun setHabitType(type: HabitType) {
         old = type
@@ -28,8 +27,8 @@ class EditorViewModel: ViewModel() {
         this.position = position
     }
 
-    fun loadHabit(type: HabitType, position: Int) {
-        val habit = HabitRepository.getHabit(type, position)
+    fun loadHabit(position: Long) {
+        val habit = repository.getHabit(position)
         selectedHabit.postValue(habit)
     }
 
@@ -49,18 +48,10 @@ class EditorViewModel: ViewModel() {
     }
 
     fun addHabit(habit: Habit) {
-        HabitRepository.addHabit(habit)
-    }
-
-    fun moveHabit(habit: Habit) {
-        when (habit.type) {
-            HabitType.REGULAR -> HabitRepository.deleteHabit(habit.copy(type = HabitType.HARMFUL), getPosition()!!)
-            HabitType.HARMFUL -> HabitRepository.deleteHabit(habit.copy(type = HabitType.REGULAR), getPosition()!!)
-        }
-        HabitRepository.addHabit(habit)
+        repository.addHabit(habit)
     }
 
     fun editHabit(habit: Habit) {
-        HabitRepository.editHabit(habit, getPosition()!!)
+        repository.editHabit(habit)
     }
 }

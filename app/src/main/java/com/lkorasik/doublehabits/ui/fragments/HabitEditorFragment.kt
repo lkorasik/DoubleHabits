@@ -18,8 +18,10 @@ import com.lkorasik.doublehabits.databinding.FragmentViewHabitBinding
 import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.model.HabitPriority
 import com.lkorasik.doublehabits.model.HabitType
+import com.lkorasik.doublehabits.App
 import com.lkorasik.doublehabits.ui.custom_views.color_picker.ColorPickerDialog
 import com.lkorasik.doublehabits.view_model.EditorViewModel
+import com.lkorasik.doublehabits.view_model.ViewModelFactory
 import java.time.Instant
 
 
@@ -30,7 +32,9 @@ class HabitEditorFragment: Fragment() {
 
     private lateinit var colorPickerDialog: ColorPickerDialog
 
-    private val editorViewModel: EditorViewModel by activityViewModels()
+    private val editorViewModel: EditorViewModel by activityViewModels {
+        ViewModelFactory((requireActivity().application as App).repository)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentViewHabitBinding = FragmentViewHabitBinding.inflate(inflater, container, false)
@@ -100,16 +104,15 @@ class HabitEditorFragment: Fragment() {
     }
 
     private fun saveHabit() {
-        val habit = buildHabit()
+        var habit = buildHabit()
 
         if(editorViewModel.getPosition() == null) {
             editorViewModel.addHabit(habit)
         }
-        else {
-            if((editorViewModel.getType() != null) && (habit.type != editorViewModel.getType()))
-                editorViewModel.moveHabit(habit)
-            else
-                editorViewModel.editHabit(habit)
+        else{
+            if(editorViewModel.getSelectedHabit().value != null)
+                habit = buildHabit(editorViewModel.getSelectedHabit().value!!.id)
+            editorViewModel.editHabit(habit)
         }
     }
 
@@ -165,7 +168,6 @@ class HabitEditorFragment: Fragment() {
             habit?.type?.let { editorViewModel.setHabitType(it) }
 
         if(habit != null) {
-            editorViewModel.createdAt = habit.createdAt
             editorViewModel.setSelectedColor(habit.color)
             colorPickerDialog.setColor(habit.color)
             setActivityTitleEdit()
@@ -214,8 +216,9 @@ class HabitEditorFragment: Fragment() {
         (activity as AppCompatActivity).title = getString(R.string.add_habit_activity_create_title)
     }
 
-    private fun buildHabit(): Habit {
+    private fun buildHabit(id: Long = 0): Habit {
         return Habit(
+            id = id,
             name = binding.habitName.editText?.text.toString(),
             description = binding.habitDescription.editText?.text.toString(),
             priority = getPriority(),

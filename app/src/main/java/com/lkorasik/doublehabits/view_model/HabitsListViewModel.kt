@@ -1,45 +1,47 @@
 package com.lkorasik.doublehabits.view_model
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.lkorasik.doublehabits.extensions.addLiveData
+import com.lkorasik.doublehabits.extensions.map
 import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.model.HabitRepository
 import com.lkorasik.doublehabits.model.HabitType
 
-class HabitsListViewModel: ViewModel() {
-    private val data = MutableLiveData(listOf<Habit>())
-    private lateinit var type: HabitType
+class HabitsListViewModel(repository: HabitRepository): ViewModel() {
+    private val emptyPair = "" to false
+    private val emptyComparator = Comparator { _: Habit, _: Habit -> 0 }
 
-    private var filter = { h: Habit -> true }
-    private var habitComparator: Comparator<Habit> = Comparator { _: Habit, _: Habit -> 0 }
+    private var filter = MutableLiveData(emptyPair)
+    private var habitComparator = MutableLiveData(emptyComparator)
 
-    private fun acceptFilter() {
-        data.postValue(HabitRepository.getHabits(type).filter(filter).sortedWith(habitComparator))
+    private val data = repository
+        .getAllHabits()
+        .addLiveData(filter)
+        .addLiveData(habitComparator)
+        .map { (pair, comparator) ->
+            val habits = pair?.first ?: listOf()
+            val filter = pair?.second ?: emptyPair
+
+            val searchLine = filter.first
+            val ignoreCase = filter.second
+
+            val habitComparator = comparator ?: emptyComparator
+            habits.filter { it.name.contains(searchLine, ignoreCase) }.sortedWith(habitComparator)
+        }
+
+    fun getHabits(type: HabitType): LiveData<List<Habit>> {
+        return data.map { item -> item.filter { it.type == type } }
     }
 
     fun setHabitComparator(comparator: Comparator<Habit>): HabitsListViewModel {
-        habitComparator = comparator
-        acceptFilter()
+        habitComparator.postValue(comparator)
 
         return this
     }
 
-    fun setFilter(func: (Habit) -> Boolean): HabitsListViewModel {
-        filter = func
-        acceptFilter()
+    fun setFilter(name: String, ignoreCase: Boolean): HabitsListViewModel {
+        filter.postValue(name to ignoreCase)
 
         return this
-    }
-
-    fun getHabits(): LiveData<List<Habit>> {
-        val list = data.value?.filter(filter)?.sortedWith(habitComparator)
-        data.value = list
-        return data
-    }
-
-    fun loadHabits(type: HabitType) {
-        this.type = type
-        acceptFilter()
     }
 }
