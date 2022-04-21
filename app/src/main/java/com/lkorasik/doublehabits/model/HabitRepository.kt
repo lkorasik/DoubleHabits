@@ -7,5 +7,5 @@ class HabitRepository(private val dao: HabitDao) {
     fun getAllHabits(): LiveData<List<Habit>> = dao.getAll()
     fun addHabit(habit: Habit) = dao.insertAll(habit)
     fun editHabit(habit: Habit) = dao.update(habit)
-    fun getHabit(position: Long): Habit = dao.getById(position) // TODO: LiveData
+    fun getHabit(position: Long): Habit = dao.getById(position)
 }

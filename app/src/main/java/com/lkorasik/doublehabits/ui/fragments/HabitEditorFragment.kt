@@ -84,8 +84,6 @@ class HabitEditorFragment: Fragment() {
         return true
     }
 
-    //TODO: логика проверки должна быть во vm. Об ошибказ через LiveData.
-
     private fun isCorrectHabitName(): Boolean {
         return binding.habitName.editText?.text.toString().isNotBlank()
     }

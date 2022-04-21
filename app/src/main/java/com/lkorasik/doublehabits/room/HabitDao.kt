@@ -21,6 +21,4 @@ interface HabitDao {
 
     @Query("SELECT * FROM habits WHERE id=:id ")
     fun getById(id: Long): Habit
-    //TODO: Сделать LiveData
-    //TODO: Доабвить фильтрующие запросы
 }
