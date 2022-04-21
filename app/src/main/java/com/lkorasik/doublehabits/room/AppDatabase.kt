@@ -15,6 +15,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         private var INSTANCE: AppDatabase? = null
+        private const val DB_NAME = "DH_DB"
 
         fun getInstance(context: Context): AppDatabase {
             if (INSTANCE == null) {
@@ -28,7 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         private fun createDatabase(context: Context): AppDatabase {
             return Room
-                .databaseBuilder(context.applicationContext, AppDatabase::class.java, "DB")
+                .databaseBuilder(context.applicationContext, AppDatabase::class.java, DB_NAME)
                 .allowMainThreadQueries()
                 .build()
         }
