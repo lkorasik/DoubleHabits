@@ -2,21 +2,28 @@ package com.lkorasik.doublehabits.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.time.Instant
 
+
+@Entity(tableName = "Habits")
 data class Habit(
-    val name: String,
-    val description: String,
-    val priority: HabitPriority,
-    val type: HabitType,
-    val periodicity: String,
-    val color: Int,
-    val count: Int,
-    val createdAt: Instant,
-    val lastEditedAt: Instant
+    @PrimaryKey(autoGenerate = true) val id: Long,
+    @ColumnInfo val name: String,
+    @ColumnInfo val description: String,
+    @ColumnInfo val priority: HabitPriority,
+    @ColumnInfo val type: HabitType,
+    @ColumnInfo val periodicity: String,
+    @ColumnInfo val color: Int,
+    @ColumnInfo val count: Int,
+    @ColumnInfo val createdAt: Instant,
+    @ColumnInfo val lastEditedAt: Instant,
 ): Parcelable {
 
     constructor(parcel: Parcel) : this(
+        parcel.readLong(),
         parcel.readString().orEmpty(),
         parcel.readString().orEmpty(),
         HabitPriority.values()[parcel.readInt()],
@@ -29,6 +36,7 @@ data class Habit(
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeLong(id)
         parcel.writeString(name)
         parcel.writeString(description)
         parcel.writeInt(priority.ordinal)

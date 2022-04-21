@@ -1,31 +1,11 @@
 package com.lkorasik.doublehabits.model
 
-object HabitRepository {
-    private val regularHabits = mutableListOf<Habit>()
-    private val harmfulHabits = mutableListOf<Habit>()
+import androidx.lifecycle.LiveData
+import com.lkorasik.doublehabits.room.HabitDao
 
-    private fun selectSource(type: HabitType): MutableList<Habit> {
-        return when(type) {
-            HabitType.REGULAR -> regularHabits
-            HabitType.HARMFUL -> harmfulHabits
-        }
-    }
-
-    fun getHabits(type: HabitType): List<Habit> = selectSource(type)
-
-    fun addHabit(habit: Habit){
-        selectSource(habit.type).add(habit)
-    }
-
-    fun getHabit(type: HabitType, position: Int): Habit {
-        return selectSource(type)[position]
-    }
-
-    fun editHabit(habit: Habit, position: Int) {
-        selectSource(habit.type)[position] = habit
-    }
-
-    fun deleteHabit(habit: Habit, position: Int) {
-        selectSource(habit.type).removeAt(position)
-    }
+class HabitRepository(private val dao: HabitDao) {
+    fun getAllHabits(): LiveData<List<Habit>> = dao.getAll()
+    fun addHabit(habit: Habit) = dao.insertAll(habit)
+    fun editHabit(habit: Habit) = dao.update(habit)
+    fun getHabit(position: Long): Habit = dao.getById(position) // TODO: LiveData
 }

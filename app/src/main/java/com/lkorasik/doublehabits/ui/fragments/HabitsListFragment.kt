@@ -12,12 +12,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lkorasik.doublehabits.IntentKeys
 import com.lkorasik.doublehabits.R
-import com.lkorasik.doublehabits.model.HabitType
-import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.databinding.FragmentHabitListBinding
+import com.lkorasik.doublehabits.model.Habit
+import com.lkorasik.doublehabits.model.HabitType
+import com.lkorasik.doublehabits.App
 import com.lkorasik.doublehabits.ui.adapters.habit_adapter.HabitRecycleViewAdapter
 import com.lkorasik.doublehabits.view_model.EditorViewModel
 import com.lkorasik.doublehabits.view_model.HabitsListViewModel
+import com.lkorasik.doublehabits.view_model.ViewModelFactory
 
 class HabitsListFragment: Fragment() {
     private var fragmentHabitListBinding: FragmentHabitListBinding? = null
@@ -26,7 +28,9 @@ class HabitsListFragment: Fragment() {
 
     private lateinit var adapter: HabitRecycleViewAdapter
 
-    private val editorViewModel: EditorViewModel by activityViewModels()
+    private val editorViewModel: EditorViewModel by activityViewModels {
+        ViewModelFactory((requireActivity().application as App).repository)
+    }
     private lateinit var vm: HabitsListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -38,12 +42,10 @@ class HabitsListFragment: Fragment() {
 
         val mode = arguments?.get(IntentKeys.Mode) as HabitType
 
-        vm = ViewModelProvider(requireActivity())[mode.name, HabitsListViewModel::class.java]
+        val factory = ViewModelFactory((requireActivity().application as App).repository)
+        vm = ViewModelProvider(requireActivity(), factory)[mode.name, HabitsListViewModel::class.java]
 
-        vm.loadHabits(mode)
-        adapter.submitList(vm.getHabits().value)
-
-        vm.getHabits().observe(viewLifecycleOwner) {
+        vm.getHabits(mode).observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
 
@@ -54,8 +56,7 @@ class HabitsListFragment: Fragment() {
     }
 
     private fun editHabit(habit: Habit, position: Int) {
-        val mode = arguments?.get(IntentKeys.Mode) as HabitType
-        editorViewModel.loadHabit(mode, position)
+        editorViewModel.loadHabit(habit.id)
         findNavController().navigate(R.id.habitEditorFragment, bundleOf(IntentKeys.Habit to habit, IntentKeys.Position to position))
     }
 

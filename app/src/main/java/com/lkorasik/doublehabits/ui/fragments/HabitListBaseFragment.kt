@@ -12,11 +12,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentHabitBaseBinding
-import com.lkorasik.doublehabits.ui.custom_views.filter_view.FilterView
 import com.lkorasik.doublehabits.model.HabitType
+import com.lkorasik.doublehabits.App
 import com.lkorasik.doublehabits.ui.adapters.HabitListPagerAdapter
+import com.lkorasik.doublehabits.ui.custom_views.filter_view.FilterView
 import com.lkorasik.doublehabits.view_model.EditorViewModel
 import com.lkorasik.doublehabits.view_model.HabitsListViewModel
+import com.lkorasik.doublehabits.view_model.ViewModelFactory
 
 class HabitListBaseFragment: Fragment() {
     private var fragmentAboutBinding: FragmentHabitBaseBinding? = null
@@ -24,7 +26,9 @@ class HabitListBaseFragment: Fragment() {
         get() = fragmentAboutBinding!!
     private lateinit var pagerAdapter: HabitListPagerAdapter
 
-    private val editorViewModel: EditorViewModel by activityViewModels()
+    private val editorViewModel: EditorViewModel by activityViewModels {
+        ViewModelFactory((requireActivity().application as App).repository)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentAboutBinding = FragmentHabitBaseBinding.inflate(inflater, container, false)
@@ -55,7 +59,7 @@ class HabitListBaseFragment: Fragment() {
         filterView.setOnAcceptListener { searchText, comparator, ignoreCase ->
             for(type in HabitType.values()){
                 ViewModelProvider(requireActivity())[type.name, HabitsListViewModel::class.java]
-                    .setFilter { h -> h.name.contains(searchText, ignoreCase) }
+                    .setFilter(searchText, ignoreCase)
                     .setHabitComparator(comparator)
             }
         }
@@ -66,8 +70,15 @@ class HabitListBaseFragment: Fragment() {
             BottomSheetBehavior.BottomSheetCallback(){
             override fun onStateChanged(bottomSheet: View, newState: Int) {}
 
+            //TODO: отключай кнопку
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                binding.addHabit.animate().scaleX(1 - slideOffset).scaleY(1 - slideOffset).setDuration(0).start()
+                binding
+                    .addHabit
+                    .animate()
+                    .scaleX(1 - slideOffset)
+                    .scaleY(1 - slideOffset)
+                    .setDuration(0)
+                    .start()
             }
         })
     }
