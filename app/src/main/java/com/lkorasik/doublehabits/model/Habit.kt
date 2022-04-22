@@ -5,9 +5,11 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 import java.time.Instant
 
 
+//@Parcelize TODO: test it!
 @Entity(tableName = "Habits")
 data class Habit(
     @PrimaryKey(autoGenerate = true) val id: Long,
@@ -21,7 +23,7 @@ data class Habit(
     @ColumnInfo val createdAt: Instant,
     @ColumnInfo val lastEditedAt: Instant,
 ): Parcelable {
-
+//todo: попробуй передвавать id, убери parcelable. Intent - для небольших объемов
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
         parcel.readString().orEmpty(),

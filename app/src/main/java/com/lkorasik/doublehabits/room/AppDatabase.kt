@@ -15,7 +15,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         private var INSTANCE: AppDatabase? = null
-        private const val DB_NAME = "DH_DB"
+        private const val DB_NAME = "DH_DB" //DoubleHabit.db
 
         fun getInstance(context: Context): AppDatabase {
             if (INSTANCE == null) {

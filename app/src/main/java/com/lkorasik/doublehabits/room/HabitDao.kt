@@ -14,7 +14,7 @@ interface HabitDao {
     fun getAll(): LiveData<List<Habit>>
 
     @Insert
-    fun insertAll(vararg habit: Habit)
+    fun insertAll(vararg habit: Habit) //todo: overload list + single item
 
     @Update
     fun update(habit: Habit)
