@@ -14,11 +14,10 @@ import java.time.Instant
 class EditorViewModel(private val repository: HabitRepository): ViewModel() {
     private val selectedHabit: MutableLiveData<Habit> = MutableLiveData(null)
     private val selectedColor = MutableLiveData(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
-    private var old: HabitType? = null //todo: убери, все в куче в бд
+    private var old: HabitType? = null
     private var position: Int? = null
     var createdAt: Instant? = null
 
-    //TODO: передавай сюдай не Habit а ее id.
     fun getSelectedHabit(): LiveData<Habit> = selectedHabit
     fun getPosition() = position
 
@@ -50,19 +49,11 @@ class EditorViewModel(private val repository: HabitRepository): ViewModel() {
         return selectedColor.value!!
     }
 
-//    fun addHabit(habit: Habit) {
-//        repository.addHabit(habit)
-//    }
-
     fun addHabit(habit: Habit) {
         viewModelScope.launch {
             repository.addHabit(habit)
         }
     }
-
-//    fun editHabit(habit: Habit) {
-//        repository.editHabit(habit)
-//    }
 
     fun editHabit(habit: Habit) {
         viewModelScope.launch {

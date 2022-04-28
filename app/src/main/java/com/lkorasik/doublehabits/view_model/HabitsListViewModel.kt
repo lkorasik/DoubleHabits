@@ -30,7 +30,7 @@ class HabitsListViewModel(repository: HabitRepository): ViewModel() {
         }
 
     fun getHabits(type: HabitType): LiveData<List<Habit>> {
-        return data.map { item -> item.filter { it.type == type } } //todo: ленивым
+        return data.map { item -> item.filter { it.type == type } } 
     }
 
     fun setHabitComparator(comparator: Comparator<Habit>): HabitsListViewModel {
