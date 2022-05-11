@@ -1,5 +1,6 @@
 package com.lkorasik.doublehabits.model
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.lkorasik.doublehabits.net.RequestContext
@@ -7,7 +8,6 @@ import com.lkorasik.doublehabits.net.dto.HabitDTO
 import com.lkorasik.doublehabits.room.HabitDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.time.Instant
 
@@ -15,34 +15,51 @@ class HabitRepository(dao: HabitDao) {
     private val database: HabitRepositoryDatabase = HabitRepositoryDatabase(dao)
     private val network: HabitRepositoryServer = HabitRepositoryServer()
 
-    fun getAllHabits(): MutableLiveData<List<Habit>> {
-        val liveData = MutableLiveData<List<Habit>>()
+    private val liveData = MutableLiveData<List<Habit>>()
 
-        CoroutineScope(Dispatchers.IO).launch {
-            liveData.postValue(network.getAllHabits())
-        }
+    fun getAllHabits(): MutableLiveData<List<Habit>> {
+        reloadDatabase()
 
         return liveData
     }
 
-    suspend fun getHabit(position: Int): Habit {
-//        return dao.getById(position)
-//        return database.getHabit(position)
-        return network.getAllHabits()[position]
+    private fun reloadDatabase() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val habits = network.getAllHabits()
+
+            //TODO("Лови исколючения сети")
+
+            database.clear()
+            habits.forEach {
+                database.addHabit(it)
+            }
+
+            liveData.postValue(network.getAllHabits())
+        }
     }
 
     suspend fun addHabit(habit: Habit) {
-        database.addHabit(habit)
+        Log.i("APP", "Add ${habit.id}")
         network.addHabit(habit)
+        reloadDatabase()
+    }
+
+    fun getHabit(position: Int): Habit {
+//        return dao.getById(position)
+//        return database.getHabit(position)
+//        return network.getAllHabits()[position]
+        return database.getHabit(position.toLong())
     }
 
     fun editHabit(habit: Habit) {
+        Log.i("APP", "Edit ${habit.id}")
 //        dao.update(habit)
-        database.editHabit(habit)
+//        database.editHabit(habit)
     }
 }
 
 class HabitRepositoryDatabase(private val dao: HabitDao) {
+    fun clear() = dao.clear()
     fun getAllHabits(): LiveData<List<Habit>> = dao.getAll()
     fun getHabit(position: Long): Habit = dao.getById(position)
 

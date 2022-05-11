@@ -1,10 +1,7 @@
 package com.lkorasik.doublehabits.room
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.model.HabitType
 
@@ -21,4 +18,7 @@ interface HabitDao {
 
     @Query("SELECT * FROM habits WHERE id=:id ")
     fun getById(id: Long): Habit
+
+    @Query("DELETE FROM habits")
+    fun clear()
 }

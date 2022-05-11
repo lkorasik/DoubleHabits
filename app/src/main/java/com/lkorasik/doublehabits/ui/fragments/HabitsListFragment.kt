@@ -36,8 +36,8 @@ class HabitsListFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentHabitListBinding = FragmentHabitListBinding.inflate(inflater, container, false)
 
-        adapter = HabitRecycleViewAdapter(binding.root.context) { data, position ->
-            editHabit(data, position)
+        adapter = HabitRecycleViewAdapter(binding.root.context) { habit, position ->
+            editHabit(habit, position)
         }
 
         val mode = arguments?.get(IntentKeys.Mode) as HabitType

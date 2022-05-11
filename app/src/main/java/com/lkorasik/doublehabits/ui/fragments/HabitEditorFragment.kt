@@ -4,6 +4,7 @@ import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
@@ -137,6 +138,7 @@ class HabitEditorFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         editorViewModel.getSelectedHabit().observe(viewLifecycleOwner) { habit ->
+            Log.i("APP", "Observe ${habit}")
             habit?.let {
                 fillForm(it)
             }
