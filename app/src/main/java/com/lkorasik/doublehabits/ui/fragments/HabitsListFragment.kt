@@ -56,7 +56,7 @@ class HabitsListFragment: Fragment() {
     }
 
     private fun editHabit(habit: Habit, position: Int) {
-//        editorViewModel.loadHabit(habit.id)
+        editorViewModel.loadHabit(habit.id)
         findNavController().navigate(R.id.habitEditorFragment, bundleOf(IntentKeys.Habit to habit, IntentKeys.Position to position))
     }
 

@@ -32,26 +32,29 @@ class HabitRepository(private val dao: HabitDao) {
             for (habit in habits) {
                 dao.update(habit)
             }
+//            dao.clear()
+//            for (habit in habits){
+//                database.addHabit(habit)
+//            }
 
             liveData.postValue(habits)
         }
     }
 
     suspend fun addHabit(habit: Habit) {
-        Log.i("APP", "Add ${habit.id}")
         network.addHabit(habit)
         reloadDatabase()
     }
 
-    fun getHabit(position: Int): Habit {
+    fun getHabit(id: String): Habit {
 //        return dao.getById(position)
 //        return database.getHabit(position)
 //        return network.getAllHabits()[position]
-        return database.getHabit(position.toLong())
+//        return database.getHabit(id)
+        return dao.getById(id)
     }
 
     fun editHabit(habit: Habit) {
-        Log.i("APP", "Edit ${habit.id}")
 //        dao.update(habit)
 //        database.editHabit(habit)
     }
@@ -60,7 +63,7 @@ class HabitRepository(private val dao: HabitDao) {
 class HabitRepositoryDatabase(private val dao: HabitDao) {
     fun clear() = dao.clear()
     fun getAllHabits(): LiveData<List<Habit>> = dao.getAll()
-    fun getHabit(position: Long): Habit = dao.getById(position)
+    fun getHabit(id: String): Habit = dao.getById(id)
 
     fun addHabit(habit: Habit) {
         dao.insertAll(habit)
