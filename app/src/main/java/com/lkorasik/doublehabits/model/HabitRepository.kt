@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.Instant
 
-class HabitRepository(private val dao: HabitDao) {
+class HabitRepository(dao: HabitDao) {
     private val database: HabitRepositoryDatabase = HabitRepositoryDatabase(dao)
     private val network: HabitRepositoryServer = HabitRepositoryServer()
 
@@ -29,7 +29,7 @@ class HabitRepository(private val dao: HabitDao) {
             //TODO("Лови исколючения сети")
 
             for (habit in habits) {
-                dao.update(habit)
+                database.update(habit)
             }
 
             liveData.postValue(habits)
@@ -42,11 +42,11 @@ class HabitRepository(private val dao: HabitDao) {
     }
 
     fun getHabit(id: String): Habit {
-        return dao.getById(id)
+        return database.getHabit(id)
     }
 
     suspend fun editHabit(habit: Habit) {
-        database.editHabit(habit)
+//        database.editHabit(habit)
         network.updateHabit(habit)
 
         reloadDatabase()
@@ -57,6 +57,10 @@ class HabitRepositoryDatabase(private val dao: HabitDao) {
     fun clear() = dao.clear()
     fun getAllHabits(): LiveData<List<Habit>> = dao.getAll()
     fun getHabit(id: String): Habit = dao.getById(id)
+
+    fun update(habit: Habit) {
+        dao.update(habit)
+    }
 
     fun addHabit(habit: Habit) {
         dao.insertAll(habit)
