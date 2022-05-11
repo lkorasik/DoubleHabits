@@ -6,6 +6,8 @@ import com.lkorasik.doublehabits.extensions.map
 import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.model.HabitRepository
 import com.lkorasik.doublehabits.model.HabitType
+import kotlinx.coroutines.launch
+import kotlin.coroutines.coroutineContext
 
 class HabitsListViewModel(repository: HabitRepository): ViewModel() {
     private val emptyPair = "" to false
@@ -14,20 +16,42 @@ class HabitsListViewModel(repository: HabitRepository): ViewModel() {
     private var filter = MutableLiveData(emptyPair)
     private var habitComparator = MutableLiveData(emptyComparator)
 
-    private val data = repository
-        .getAllHabits()
-        .addLiveData(filter)
-        .addLiveData(habitComparator)
-        .map { (pair, comparator) ->
-            val habits = pair?.first ?: listOf()
-            val filter = pair?.second ?: emptyPair
+    private var data: LiveData<List<Habit>> = MutableLiveData(listOf())
 
-            val searchLine = filter.first
-            val ignoreCase = filter.second
+    init {
+        viewModelScope.launch {
+            data = repository
+                .getAllHabits()
+                .addLiveData(filter)
+                .addLiveData(habitComparator)
+                .map { (pair, comparator) ->
+                    val habits = pair?.first ?: listOf()
+                    val filter = pair?.second ?: emptyPair
 
-            val habitComparator = comparator ?: emptyComparator
-            habits.filter { it.name.contains(searchLine, ignoreCase) }.sortedWith(habitComparator)
+                    val searchLine = filter.first
+                    val ignoreCase = filter.second
+
+                    val habitComparator = comparator ?: emptyComparator
+                    habits.filter { it.name.contains(searchLine, ignoreCase) }
+                        .sortedWith(habitComparator)
+                }
         }
+    }
+
+//    private val data = repository
+//        .getAllHabits()
+//        .addLiveData(filter)
+//        .addLiveData(habitComparator)
+//        .map { (pair, comparator) ->
+//            val habits = pair?.first ?: listOf()
+//            val filter = pair?.second ?: emptyPair
+//
+//            val searchLine = filter.first
+//            val ignoreCase = filter.second
+//
+//            val habitComparator = comparator ?: emptyComparator
+//            habits.filter { it.name.contains(searchLine, ignoreCase) }.sortedWith(habitComparator)
+//        }
 
     fun getHabits(type: HabitType): LiveData<List<Habit>> {
         return data.map { item -> item.filter { it.type == type } } 

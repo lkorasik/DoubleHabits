@@ -10,7 +10,7 @@ interface DoubleHabitsAPI {
     suspend fun createOrUpdateHabit(@Header(HeadersKeys.AUTHORIZATION) token: String, @Body habit: HabitDTO): HabitUID_DTO
 
     @GET("api/habit")
-    fun getHabits(): List<HabitDTO>
+    suspend fun getHabits(@Header(HeadersKeys.AUTHORIZATION) token: String): List<HabitDTO>
 
     @DELETE("api/habit")
     fun deleteHabit(habit: HabitUID_DTO)

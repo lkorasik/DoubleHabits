@@ -4,16 +4,16 @@ import com.lkorasik.doublehabits.model.HabitPriority
 import com.lkorasik.doublehabits.model.HabitType
 
 data class HabitDTO(
-    private val color: Int,
-    private val count: Int,
-    private val date: Int,
-    private val description: String,
-    private val done_dates: List<Int>,
-    private val frequency: Int,
-//    private val priority: HabitPriority,
-    private val priority: Int, // Enum: 0, 1, 2
-    private val title: String,
-    private val type: Int, // Enum: 0, 1
-//    private val type: HabitType,
-    private val uid: String?
+    val color: Int,
+    val count: Int,
+    val date: Int,
+    val description: String,
+    val done_dates: List<Int>,
+    val frequency: Int,
+//    val priority: HabitPriority,
+    val priority: Int, // Enum: 0, 1, 2
+    val title: String,
+    val type: Int, // Enum: 0, 1
+//    val type: HabitType,
+    val uid: String?
 )

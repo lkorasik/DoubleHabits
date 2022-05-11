@@ -1,21 +1,26 @@
 package com.lkorasik.doublehabits.model
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.lkorasik.doublehabits.net.APIKey
 import com.lkorasik.doublehabits.net.RequestContext
 import com.lkorasik.doublehabits.net.dto.HabitDTO
 import com.lkorasik.doublehabits.room.HabitDao
+import java.time.Instant
 
-class CommonRepo(private val dao: HabitDao): HabitRepository {
+class CommonRepo(dao: HabitDao): HabitRepository {
     private val database: HabitRepositoryDatabase = HabitRepositoryDatabase(dao)
     private val network: HabitRepositoryServer = HabitRepositoryServer()
 
-    override fun getAllHabits(): LiveData<List<Habit>> {
-        return dao.getAll()
+    override suspend fun getAllHabits(): LiveData<List<Habit>> {
+//        return dao.getAll()
+//        return database.getAllHabits()
+        return network.getAllHabits()
     }
 
     override fun getHabit(position: Long): Habit {
-        return dao.getById(position)
+//        return dao.getById(position)
+        return database.getHabit(position)
     }
 
     override suspend fun addHabit(habit: Habit) {
@@ -24,12 +29,13 @@ class CommonRepo(private val dao: HabitDao): HabitRepository {
     }
 
     override fun editHabit(habit: Habit) {
-        dao.update(habit)
+//        dao.update(habit)
+        database.editHabit(habit)
     }
 }
 
 interface HabitRepository {
-    fun getAllHabits(): LiveData<List<Habit>>
+    suspend fun getAllHabits(): LiveData<List<Habit>>
     fun getHabit(position: Long): Habit
     suspend fun addHabit(habit: Habit)
     fun editHabit(habit: Habit)
@@ -61,17 +67,26 @@ class HabitRepositoryServer() {
             title = habit.name,
             type = 0,
             uid = null
-//            color = habit.color,
-//            count = habit.count,
-//            date = habit.lastEditedAt.toEpochMilli().toInt(),
-//            description = habit.description,
-//            done_dates = listOf(0),
-//            frequency = habit.periodicity.toInt(),
-//            priority = habit.priority,
-//            title = habit.name,
-//            type = habit.type,
-//            uid = null
         )
         RequestContext.API.createOrUpdateHabit(APIKey.authorizationToken, dto)
+    }
+
+    suspend fun getAllHabits(): LiveData<List<Habit>> {
+        val list = RequestContext.API.getHabits(APIKey.authorizationToken).map {
+            Habit(
+                id = 0,
+                name = it.title,
+                description = it.description,
+                priority = HabitPriority.values()[it.priority],
+                type = HabitType.values()[it.type],
+                periodicity = it.frequency.toString(),
+                color = it.color,
+                count = it.count,
+                createdAt = Instant.now(),
+                lastEditedAt = Instant.now()
+            )
+        }
+
+        return MutableLiveData(list)
     }
 }
