@@ -68,11 +68,11 @@ class HabitRepositoryServer() {
             type = 0,
             uid = null
         )
-        RequestContext.API.createOrUpdateHabit(APIKey.authorizationToken, dto)
+        RequestContext.API.createOrUpdateHabit(dto)
     }
 
     suspend fun getAllHabits(): LiveData<List<Habit>> {
-        val list = RequestContext.API.getHabits(APIKey.authorizationToken).map {
+        val list = RequestContext.API.getHabits().map {
             Habit(
                 id = 0,
                 name = it.title,

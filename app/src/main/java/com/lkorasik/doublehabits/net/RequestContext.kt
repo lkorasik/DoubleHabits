@@ -5,11 +5,14 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 object RequestContext {
     private val doubleHabitsAPI: DoubleHabitsAPI
     private const val BASE_URL = "https://droid-test-server.doubletapp.ru/"
     val API: DoubleHabitsAPI
         get() = doubleHabitsAPI
+
+    private const val AUTHORIZATION = "Authorization"
 
     init {
         val gson = GsonBuilder()
@@ -17,6 +20,15 @@ object RequestContext {
             .create()
         val client = OkHttpClient()
             .newBuilder()
+            .addInterceptor {
+                val newRequest = it
+                    .request()
+                    .newBuilder()
+                    .addHeader(AUTHORIZATION, APIKey.authorizationToken)
+                    .build()
+
+                it.proceed(newRequest)
+            }
             .build()
         val retrofit = Retrofit
             .Builder()
