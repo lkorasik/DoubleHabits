@@ -24,7 +24,7 @@ class CommonRepo(dao: HabitDao): HabitRepository {
     }
 
     override suspend fun addHabit(habit: Habit) {
-//        database.addHabit(habit)
+        database.addHabit(habit)
         network.addHabit(habit)
     }
 
