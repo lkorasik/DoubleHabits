@@ -59,6 +59,8 @@ class HabitRepository(private val dao: HabitDao) {
 //        database.editHabit(habit)
         database.editHabit(habit)
         network.updateHabit(habit)
+
+        reloadDatabase()
     }
 }
 
@@ -123,7 +125,6 @@ class HabitRepositoryServer {
             type = habit.type.ordinal,
             uid = habit.id
         )
-        Log.i("APP", dto.toString())
         RequestContext.API.createOrUpdateHabit(dto)
     }
 }
