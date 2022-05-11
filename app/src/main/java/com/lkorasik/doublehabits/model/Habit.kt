@@ -11,7 +11,8 @@ import java.time.Instant
 @Parcelize
 @Entity(tableName = "Habits")
 data class Habit(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey val id: String,
+//    @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo val name: String,
     @ColumnInfo val description: String,
     @ColumnInfo val priority: HabitPriority,

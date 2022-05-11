@@ -235,7 +235,7 @@ class HabitEditorFragment: Fragment() {
         (activity as AppCompatActivity).title = getString(R.string.add_habit_activity_create_title)
     }
 
-    private fun buildHabit(id: Long = 0): Habit {
+    private fun buildHabit(id: String = ""): Habit {
         return Habit(
             id = id,
             name = binding.habitName.editText?.text.toString(),
