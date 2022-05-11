@@ -40,6 +40,10 @@ class EditorViewModel(private val repository: HabitRepository): ViewModel() {
 //        selectedHabit.postValue(habit)
     }
 
+    fun loadHabit(habit: Habit) {
+        selectedHabit.postValue(habit)
+    }
+
     fun createHabit() {
         old = null
         position = null

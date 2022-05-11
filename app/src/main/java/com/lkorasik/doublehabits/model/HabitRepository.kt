@@ -54,9 +54,11 @@ class HabitRepository(private val dao: HabitDao) {
         return dao.getById(id)
     }
 
-    fun editHabit(habit: Habit) {
+    suspend fun editHabit(habit: Habit) {
 //        dao.update(habit)
 //        database.editHabit(habit)
+        database.editHabit(habit)
+        network.updateHabit(habit)
     }
 }
 
@@ -106,5 +108,21 @@ class HabitRepositoryServer {
                 lastEditedAt = Instant.now()
             )
         }
+    }
+
+    suspend fun updateHabit(habit: Habit) {
+        val dto = HabitDTO(
+            color = 0,
+            count = 0,
+            date = 1,
+            description = habit.description,
+            done_dates = listOf(0),
+            frequency = 0,
+            priority = 0,
+            title = habit.name,
+            type = 0,
+            uid = habit.id
+        )
+        RequestContext.API.createOrUpdateHabit(dto)
     }
 }
