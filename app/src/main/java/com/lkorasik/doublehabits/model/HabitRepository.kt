@@ -79,15 +79,15 @@ class HabitRepositoryDatabase(private val dao: HabitDao) {
 class HabitRepositoryServer {
     suspend fun addHabit(habit: Habit) {
         val dto = HabitDTO(
-            color = 0,
-            count = 0,
-            date = 0,
+            color = habit.color,
+            count = habit.count,
+            date = Instant.now().toEpochMilli().toInt(),
             description = habit.description,
             done_dates = listOf(0),
-            frequency = 0,
-            priority = 0,
+            frequency = habit.periodicity.toInt(),
+            priority = habit.priority.ordinal,
             title = habit.name,
-            type = 0,
+            type = habit.type.ordinal,
             uid = null
         )
         RequestContext.API.createOrUpdateHabit(dto)
@@ -112,17 +112,18 @@ class HabitRepositoryServer {
 
     suspend fun updateHabit(habit: Habit) {
         val dto = HabitDTO(
-            color = 0,
-            count = 0,
-            date = 1,
+            color = habit.color,
+            count = habit.count,
+            date = Instant.now().toEpochMilli().toInt(),
             description = habit.description,
             done_dates = listOf(0),
-            frequency = 0,
-            priority = 0,
+            frequency = habit.periodicity.toInt(),
+            priority = habit.priority.ordinal,
             title = habit.name,
-            type = 0,
+            type = habit.type.ordinal,
             uid = habit.id
         )
+        Log.i("APP", dto.toString())
         RequestContext.API.createOrUpdateHabit(dto)
     }
 }
