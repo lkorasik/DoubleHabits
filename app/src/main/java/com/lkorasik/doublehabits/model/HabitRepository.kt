@@ -2,20 +2,27 @@ package com.lkorasik.doublehabits.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.lkorasik.doublehabits.net.APIKey
 import com.lkorasik.doublehabits.net.RequestContext
 import com.lkorasik.doublehabits.net.dto.HabitDTO
 import com.lkorasik.doublehabits.room.HabitDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.time.Instant
 
 class CommonRepo(dao: HabitDao): HabitRepository {
     private val database: HabitRepositoryDatabase = HabitRepositoryDatabase(dao)
     private val network: HabitRepositoryServer = HabitRepositoryServer()
 
-    override suspend fun getAllHabits(): LiveData<List<Habit>> {
-//        return dao.getAll()
-//        return database.getAllHabits()
-        return network.getAllHabits()
+    override fun getAllHabits(): MutableLiveData<List<Habit>> {
+        val liveData = MutableLiveData<List<Habit>>()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            liveData.postValue(network.getAllHabits())
+        }
+
+        return liveData
     }
 
     override fun getHabit(position: Long): Habit {
@@ -35,7 +42,8 @@ class CommonRepo(dao: HabitDao): HabitRepository {
 }
 
 interface HabitRepository {
-    suspend fun getAllHabits(): LiveData<List<Habit>>
+    fun getAllHabits(): MutableLiveData<List<Habit>>
+
     fun getHabit(position: Long): Habit
     suspend fun addHabit(habit: Habit)
     fun editHabit(habit: Habit)
@@ -54,7 +62,7 @@ class HabitRepositoryDatabase(private val dao: HabitDao) {
     }
 }
 
-class HabitRepositoryServer() {
+class HabitRepositoryServer {
     suspend fun addHabit(habit: Habit) {
         val dto = HabitDTO(
             color = 0,
@@ -71,8 +79,8 @@ class HabitRepositoryServer() {
         RequestContext.API.createOrUpdateHabit(dto)
     }
 
-    suspend fun getAllHabits(): LiveData<List<Habit>> {
-        val list = RequestContext.API.getHabits().map {
+    suspend fun getAllHabits(): List<Habit> {
+        return RequestContext.API.getHabits().map {
             Habit(
                 id = 0,
                 name = it.title,
@@ -86,7 +94,5 @@ class HabitRepositoryServer() {
                 lastEditedAt = Instant.now()
             )
         }
-
-        return MutableLiveData(list)
     }
 }

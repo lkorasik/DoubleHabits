@@ -6,8 +6,6 @@ import com.lkorasik.doublehabits.extensions.map
 import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.model.HabitRepository
 import com.lkorasik.doublehabits.model.HabitType
-import kotlinx.coroutines.launch
-import kotlin.coroutines.coroutineContext
 
 class HabitsListViewModel(repository: HabitRepository): ViewModel() {
     private val emptyPair = "" to false
@@ -19,12 +17,11 @@ class HabitsListViewModel(repository: HabitRepository): ViewModel() {
     private var data: LiveData<List<Habit>> = MutableLiveData(listOf())
 
     init {
-        viewModelScope.launch {
-            data = repository
-                .getAllHabits()
-                .addLiveData(filter)
-                .addLiveData(habitComparator)
-                .map { (pair, comparator) ->
+        data = repository
+            .getAllHabits()
+            .addLiveData(filter)
+            .addLiveData(habitComparator)
+            .map { (pair, comparator) ->
                     val habits = pair?.first ?: listOf()
                     val filter = pair?.second ?: emptyPair
 
@@ -35,8 +32,40 @@ class HabitsListViewModel(repository: HabitRepository): ViewModel() {
                     habits.filter { it.name.contains(searchLine, ignoreCase) }
                         .sortedWith(habitComparator)
                 }
-        }
+//            .addLiveData(filter)
+//                .addLiveData(habitComparator)
+//                .map { (pair, comparator) ->
+//                    val habits = pair?.first ?: listOf()
+//                    val filter = pair?.second ?: emptyPair
+//
+//                    val searchLine = filter.first
+//                    val ignoreCase = filter.second
+//
+//                    val habitComparator = comparator ?: emptyComparator
+//                    habits.filter { it.name.contains(searchLine, ignoreCase) }
+//                        .sortedWith(habitComparator)
+//                }
     }
+
+//    init {
+//        viewModelScope.launch {
+//            data = repository
+//                .getAllHabits()
+//                .addLiveData(filter)
+//                .addLiveData(habitComparator)
+//                .map { (pair, comparator) ->
+//                    val habits = pair?.first ?: listOf()
+//                    val filter = pair?.second ?: emptyPair
+//
+//                    val searchLine = filter.first
+//                    val ignoreCase = filter.second
+//
+//                    val habitComparator = comparator ?: emptyComparator
+//                    habits.filter { it.name.contains(searchLine, ignoreCase) }
+//                        .sortedWith(habitComparator)
+//                }
+//        }
+//    }
 
 //    private val data = repository
 //        .getAllHabits()
