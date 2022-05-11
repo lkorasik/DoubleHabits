@@ -72,20 +72,32 @@ class HabitEditorFragment: Fragment() {
     }
 
     private fun isValidInput(): Boolean {
-        if(!isCorrectHabitName()) {
-            showMessage(getString(R.string.add_habit_empty_name))
+        if(!isCorrectHabitTitle()) {
+            showMessage(getString(R.string.add_habit_empty_title))
+            return false
+        }
+        if(!isCorrectHabitDescription()) {
+            showMessage(getString(R.string.add_habit_empty_description))
             return false
         }
         else if(!isCorrectCount()) {
             showMessage(getString(R.string.add_habit_incorrect_count))
             return false
         }
+        else if(!isCorrectPeriodicity()) {
+            showMessage(getString(R.string.add_habit_incorrect_periodicity))
+            return false
+        }
 
         return true
     }
 
-    private fun isCorrectHabitName(): Boolean {
+    private fun isCorrectHabitTitle(): Boolean {
         return binding.habitName.editText?.text.toString().isNotBlank()
+    }
+
+    private fun isCorrectHabitDescription(): Boolean {
+        return binding.habitDescription.editText?.text.toString().isNotBlank()
     }
 
     private fun isCorrectCount(): Boolean {
@@ -93,6 +105,13 @@ class HabitEditorFragment: Fragment() {
             return false
 
         return binding.count.editText?.text.toString().toInt() > 0
+    }
+
+    private fun isCorrectPeriodicity(): Boolean {
+        if(binding.periodicity.editText?.text.isNullOrEmpty())
+            return false
+
+        return binding.periodicity.editText?.text.toString().toInt() > 0
     }
 
     private fun showMessage(message: String) {
