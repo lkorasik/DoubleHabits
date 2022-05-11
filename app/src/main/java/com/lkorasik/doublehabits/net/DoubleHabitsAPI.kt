@@ -3,14 +3,11 @@ package com.lkorasik.doublehabits.net
 import com.lkorasik.doublehabits.net.dto.HabitDTO
 import com.lkorasik.doublehabits.net.dto.HabitDoneDTO
 import com.lkorasik.doublehabits.net.dto.HabitUID_DTO
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface DoubleHabitsAPI {
     @PUT("api/habit")
-    fun createOrUpdateHabit(habit: HabitDTO)
+    suspend fun createOrUpdateHabit(@Header(HeadersKeys.AUTHORIZATION) token: String, @Body habit: HabitDTO): HabitUID_DTO
 
     @GET("api/habit")
     fun getHabits(): List<HabitDTO>
@@ -20,4 +17,8 @@ interface DoubleHabitsAPI {
 
     @POST("api/habit_done")
     fun habitDone(habit: HabitDoneDTO)
+}
+
+object HeadersKeys {
+    const val AUTHORIZATION = "Authorization"
 }

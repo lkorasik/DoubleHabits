@@ -10,10 +10,10 @@ data class HabitDTO(
     private val description: String,
     private val done_dates: List<Int>,
     private val frequency: Int,
-    private val priority: HabitPriority,
-//    private val priority: Int, // Enum: 0, 1, 2
+//    private val priority: HabitPriority,
+    private val priority: Int, // Enum: 0, 1, 2
     private val title: String,
-//    private val type: Int, // Enum: 0, 1
-    private val type: HabitType,
-    private val uid: String
+    private val type: Int, // Enum: 0, 1
+//    private val type: HabitType,
+    private val uid: String?
 )
