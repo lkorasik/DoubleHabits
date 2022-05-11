@@ -1,9 +1,11 @@
 package com.lkorasik.doublehabits.room
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 import com.lkorasik.doublehabits.model.Habit
-import com.lkorasik.doublehabits.model.HabitType
 
 @Dao
 interface HabitDao {

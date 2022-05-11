@@ -32,55 +32,7 @@ class HabitsListViewModel(repository: HabitRepository): ViewModel() {
                     habits.filter { it.name.contains(searchLine, ignoreCase) }
                         .sortedWith(habitComparator)
                 }
-//            .addLiveData(filter)
-//                .addLiveData(habitComparator)
-//                .map { (pair, comparator) ->
-//                    val habits = pair?.first ?: listOf()
-//                    val filter = pair?.second ?: emptyPair
-//
-//                    val searchLine = filter.first
-//                    val ignoreCase = filter.second
-//
-//                    val habitComparator = comparator ?: emptyComparator
-//                    habits.filter { it.name.contains(searchLine, ignoreCase) }
-//                        .sortedWith(habitComparator)
-//                }
     }
-
-//    init {
-//        viewModelScope.launch {
-//            data = repository
-//                .getAllHabits()
-//                .addLiveData(filter)
-//                .addLiveData(habitComparator)
-//                .map { (pair, comparator) ->
-//                    val habits = pair?.first ?: listOf()
-//                    val filter = pair?.second ?: emptyPair
-//
-//                    val searchLine = filter.first
-//                    val ignoreCase = filter.second
-//
-//                    val habitComparator = comparator ?: emptyComparator
-//                    habits.filter { it.name.contains(searchLine, ignoreCase) }
-//                        .sortedWith(habitComparator)
-//                }
-//        }
-//    }
-
-//    private val data = repository
-//        .getAllHabits()
-//        .addLiveData(filter)
-//        .addLiveData(habitComparator)
-//        .map { (pair, comparator) ->
-//            val habits = pair?.first ?: listOf()
-//            val filter = pair?.second ?: emptyPair
-//
-//            val searchLine = filter.first
-//            val ignoreCase = filter.second
-//
-//            val habitComparator = comparator ?: emptyComparator
-//            habits.filter { it.name.contains(searchLine, ignoreCase) }.sortedWith(habitComparator)
-//        }
 
     fun getHabits(type: HabitType): LiveData<List<Habit>> {
         return data.map { item -> item.filter { it.type == type } } 
