@@ -11,11 +11,11 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.time.Instant
 
-class CommonRepo(dao: HabitDao): HabitRepository {
+class HabitRepository(dao: HabitDao) {
     private val database: HabitRepositoryDatabase = HabitRepositoryDatabase(dao)
     private val network: HabitRepositoryServer = HabitRepositoryServer()
 
-    override fun getAllHabits(): MutableLiveData<List<Habit>> {
+    fun getAllHabits(): MutableLiveData<List<Habit>> {
         val liveData = MutableLiveData<List<Habit>>()
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -25,28 +25,21 @@ class CommonRepo(dao: HabitDao): HabitRepository {
         return liveData
     }
 
-    override fun getHabit(position: Long): Habit {
+    suspend fun getHabit(position: Int): Habit {
 //        return dao.getById(position)
-        return database.getHabit(position)
+//        return database.getHabit(position)
+        return network.getAllHabits()[position]
     }
 
-    override suspend fun addHabit(habit: Habit) {
+    suspend fun addHabit(habit: Habit) {
         database.addHabit(habit)
         network.addHabit(habit)
     }
 
-    override fun editHabit(habit: Habit) {
+    fun editHabit(habit: Habit) {
 //        dao.update(habit)
         database.editHabit(habit)
     }
-}
-
-interface HabitRepository {
-    fun getAllHabits(): MutableLiveData<List<Habit>>
-
-    fun getHabit(position: Long): Habit
-    suspend fun addHabit(habit: Habit)
-    fun editHabit(habit: Habit)
 }
 
 class HabitRepositoryDatabase(private val dao: HabitDao) {
