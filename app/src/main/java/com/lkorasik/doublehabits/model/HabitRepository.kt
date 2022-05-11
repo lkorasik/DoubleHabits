@@ -1,6 +1,5 @@
 package com.lkorasik.doublehabits.model
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.lkorasik.doublehabits.net.RequestContext
@@ -32,10 +31,6 @@ class HabitRepository(private val dao: HabitDao) {
             for (habit in habits) {
                 dao.update(habit)
             }
-//            dao.clear()
-//            for (habit in habits){
-//                database.addHabit(habit)
-//            }
 
             liveData.postValue(habits)
         }
@@ -47,16 +42,10 @@ class HabitRepository(private val dao: HabitDao) {
     }
 
     fun getHabit(id: String): Habit {
-//        return dao.getById(position)
-//        return database.getHabit(position)
-//        return network.getAllHabits()[position]
-//        return database.getHabit(id)
         return dao.getById(id)
     }
 
     suspend fun editHabit(habit: Habit) {
-//        dao.update(habit)
-//        database.editHabit(habit)
         database.editHabit(habit)
         network.updateHabit(habit)
 

@@ -12,7 +12,6 @@ import java.time.Instant
 @Entity(tableName = "Habits")
 data class Habit(
     @PrimaryKey val id: String,
-//    @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo val name: String,
     @ColumnInfo val description: String,
     @ColumnInfo val priority: HabitPriority,
