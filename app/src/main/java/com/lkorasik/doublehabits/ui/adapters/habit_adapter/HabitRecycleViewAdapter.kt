@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.model.Habit
 
+
 class HabitRecycleViewAdapter(
     private val context: Context,
-    private val onItemClicked: OnItemClicked
+    private val onItemClicked: OnItemClicked,
 ): ListAdapter<Habit, ViewHolder>(HabitDiffCallBack()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {

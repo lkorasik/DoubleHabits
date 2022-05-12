@@ -1,6 +1,5 @@
 package com.lkorasik.doublehabits.model
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.lkorasik.doublehabits.model.repository.HabitRepositoryDatabase
 import com.lkorasik.doublehabits.model.repository.HabitRepositoryServer
@@ -23,13 +22,7 @@ class HabitRepository(dao: HabitDao) {
 
     private fun reloadDatabase() {
         CoroutineScope(Dispatchers.IO).launch {
-            Log.i("APP_NET", "Start request")
-
             val habits = network.getAllHabits()
-
-            Log.i("APP_NET", "Result ${habits.size}")
-
-            //TODO("Лови исколючения сети")
 
             for (habit in habits) {
                 database.update(habit)
