@@ -3,6 +3,7 @@ package com.lkorasik.doublehabits.model
 import androidx.lifecycle.MutableLiveData
 import com.lkorasik.doublehabits.model.repository.HabitRepositoryDatabase
 import com.lkorasik.doublehabits.model.repository.HabitRepositoryServer
+import com.lkorasik.doublehabits.net.dto.HabitUID_DTO
 import com.lkorasik.doublehabits.room.HabitDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +40,11 @@ class HabitRepository(dao: HabitDao) {
 
     suspend fun editHabit(habit: Habit) {
         network.updateHabit(habit)
+        reloadDatabase()
+    }
+
+    suspend fun deleteHabit(habituidDto: HabitUID_DTO) {
+        network.deleteHabit(habituidDto)
         reloadDatabase()
     }
 }

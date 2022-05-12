@@ -6,8 +6,10 @@ import com.lkorasik.doublehabits.extensions.map
 import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.model.HabitRepository
 import com.lkorasik.doublehabits.model.HabitType
+import com.lkorasik.doublehabits.net.dto.HabitUID_DTO
+import kotlinx.coroutines.launch
 
-class HabitsListViewModel(repository: HabitRepository): ViewModel() {
+class HabitsListViewModel(private val repository: HabitRepository): ViewModel() {
     private val emptyPair = "" to false
     private val emptyComparator = Comparator { _: Habit, _: Habit -> 0 }
 
@@ -42,6 +44,12 @@ class HabitsListViewModel(repository: HabitRepository): ViewModel() {
         habitComparator.postValue(comparator)
 
         return this
+    }
+
+    fun deleteHabit(habit: Habit) {
+        viewModelScope.launch {
+            repository.deleteHabit(HabitUID_DTO.from(habit))
+        }
     }
 
     fun setFilter(name: String, ignoreCase: Boolean): HabitsListViewModel {

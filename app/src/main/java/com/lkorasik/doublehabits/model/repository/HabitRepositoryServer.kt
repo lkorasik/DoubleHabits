@@ -3,6 +3,7 @@ package com.lkorasik.doublehabits.model.repository
 import com.lkorasik.doublehabits.model.Habit
 import com.lkorasik.doublehabits.net.RequestContext
 import com.lkorasik.doublehabits.net.dto.HabitDTO
+import com.lkorasik.doublehabits.net.dto.HabitUID_DTO
 
 class HabitRepositoryServer {
     fun getAllHabits(): List<Habit> {
@@ -25,5 +26,9 @@ class HabitRepositoryServer {
     private suspend fun sendHabit(habit: Habit) {
         val dto = HabitDTO.from(habit)
         RequestContext.API.createOrUpdateHabit(dto)
+    }
+
+    suspend fun deleteHabit(habit: HabitUID_DTO) {
+        RequestContext.API.deleteHabit(habit)
     }
 }
