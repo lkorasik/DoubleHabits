@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.model.Habit
 
+
 class HabitRecycleViewAdapter(
     private val context: Context,
     private val onItemClicked: OnItemClicked
@@ -27,6 +28,11 @@ class HabitRecycleViewAdapter(
             itemView.setOnClickListener {
                 onItemClicked.onClick(getItem(position), position)
             }
+
+//            itemView.setOnLongClickListener {
+//                onItemLongClicked.onClick(getItem(position), position)
+//                true
+//            }
         }
     }
 }

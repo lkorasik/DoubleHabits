@@ -1,6 +1,7 @@
 package com.lkorasik.doublehabits.view_model
 
 import android.graphics.Color
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,8 +30,7 @@ class EditorViewModel(private val repository: HabitRepository): ViewModel() {
         this.position = position
     }
 
-    fun loadHabit(position: Long) {
-        val habit = repository.getHabit(position)
+    fun loadHabit(habit: Habit) {
         selectedHabit.postValue(habit)
     }
 

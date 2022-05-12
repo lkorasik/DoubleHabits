@@ -4,6 +4,7 @@ import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
@@ -72,20 +73,32 @@ class HabitEditorFragment: Fragment() {
     }
 
     private fun isValidInput(): Boolean {
-        if(!isCorrectHabitName()) {
-            showMessage(getString(R.string.add_habit_empty_name))
+        if(!isCorrectHabitTitle()) {
+            showMessage(getString(R.string.add_habit_empty_title))
+            return false
+        }
+        if(!isCorrectHabitDescription()) {
+            showMessage(getString(R.string.add_habit_empty_description))
             return false
         }
         else if(!isCorrectCount()) {
             showMessage(getString(R.string.add_habit_incorrect_count))
             return false
         }
+        else if(!isCorrectPeriodicity()) {
+            showMessage(getString(R.string.add_habit_incorrect_periodicity))
+            return false
+        }
 
         return true
     }
 
-    private fun isCorrectHabitName(): Boolean {
+    private fun isCorrectHabitTitle(): Boolean {
         return binding.habitName.editText?.text.toString().isNotBlank()
+    }
+
+    private fun isCorrectHabitDescription(): Boolean {
+        return binding.habitDescription.editText?.text.toString().isNotBlank()
     }
 
     private fun isCorrectCount(): Boolean {
@@ -93,6 +106,13 @@ class HabitEditorFragment: Fragment() {
             return false
 
         return binding.count.editText?.text.toString().toInt() > 0
+    }
+
+    private fun isCorrectPeriodicity(): Boolean {
+        if(binding.periodicity.editText?.text.isNullOrEmpty())
+            return false
+
+        return binding.periodicity.editText?.text.toString().toInt() > 0
     }
 
     private fun showMessage(message: String) {
@@ -118,6 +138,7 @@ class HabitEditorFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         editorViewModel.getSelectedHabit().observe(viewLifecycleOwner) { habit ->
+            Log.i("APP", "Observe ${habit}")
             habit?.let {
                 fillForm(it)
             }
@@ -189,7 +210,7 @@ class HabitEditorFragment: Fragment() {
 
     private fun fillForm(habit: Habit) {
         with(binding) {
-            habitName.editText?.setText(habit.name)
+            habitName.editText?.setText(habit.title)
             habitDescription.editText?.setText(habit.description)
             habitPriority.setSelection(habit.priority.ordinal)
 
@@ -199,7 +220,7 @@ class HabitEditorFragment: Fragment() {
             }
 
             count.editText?.setText(habit.count.toString())
-            periodicity.editText?.setText(habit.periodicity)
+            periodicity.editText?.setText(habit.frequency)
             (preview.background as GradientDrawable).apply {
                 setColor(habit.color)
             }
@@ -214,14 +235,14 @@ class HabitEditorFragment: Fragment() {
         (activity as AppCompatActivity).title = getString(R.string.add_habit_activity_create_title)
     }
 
-    private fun buildHabit(id: Long = 0): Habit {
+    private fun buildHabit(id: String = ""): Habit {
         return Habit(
             id = id,
-            name = binding.habitName.editText?.text.toString(),
+            title = binding.habitName.editText?.text.toString(),
             description = binding.habitDescription.editText?.text.toString(),
             priority = getPriority(),
             type = getSelectedType(),
-            periodicity = binding.periodicity.editText?.text.toString(),
+            frequency = binding.periodicity.editText?.text.toString(),
             color = editorViewModel.getSelectedColor(),
             count = getCount(),
             createdAt = editorViewModel.createdAt ?: Instant.now(),

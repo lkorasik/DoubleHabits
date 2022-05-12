@@ -8,7 +8,7 @@ object SortComparatorFactory {
 
         return when (type) {
             SortTypes.NAME -> Comparator { h1: Habit, h2: Habit ->
-                h1.name.compareTo(h2.name) * flag
+                h1.title.compareTo(h2.title) * flag
             }
             SortTypes.PRIORITY -> Comparator { h1: Habit, h2: Habit ->
                 h1.priority.compareTo(h2.priority) * flag

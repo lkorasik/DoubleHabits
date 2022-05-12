@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DoubleHabits</string>
 
-    <string name="add_habit.habit_name">Habit name</string>
+    <string name="add_habit.habit_title">Habit title</string>
     <string name="add_habit.habit_description">Habit description</string>
     <string name="add_habit.habit_count">Count of execution</string>
     <string name="add_habit.habit_periodicity">Periodicity</string>
@@ -9,10 +9,12 @@
     <string name="add_habit.habit_priority">Habit priority:</string>
     <string name="add_habit.habit_type_regular">Regular</string>
     <string name="add_habit.habit_type_harmful">Harmful</string>
-    <string name="add_habit.empty_name">You must write habit\'s name</string>
+    <string name="add_habit.empty_title">You must write habit\'s title</string>
+    <string name="add_habit.empty_description">You must write habit\'s description</string>
     <string name="add_habit.habit_color">Habits color</string>
     <string name="add_habit.select_color">Select color</string>
     <string name="add_habit.incorrect_count">Count must be positive number</string>
+    <string name="add_habit.incorrect_periodicity">Periodicity must be positive number</string>
     <string name="add_habit.activity_create_title">Create habit</string>
     <string name="add_habit.activity_edit_title">Edit habit</string>
 

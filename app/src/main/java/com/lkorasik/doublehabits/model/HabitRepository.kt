@@ -1,17 +1,53 @@
 package com.lkorasik.doublehabits.model
 
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.lkorasik.doublehabits.model.repository.HabitRepositoryDatabase
+import com.lkorasik.doublehabits.model.repository.HabitRepositoryServer
+import com.lkorasik.doublehabits.net.dto.HabitUID_DTO
 import com.lkorasik.doublehabits.room.HabitDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class HabitRepository(private val dao: HabitDao) {
-    fun getAllHabits(): LiveData<List<Habit>> = dao.getAll()
-    fun getHabit(position: Long): Habit = dao.getById(position)
+class HabitRepository(dao: HabitDao) {
+    private val database: HabitRepositoryDatabase = HabitRepositoryDatabase(dao)
+    private val network: HabitRepositoryServer = HabitRepositoryServer()
 
-    fun addHabit(habit: Habit) {
-        dao.insertAll(habit)
+    private val liveData = MutableLiveData<List<Habit>>()
+
+    fun getAllHabits(): MutableLiveData<List<Habit>> {
+        reloadDatabase()
+
+        return liveData
     }
 
-    fun editHabit(habit: Habit) {
-        dao.update(habit)
+    private fun reloadDatabase() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val habits = network.getAllHabits()
+
+            for (habit in habits) {
+                database.update(habit)
+            }
+
+            liveData.postValue(habits)
+        }
     }
+
+    suspend fun addHabit(habit: Habit) {
+        network.addHabit(habit)
+        reloadDatabase()
+    }
+
+    suspend fun editHabit(habit: Habit) {
+        network.updateHabit(habit)
+        reloadDatabase()
+    }
+
+//    suspend fun deleteHabit(habituidDto: HabitUID_DTO) {
+//        network.deleteHabit(habituidDto)
+//        reloadDatabase()
+//    }
 }
+
+
+
