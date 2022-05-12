@@ -5,6 +5,9 @@ import com.lkorasik.doublehabits.model.HabitPriority
 import com.lkorasik.doublehabits.model.HabitType
 import com.lkorasik.doublehabits.net.RequestContext
 import com.lkorasik.doublehabits.net.dto.HabitDTO
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.time.Instant
 
 class HabitRepositoryServer {
@@ -24,20 +27,27 @@ class HabitRepositoryServer {
         RequestContext.API.createOrUpdateHabit(dto)
     }
 
-    suspend fun getAllHabits(): List<Habit> {
-        return RequestContext.API.getHabits().map {
-            Habit(
-                id = it.uid!!,
-                name = it.title,
-                description = it.description,
-                priority = HabitPriority.values()[it.priority],
-                type = HabitType.values()[it.type],
-                periodicity = it.frequency.toString(),
-                color = it.color,
-                count = it.count,
-                createdAt = Instant.now(),
-                lastEditedAt = Instant.now()
-            )
+    fun getAllHabits(): List<Habit> {
+        val habits = RequestContext.API.getHabits().execute()
+
+        if (habits.isSuccessful) {
+            return habits.body()?.map {
+                Habit(
+                    id = it.uid!!,
+                    name = it.title,
+                    description = it.description,
+                    priority = HabitPriority.values()[it.priority],
+                    type = HabitType.values()[it.type],
+                    periodicity = it.frequency.toString(),
+                    color = it.color,
+                    count = it.count,
+                    createdAt = Instant.now(),
+                    lastEditedAt = Instant.now()
+                )
+            } ?: listOf()
+        }
+        else {
+            return listOf()
         }
     }
 
