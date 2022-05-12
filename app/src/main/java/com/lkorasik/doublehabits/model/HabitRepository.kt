@@ -44,13 +44,8 @@ class HabitRepository(dao: HabitDao) {
         reloadDatabase()
     }
 
-    fun getHabit(id: String): Habit {
-        return database.getHabit(id)
-    }
-
     suspend fun editHabit(habit: Habit) {
         network.updateHabit(habit)
-
         reloadDatabase()
     }
 }

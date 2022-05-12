@@ -5,22 +5,12 @@ import com.lkorasik.doublehabits.model.HabitPriority
 import com.lkorasik.doublehabits.model.HabitType
 import com.lkorasik.doublehabits.net.RequestContext
 import com.lkorasik.doublehabits.net.dto.HabitDTO
+import java.sql.Timestamp
 import java.time.Instant
 
 class HabitRepositoryServer {
     suspend fun addHabit(habit: Habit) {
-        val dto = HabitDTO(
-            color = habit.color,
-            count = habit.count,
-            date = Instant.now().toEpochMilli().toInt(),
-            description = habit.description,
-            done_dates = listOf(0),
-            frequency = habit.frequency.toInt(),
-            priority = habit.priority.ordinal,
-            title = habit.title,
-            type = habit.type.ordinal,
-            uid = null
-        )
+        val dto = HabitDTO.from(habit)
         RequestContext.API.createOrUpdateHabit(dto)
     }
 
@@ -49,18 +39,7 @@ class HabitRepositoryServer {
     }
 
     suspend fun updateHabit(habit: Habit) {
-        val dto = HabitDTO(
-            color = habit.color,
-            count = habit.count,
-            date = Instant.now().toEpochMilli().toInt(),
-            description = habit.description,
-            done_dates = listOf(0),
-            frequency = habit.frequency.toInt(),
-            priority = habit.priority.ordinal,
-            title = habit.title,
-            type = habit.type.ordinal,
-            uid = habit.id
-        )
+        val dto = HabitDTO.from(habit)
         RequestContext.API.createOrUpdateHabit(dto)
     }
 }
