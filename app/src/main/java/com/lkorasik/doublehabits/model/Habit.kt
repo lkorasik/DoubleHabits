@@ -12,13 +12,15 @@ import java.time.Instant
 @Entity(tableName = "Habits")
 data class Habit(
     @PrimaryKey val id: String,
-    @ColumnInfo val name: String,
-    @ColumnInfo val description: String,
-    @ColumnInfo val priority: HabitPriority,
-    @ColumnInfo val type: HabitType,
-    @ColumnInfo val periodicity: String,
+    @ColumnInfo val title: String,
     @ColumnInfo val color: Int,
     @ColumnInfo val count: Int,
-    @ColumnInfo val createdAt: Instant,
-    @ColumnInfo val lastEditedAt: Instant,
+    @ColumnInfo val description: String,
+    //TODO: Add done dates
+    @ColumnInfo val frequency: String,
+    @ColumnInfo val priority: HabitPriority,
+    @ColumnInfo val type: HabitType,
+    //TODO: Make single date
+    @ColumnInfo val createdAt: Instant, //TODO: Delete
+    @ColumnInfo val lastEditedAt: Instant, //TODO: Delete
 ): Parcelable

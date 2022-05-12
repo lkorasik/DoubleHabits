@@ -9,12 +9,12 @@ import com.lkorasik.doublehabits.databinding.WidgetHabitBinding
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bind(context: Context, habit: Habit) {
         with(WidgetHabitBinding.bind(itemView)) {
-            habitName.text = habit.name
+            habitName.text = habit.title
             habitDescription.text = habit.description
             habitType.text = context.getString(habit.type.resource)
             habitPriority.text = context.getString(habit.priority.resource)
             coloredPanel.setBackgroundColor(habit.color)
-            habitPeriodicity.text = habit.periodicity
+            habitPeriodicity.text = habit.frequency
         }
     }
 }

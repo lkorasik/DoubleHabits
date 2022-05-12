@@ -29,7 +29,7 @@ class HabitsListViewModel(repository: HabitRepository): ViewModel() {
                     val ignoreCase = filter.second
 
                     val habitComparator = comparator ?: emptyComparator
-                    habits.filter { it.name.contains(searchLine, ignoreCase) }
+                    habits.filter { it.title.contains(searchLine, ignoreCase) }
                         .sortedWith(habitComparator)
                 }
     }

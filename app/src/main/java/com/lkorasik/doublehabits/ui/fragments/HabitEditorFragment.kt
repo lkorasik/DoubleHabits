@@ -210,7 +210,7 @@ class HabitEditorFragment: Fragment() {
 
     private fun fillForm(habit: Habit) {
         with(binding) {
-            habitName.editText?.setText(habit.name)
+            habitName.editText?.setText(habit.title)
             habitDescription.editText?.setText(habit.description)
             habitPriority.setSelection(habit.priority.ordinal)
 
@@ -220,7 +220,7 @@ class HabitEditorFragment: Fragment() {
             }
 
             count.editText?.setText(habit.count.toString())
-            periodicity.editText?.setText(habit.periodicity)
+            periodicity.editText?.setText(habit.frequency)
             (preview.background as GradientDrawable).apply {
                 setColor(habit.color)
             }
@@ -238,11 +238,11 @@ class HabitEditorFragment: Fragment() {
     private fun buildHabit(id: String = ""): Habit {
         return Habit(
             id = id,
-            name = binding.habitName.editText?.text.toString(),
+            title = binding.habitName.editText?.text.toString(),
             description = binding.habitDescription.editText?.text.toString(),
             priority = getPriority(),
             type = getSelectedType(),
-            periodicity = binding.periodicity.editText?.text.toString(),
+            frequency = binding.periodicity.editText?.text.toString(),
             color = editorViewModel.getSelectedColor(),
             count = getCount(),
             createdAt = editorViewModel.createdAt ?: Instant.now(),
