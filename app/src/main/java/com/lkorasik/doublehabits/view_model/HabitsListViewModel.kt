@@ -48,7 +48,7 @@ class HabitsListViewModel(private val repository: HabitRepository): ViewModel() 
 
     fun deleteHabit(habit: Habit) {
         viewModelScope.launch {
-            repository.deleteHabit(HabitUID_DTO.from(habit))
+//            repository.deleteHabit(HabitUID_DTO.from(habit))
         }
     }
 

@@ -36,11 +36,9 @@ class HabitsListFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentHabitListBinding = FragmentHabitListBinding.inflate(inflater, container, false)
 
-        adapter = HabitRecycleViewAdapter(binding.root.context, { habit, position ->
+        adapter = HabitRecycleViewAdapter(binding.root.context) { habit, position ->
             editHabit(habit, position)
-        }, { habit, position ->
-            vm.deleteHabit(habit)
-        })
+        }
 
         val mode = arguments?.get(IntentKeys.Mode) as HabitType
 
@@ -58,7 +56,6 @@ class HabitsListFragment: Fragment() {
     }
 
     private fun editHabit(habit: Habit, position: Int) {
-//        editorViewModel.loadHabit(habit.id)
         editorViewModel.loadHabit(habit)
         findNavController().navigate(R.id.habitEditorFragment, bundleOf(IntentKeys.Habit to habit, IntentKeys.Position to position))
     }

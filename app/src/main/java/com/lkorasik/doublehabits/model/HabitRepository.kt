@@ -43,10 +43,10 @@ class HabitRepository(dao: HabitDao) {
         reloadDatabase()
     }
 
-    suspend fun deleteHabit(habituidDto: HabitUID_DTO) {
-        network.deleteHabit(habituidDto)
-        reloadDatabase()
-    }
+//    suspend fun deleteHabit(habituidDto: HabitUID_DTO) {
+//        network.deleteHabit(habituidDto)
+//        reloadDatabase()
+//    }
 }
 
 

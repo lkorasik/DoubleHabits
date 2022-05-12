@@ -10,8 +10,7 @@ import com.lkorasik.doublehabits.model.Habit
 
 class HabitRecycleViewAdapter(
     private val context: Context,
-    private val onItemClicked: OnItemClicked,
-    private val onItemLongClicked: OnItemClicked,
+    private val onItemClicked: OnItemClicked
 ): ListAdapter<Habit, ViewHolder>(HabitDiffCallBack()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -30,10 +29,10 @@ class HabitRecycleViewAdapter(
                 onItemClicked.onClick(getItem(position), position)
             }
 
-            itemView.setOnLongClickListener {
-                onItemLongClicked.onClick(getItem(position), position)
-                true
-            }
+//            itemView.setOnLongClickListener {
+//                onItemLongClicked.onClick(getItem(position), position)
+//                true
+//            }
         }
     }
 }
