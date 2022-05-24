@@ -12,7 +12,7 @@ interface DoubleHabitsAPI {
     suspend fun createOrUpdateHabit(@Body habit: HabitDTO): HabitUID_DTO
 
     @GET("api/habit")
-    fun getHabits(): Call<List<HabitDTO>?>
+    fun getHabits(): Call<List<HabitDTO>?> //TOOD: use coroutine
 
 //    @DELETE("api/habit")
     @HTTP(method = "DELETE", path = "api/habit", hasBody = true)

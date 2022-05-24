@@ -18,6 +18,7 @@ class HabitRepository(dao: HabitDao) {
     fun getAllHabits(): MutableLiveData<List<Habit>> {
         reloadDatabase()
 
+        //todo: верни ld из базы
         return liveData
     }
 
@@ -29,7 +30,7 @@ class HabitRepository(dao: HabitDao) {
                 database.update(habit)
             }
 
-            liveData.postValue(habits)
+            liveData.postValue(habits)//todo: убери лишнюю LD, getAllHabits: LD
         }
     }
 
