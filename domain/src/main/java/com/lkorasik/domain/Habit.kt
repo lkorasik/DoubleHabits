@@ -1,10 +1,10 @@
-package com.lkorasik.doublehabits.model
+package com.lkorasik.domain
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.lkorasik.doublehabits.net.dto.HabitDTO
+//import com.lkorasik.doublehabits.net.dto.HabitDTO
 import kotlinx.parcelize.Parcelize
 import java.time.Instant
 
@@ -26,19 +26,19 @@ data class Habit(
     @ColumnInfo val lastEditedAt: Instant, //TODO: Delete
 ): Parcelable {
     companion object {
-        fun from(habit: HabitDTO): Habit {
-            return Habit(
-                id = habit.uid ?: "",
-                title = habit.title,
-                description = habit.description,
-                priority = HabitPriority.values()[habit.priority],
-                type = HabitType.values()[habit.type],
-                frequency = habit.frequency.toString(),
-                color = habit.color,
-                count = habit.count,
-                createdAt = Instant.now(),
-                lastEditedAt = Instant.now()
-            )
-        }
+//        fun from(habit: HabitDTO): Habit {
+//            return Habit(
+//                id = habit.uid ?: "",
+//                title = habit.title,
+//                description = habit.description,
+//                priority = HabitPriority.values()[habit.priority],
+//                type = HabitType.values()[habit.type],
+//                frequency = habit.frequency.toString(),
+//                color = habit.color,
+//                count = habit.count,
+//                createdAt = Instant.now(),
+//                lastEditedAt = Instant.now()
+//            )
+//        }
     }
 }

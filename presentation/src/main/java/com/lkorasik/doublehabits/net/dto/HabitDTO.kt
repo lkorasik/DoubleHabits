@@ -1,6 +1,6 @@
 package com.lkorasik.doublehabits.net.dto
 
-import com.lkorasik.doublehabits.model.Habit
+import com.lkorasik.domain.Habit
 import java.time.Instant
 
 data class HabitDTO(
@@ -16,7 +16,7 @@ data class HabitDTO(
     val type: Int, // Enum: 0, 1
 ) {
     companion object {
-        fun from(habit: Habit): HabitDTO {
+        fun from(habit: com.lkorasik.domain.Habit): HabitDTO {
             return HabitDTO(
                 color = habit.color,
                 count = habit.count,

@@ -3,7 +3,6 @@ package com.lkorasik.doublehabits.model
 import androidx.lifecycle.MutableLiveData
 import com.lkorasik.doublehabits.model.repository.HabitRepositoryDatabase
 import com.lkorasik.doublehabits.model.repository.HabitRepositoryServer
-import com.lkorasik.doublehabits.net.dto.HabitUID_DTO
 import com.lkorasik.doublehabits.room.HabitDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,9 +12,9 @@ class HabitRepository(dao: HabitDao) {
     private val database: HabitRepositoryDatabase = HabitRepositoryDatabase(dao)
     private val network: HabitRepositoryServer = HabitRepositoryServer()
 
-    private val liveData = MutableLiveData<List<Habit>>()
+    private val liveData = MutableLiveData<List<com.lkorasik.domain.Habit>>()
 
-    fun getAllHabits(): MutableLiveData<List<Habit>> {
+    fun getAllHabits(): MutableLiveData<List<com.lkorasik.domain.Habit>> {
         reloadDatabase()
 
         //todo: верни ld из базы
@@ -34,12 +33,12 @@ class HabitRepository(dao: HabitDao) {
         }
     }
 
-    suspend fun addHabit(habit: Habit) {
+    suspend fun addHabit(habit: com.lkorasik.domain.Habit) {
         network.addHabit(habit)
         reloadDatabase()
     }
 
-    suspend fun editHabit(habit: Habit) {
+    suspend fun editHabit(habit: com.lkorasik.domain.Habit) {
         network.updateHabit(habit)
         reloadDatabase()
     }

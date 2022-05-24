@@ -16,9 +16,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.lkorasik.doublehabits.IntentKeys
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentViewHabitBinding
-import com.lkorasik.doublehabits.model.Habit
-import com.lkorasik.doublehabits.model.HabitPriority
-import com.lkorasik.doublehabits.model.HabitType
+import com.lkorasik.domain.HabitPriority
+import com.lkorasik.domain.HabitType
 import com.lkorasik.doublehabits.App
 import com.lkorasik.doublehabits.ui.custom_views.color_picker.ColorPickerDialog
 import com.lkorasik.doublehabits.view_model.EditorViewModel
@@ -180,7 +179,7 @@ class HabitEditorFragment: Fragment() {
     }
 
     private fun handleArguments() {
-        val habit = arguments?.getParcelable<Habit>(IntentKeys.Habit)
+        val habit = arguments?.getParcelable<com.lkorasik.domain.Habit>(IntentKeys.Habit)
         arguments?.getInt(IntentKeys.Position)?.let { editorViewModel.setPosition(it) }
 
         if(editorViewModel.getPosition() != null)
@@ -208,7 +207,7 @@ class HabitEditorFragment: Fragment() {
         }
     }
 
-    private fun fillForm(habit: Habit) {
+    private fun fillForm(habit: com.lkorasik.domain.Habit) {
         with(binding) {
             habitName.editText?.setText(habit.title)
             habitDescription.editText?.setText(habit.description)
@@ -235,8 +234,8 @@ class HabitEditorFragment: Fragment() {
         (activity as AppCompatActivity).title = getString(R.string.add_habit_activity_create_title)
     }
 
-    private fun buildHabit(id: String = ""): Habit {
-        return Habit(
+    private fun buildHabit(id: String = ""): com.lkorasik.domain.Habit {
+        return com.lkorasik.domain.Habit(
             id = id,
             title = binding.habitName.editText?.text.toString(),
             description = binding.habitDescription.editText?.text.toString(),

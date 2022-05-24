@@ -2,7 +2,7 @@ package com.lkorasik.doublehabits.ui.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.lkorasik.doublehabits.model.HabitType
+import com.lkorasik.domain.HabitType
 import com.lkorasik.doublehabits.ui.fragments.HabitsListFragment
 
 class HabitListPagerAdapter(base: Fragment) : FragmentStateAdapter(base) {

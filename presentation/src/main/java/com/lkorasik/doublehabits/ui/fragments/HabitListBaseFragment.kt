@@ -12,7 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentHabitBaseBinding
-import com.lkorasik.doublehabits.model.HabitType
+import com.lkorasik.domain.HabitType
 import com.lkorasik.doublehabits.App
 import com.lkorasik.doublehabits.ui.adapters.HabitListPagerAdapter
 import com.lkorasik.doublehabits.ui.custom_views.filter_view.FilterView

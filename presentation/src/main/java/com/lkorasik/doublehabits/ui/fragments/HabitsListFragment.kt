@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lkorasik.doublehabits.IntentKeys
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentHabitListBinding
-import com.lkorasik.doublehabits.model.Habit
-import com.lkorasik.doublehabits.model.HabitType
+import com.lkorasik.domain.HabitType
 import com.lkorasik.doublehabits.App
 import com.lkorasik.doublehabits.ui.adapters.habit_adapter.HabitRecycleViewAdapter
 import com.lkorasik.doublehabits.view_model.EditorViewModel
@@ -55,7 +54,7 @@ class HabitsListFragment: Fragment() {
         return binding.root
     }
 
-    private fun editHabit(habit: Habit, position: Int) {
+    private fun editHabit(habit: com.lkorasik.domain.Habit, position: Int) {
         editorViewModel.loadHabit(habit)
         findNavController().navigate(R.id.habitEditorFragment, bundleOf(IntentKeys.Habit to habit, IntentKeys.Position to position))
     }
