@@ -4,17 +4,18 @@ import androidx.lifecycle.*
 import com.lkorasik.doublehabits.extensions.addLiveData
 import com.lkorasik.doublehabits.extensions.map
 import com.lkorasik.data.repository.HabitRepository
+import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.domain.HabitType
 import kotlinx.coroutines.launch
 
 class HabitsListViewModel(private val repository: HabitRepository): ViewModel() {
     private val emptyPair = "" to false
-    private val emptyComparator = Comparator { _: com.lkorasik.domain.Habit, _: com.lkorasik.domain.Habit -> 0 }
+    private val emptyComparator = Comparator { _: HabitEntity, _: HabitEntity -> 0 }
 
     private var filter = MutableLiveData(emptyPair)
     private var habitComparator = MutableLiveData(emptyComparator)
 
-    private var data: LiveData<List<com.lkorasik.domain.Habit>> = MutableLiveData(listOf())
+    private var data: LiveData<List<HabitEntity>> = MutableLiveData(listOf())
 
     init {
         data = repository
@@ -34,17 +35,17 @@ class HabitsListViewModel(private val repository: HabitRepository): ViewModel() 
                 }
     }
 
-    fun getHabits(type: HabitType): LiveData<List<com.lkorasik.domain.Habit>> {
+    fun getHabits(type: HabitType): LiveData<List<HabitEntity>> {
         return data.map { item -> item.filter { it.type == type } } 
     }
 
-    fun setHabitComparator(comparator: Comparator<com.lkorasik.domain.Habit>): HabitsListViewModel {
+    fun setHabitComparator(comparator: Comparator<HabitEntity>): HabitsListViewModel {
         habitComparator.postValue(comparator)
 
         return this
     }
 
-    fun deleteHabit(habit: com.lkorasik.domain.Habit) {
+    fun deleteHabit(habit: HabitEntity) {
         viewModelScope.launch {
 //            repository.deleteHabit(HabitUID_DTO.from(habit))
         }

@@ -1,4 +1,4 @@
-package com.lkorasik.data
+package com.lkorasik.data.net
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -13,8 +13,6 @@ object RequestContext {
     val API: DoubleHabitsAPI
         get() = doubleHabitsAPI
 
-    private const val AUTHORIZATION_HEADER = "Authorization"
-
     init {
         val gson = GsonBuilder()
             .setLenient()
@@ -22,15 +20,7 @@ object RequestContext {
 
         val client = OkHttpClient()
             .newBuilder()
-            .addInterceptor {
-                val newRequest = it
-                    .request()
-                    .newBuilder()
-                    .addHeader(AUTHORIZATION_HEADER, APIKey.authorizationToken)
-                    .build()
-
-                it.proceed(newRequest)
-            }
+            .addInterceptor(AuthInterceptor())
             .build()
 
         val retrofit = Retrofit

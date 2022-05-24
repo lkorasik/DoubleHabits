@@ -1,7 +1,7 @@
 package com.lkorasik.doublehabits.ui.adapters.habit_adapter
 
-import com.lkorasik.domain.Habit
+import com.lkorasik.data.room.HabitEntity
 
 fun interface OnItemClicked {
-    fun onClick(habit: com.lkorasik.domain.Habit, position: Int)
+    fun onClick(habit: HabitEntity, position: Int)
 }

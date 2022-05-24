@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.doublehabits.IntentKeys
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentHabitListBinding
@@ -54,7 +55,7 @@ class HabitsListFragment: Fragment() {
         return binding.root
     }
 
-    private fun editHabit(habit: com.lkorasik.domain.Habit, position: Int) {
+    private fun editHabit(habit: HabitEntity, position: Int) {
         editorViewModel.loadHabit(habit)
         findNavController().navigate(R.id.habitEditorFragment, bundleOf(IntentKeys.Habit to habit, IntentKeys.Position to position))
     }

@@ -3,14 +3,14 @@ package com.lkorasik.doublehabits.ui.adapters.habit_adapter
 import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.lkorasik.domain.Habit
+import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.domain.HabitPriority
 import com.lkorasik.domain.HabitType
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.WidgetHabitBinding
 
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    fun bind(context: Context, habit: com.lkorasik.domain.Habit) {
+    fun bind(context: Context, habit: HabitEntity) {
         val type = when(habit.type) {
             HabitType.REGULAR -> R.string.add_habit_habit_type_regular
             HabitType.HARMFUL -> R.string.add_habit_habit_type_harmful

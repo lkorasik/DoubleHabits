@@ -5,21 +5,20 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.lkorasik.domain.Habit
 
 @Dao
 interface HabitDao {
     @Query("SELECT * FROM habits")
-    fun getAll(): LiveData<List<com.lkorasik.domain.Habit>>
+    fun getAll(): LiveData<List<HabitEntity>>
 
     @Insert
-    fun insertAll(vararg habit: com.lkorasik.domain.Habit)
+    fun insertAll(vararg habit: HabitEntity)
 
     @Update
-    fun update(habit: com.lkorasik.domain.Habit)
+    fun update(habit: HabitEntity)
 
     @Query("SELECT * FROM habits WHERE id=:id ")
-    fun getById(id: String): com.lkorasik.domain.Habit
+    fun getById(id: String): HabitEntity
 
     @Query("DELETE FROM habits")
     fun clear()

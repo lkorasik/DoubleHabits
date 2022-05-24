@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.doublehabits.IntentKeys
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentViewHabitBinding
@@ -179,7 +180,7 @@ class HabitEditorFragment: Fragment() {
     }
 
     private fun handleArguments() {
-        val habit = arguments?.getParcelable<com.lkorasik.domain.Habit>(IntentKeys.Habit)
+        val habit = arguments?.getParcelable<HabitEntity>(IntentKeys.Habit)
         arguments?.getInt(IntentKeys.Position)?.let { editorViewModel.setPosition(it) }
 
         if(editorViewModel.getPosition() != null)
@@ -207,7 +208,7 @@ class HabitEditorFragment: Fragment() {
         }
     }
 
-    private fun fillForm(habit: com.lkorasik.domain.Habit) {
+    private fun fillForm(habit: HabitEntity) {
         with(binding) {
             habitName.editText?.setText(habit.title)
             habitDescription.editText?.setText(habit.description)
@@ -234,8 +235,8 @@ class HabitEditorFragment: Fragment() {
         (activity as AppCompatActivity).title = getString(R.string.add_habit_activity_create_title)
     }
 
-    private fun buildHabit(id: String = ""): com.lkorasik.domain.Habit {
-        return com.lkorasik.domain.Habit(
+    private fun buildHabit(id: String = ""): HabitEntity {
+        return HabitEntity(
             id = id,
             title = binding.habitName.editText?.text.toString(),
             description = binding.habitDescription.editText?.text.toString(),

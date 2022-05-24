@@ -1,4 +1,4 @@
-package com.lkorasik.data
+package com.lkorasik.data.net
 
 class APIKey {
     companion object {

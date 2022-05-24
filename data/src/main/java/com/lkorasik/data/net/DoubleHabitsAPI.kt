@@ -1,4 +1,4 @@
-package com.lkorasik.data
+package com.lkorasik.data.net
 
 import com.lkorasik.data.dto.HabitDTO
 import com.lkorasik.data.dto.HabitDoneDTO
@@ -9,12 +9,11 @@ import retrofit2.http.*
 
 interface DoubleHabitsAPI {
     @PUT("api/habit")
-    suspend fun createOrUpdateHabit(@Body habit: HabitDTO): HabitUID_DTO
+    suspend fun saveHabit(@Body habit: HabitDTO): HabitUID_DTO
 
     @GET("api/habit")
     fun getHabits(): Call<List<HabitDTO>?> //TOOD: use coroutine
 
-//    @DELETE("api/habit")
     @HTTP(method = "DELETE", path = "api/habit", hasBody = true)
     fun deleteHabit(@Body habit: HabitUID_DTO): Call<ResponseBody?>
 

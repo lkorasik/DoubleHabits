@@ -1,14 +1,14 @@
 package com.lkorasik.doublehabits.ui.adapters.habit_adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.lkorasik.domain.Habit
+import com.lkorasik.data.room.HabitEntity
 
-class HabitDiffCallBack: DiffUtil.ItemCallback<com.lkorasik.domain.Habit>() {
-    override fun areItemsTheSame(oldItem: com.lkorasik.domain.Habit, newItem: com.lkorasik.domain.Habit): Boolean {
+class HabitDiffCallBack: DiffUtil.ItemCallback<HabitEntity>() {
+    override fun areItemsTheSame(oldItem: HabitEntity, newItem: HabitEntity): Boolean {
         return oldItem === newItem
     }
 
-    override fun areContentsTheSame(oldItem: com.lkorasik.domain.Habit, newItem: com.lkorasik.domain.Habit): Boolean {
+    override fun areContentsTheSame(oldItem: HabitEntity, newItem: HabitEntity): Boolean {
         return oldItem == newItem
     }
 }

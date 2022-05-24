@@ -4,14 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.doublehabits.R
-import com.lkorasik.domain.Habit
 
 
 class HabitRecycleViewAdapter(
     private val context: Context,
     private val onItemClicked: OnItemClicked
-): ListAdapter<com.lkorasik.domain.Habit, ViewHolder>(HabitDiffCallBack()) {
+): ListAdapter<HabitEntity, ViewHolder>(HabitDiffCallBack()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater
