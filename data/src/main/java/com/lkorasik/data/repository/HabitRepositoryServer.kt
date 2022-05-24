@@ -1,9 +1,9 @@
-package com.lkorasik.doublehabits.model.repository
+package com.lkorasik.data.repository
 
+import com.lkorasik.data.RequestContext
 import com.lkorasik.domain.Habit
 import com.lkorasik.domain.HabitPriority
 import com.lkorasik.domain.HabitType
-import com.lkorasik.data.RequestContext
 import com.lkorasik.data.dto.HabitDTO
 import com.lkorasik.data.dto.HabitUID_DTO
 import java.time.Instant

@@ -3,7 +3,7 @@ package com.lkorasik.doublehabits.view_model
 import androidx.lifecycle.*
 import com.lkorasik.doublehabits.extensions.addLiveData
 import com.lkorasik.doublehabits.extensions.map
-import com.lkorasik.doublehabits.model.HabitRepository
+import com.lkorasik.data.repository.HabitRepository
 import com.lkorasik.domain.HabitType
 import kotlinx.coroutines.launch
 

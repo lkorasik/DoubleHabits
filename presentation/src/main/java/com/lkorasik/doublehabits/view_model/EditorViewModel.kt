@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lkorasik.doublehabits.model.HabitRepository
+import com.lkorasik.data.repository.HabitRepository
 import com.lkorasik.domain.HabitType
 import kotlinx.coroutines.launch
 import java.time.Instant

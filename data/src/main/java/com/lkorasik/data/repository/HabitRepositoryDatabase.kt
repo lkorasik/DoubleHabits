@@ -1,4 +1,4 @@
-package com.lkorasik.doublehabits.model.repository
+package com.lkorasik.data.repository
 
 import com.lkorasik.data.room.HabitDao
 

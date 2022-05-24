@@ -2,7 +2,7 @@ package com.lkorasik.doublehabits
 
 import android.app.Application
 import android.content.Context
-import com.lkorasik.doublehabits.model.HabitRepository
+import com.lkorasik.data.repository.HabitRepository
 import com.lkorasik.data.room.AppDatabase
 
 class App : Application() {

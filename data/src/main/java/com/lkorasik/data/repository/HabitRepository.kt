@@ -1,8 +1,6 @@
-package com.lkorasik.doublehabits.model
+package com.lkorasik.data.repository
 
 import androidx.lifecycle.MutableLiveData
-import com.lkorasik.doublehabits.model.repository.HabitRepositoryDatabase
-import com.lkorasik.doublehabits.model.repository.HabitRepositoryServer
 import com.lkorasik.data.room.HabitDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

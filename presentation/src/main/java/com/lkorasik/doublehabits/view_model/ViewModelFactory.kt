@@ -2,7 +2,7 @@ package com.lkorasik.doublehabits.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.lkorasik.doublehabits.model.HabitRepository
+import com.lkorasik.data.repository.HabitRepository
 
 class ViewModelFactory(private val habitRepository: HabitRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
