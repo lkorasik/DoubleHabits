@@ -1,4 +1,4 @@
-package com.lkorasik.doublehabits.room
+package com.lkorasik.data.room
 
 import android.content.Context
 import androidx.room.Database
@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.lkorasik.domain.Habit
 
 
-@Database(entities = [com.lkorasik.domain.Habit::class], version = 1)
+@Database(entities = [Habit::class], version = 1)
 @TypeConverters(InstantConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun habitDao(): HabitDao

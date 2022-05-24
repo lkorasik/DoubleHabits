@@ -1,4 +1,4 @@
-package com.lkorasik.doublehabits.room
+package com.lkorasik.data.room
 
 import androidx.room.TypeConverter
 import java.time.Instant
