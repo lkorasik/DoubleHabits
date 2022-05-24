@@ -1,8 +1,8 @@
-package com.lkorasik.doublehabits.net
+package com.lkorasik.data
 
-import com.lkorasik.doublehabits.net.dto.HabitDTO
-import com.lkorasik.doublehabits.net.dto.HabitDoneDTO
-import com.lkorasik.doublehabits.net.dto.HabitUID_DTO
+import com.lkorasik.data.dto.HabitDTO
+import com.lkorasik.data.dto.HabitDoneDTO
+import com.lkorasik.data.dto.HabitUID_DTO
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*

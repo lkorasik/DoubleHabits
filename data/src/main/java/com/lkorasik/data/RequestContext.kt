@@ -1,4 +1,4 @@
-package com.lkorasik.doublehabits.net
+package com.lkorasik.data
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

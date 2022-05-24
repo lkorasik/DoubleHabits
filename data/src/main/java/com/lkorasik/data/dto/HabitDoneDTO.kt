@@ -1,4 +1,4 @@
-package com.lkorasik.doublehabits.net.dto
+package com.lkorasik.data.dto
 
 data class HabitDoneDTO(
     private val date: Int,

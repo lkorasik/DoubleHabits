@@ -1,4 +1,4 @@
-package com.lkorasik.doublehabits.net
+package com.lkorasik.data
 
 class APIKey {
     companion object {
