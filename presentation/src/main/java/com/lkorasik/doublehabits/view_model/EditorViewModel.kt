@@ -5,13 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lkorasik.data.repository.HabitRepository
+import com.lkorasik.data.repository.HabitRepositoryImpl
 import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.domain.HabitType
 import kotlinx.coroutines.launch
 import java.time.Instant
 
-class EditorViewModel(private val repository: HabitRepository): ViewModel() {
+class EditorViewModel(private val repository: HabitRepositoryImpl): ViewModel() {
     private val selectedHabit: MutableLiveData<HabitEntity> = MutableLiveData(null)
     private val selectedColor = MutableLiveData(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
     private var old: HabitType? = null

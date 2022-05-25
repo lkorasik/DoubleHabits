@@ -34,7 +34,7 @@ class HabitEditorFragment: Fragment() {
     private lateinit var colorPickerDialog: ColorPickerDialog
 
     private val editorViewModel: EditorViewModel by activityViewModels {
-        ViewModelFactory((requireActivity().application as App).repository)
+        ViewModelFactory((requireActivity().application as App).repository, (requireActivity().application as App).habitsUseCase)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

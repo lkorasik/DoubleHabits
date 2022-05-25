@@ -5,11 +5,12 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HabitDao {
     @Query("SELECT * FROM habits")
-    fun getAll(): LiveData<List<HabitEntity>>
+    fun getAll(): Flow<List<HabitEntity>>
 
     @Insert
     fun insertAll(vararg habit: HabitEntity)

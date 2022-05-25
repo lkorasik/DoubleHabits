@@ -3,21 +3,48 @@ package com.lkorasik.data.repository
 import androidx.lifecycle.MutableLiveData
 import com.lkorasik.data.room.HabitDao
 import com.lkorasik.data.room.HabitEntity
+import com.lkorasik.domain.Repository
+import com.lkorasik.domain.entities.HabitModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-class HabitRepository(dao: HabitDao) {
+class HabitRepositoryImpl(private val dao: HabitDao): Repository {
     private val database: HabitRepositoryDatabase = HabitRepositoryDatabase(dao)
     private val network: HabitRepositoryServer = HabitRepositoryServer()
 
     private val liveData = MutableLiveData<List<HabitEntity>>()
 
-    fun getAllHabits(): MutableLiveData<List<HabitEntity>> {
+    override fun getAllHabits(): Flow<List<HabitModel>> {
         reloadDatabase()
 
         //todo: верни ld из базы
-        return liveData
+//        return liveData
+
+        return dao.getAll().map { it.map { entity ->
+            HabitModel(
+                id = entity.id,
+                name = entity.title,
+                description = entity.description,
+                color = entity.color,
+                date = entity.createdAt.nano,
+                countRepeats = entity.count,
+                interval = entity.frequency.toIntOrNull() ?: 0,
+                type = entity.type,
+                priority = entity.priority,
+            )
+        }
+        }
+    }
+
+    override suspend fun addHabit(habit: HabitModel) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun editHabit(habit: HabitModel) {
+        TODO("Not yet implemented")
     }
 
     private fun reloadDatabase() {

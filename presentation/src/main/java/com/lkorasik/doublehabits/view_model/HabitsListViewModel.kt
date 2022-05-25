@@ -1,14 +1,19 @@
 package com.lkorasik.doublehabits.view_model
 
 import androidx.lifecycle.*
+import androidx.room.ColumnInfo
+import androidx.room.PrimaryKey
 import com.lkorasik.doublehabits.extensions.addLiveData
 import com.lkorasik.doublehabits.extensions.map
-import com.lkorasik.data.repository.HabitRepository
+import com.lkorasik.data.repository.HabitRepositoryImpl
 import com.lkorasik.data.room.HabitEntity
+import com.lkorasik.domain.HabitPriority
 import com.lkorasik.domain.HabitType
+import com.lkorasik.domain.HabitsUseCase
 import kotlinx.coroutines.launch
+import java.time.Instant
 
-class HabitsListViewModel(private val repository: HabitRepository): ViewModel() {
+class HabitsListViewModel(private val repository: HabitRepositoryImpl, private val useCase: HabitsUseCase): ViewModel() {
     private val emptyPair = "" to false
     private val emptyComparator = Comparator { _: HabitEntity, _: HabitEntity -> 0 }
 
@@ -18,8 +23,10 @@ class HabitsListViewModel(private val repository: HabitRepository): ViewModel() 
     private var data: LiveData<List<HabitEntity>> = MutableLiveData(listOf())
 
     init {
-        data = repository
+//        data = repository
+        data = useCase
             .getAllHabits()
+            .asLiveData(viewModelScope.coroutineContext)
             .addLiveData(filter)
             .addLiveData(habitComparator)
             .map { (pair, comparator) ->
@@ -30,7 +37,21 @@ class HabitsListViewModel(private val repository: HabitRepository): ViewModel() 
                     val ignoreCase = filter.second
 
                     val habitComparator = comparator ?: emptyComparator
-                    habits.filter { it.title.contains(searchLine, ignoreCase) }
+                habits.map {
+                    HabitEntity(
+                        id = it.id,
+                        title = it.name,
+                        color = it.color,
+                        count = it.countRepeats,
+                        description = it.description,
+                        frequency = it.interval.toString(),
+                        priority = it.priority,
+                        type = it.type,
+                        createdAt = Instant.now(),
+                        lastEditedAt = Instant.now()
+                    )
+                }
+                 .filter { it.title.contains(searchLine, ignoreCase) }
                         .sortedWith(habitComparator)
                 }
     }

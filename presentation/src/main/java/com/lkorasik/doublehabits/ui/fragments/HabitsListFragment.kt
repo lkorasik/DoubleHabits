@@ -29,7 +29,7 @@ class HabitsListFragment: Fragment() {
     private lateinit var adapter: HabitRecycleViewAdapter
 
     private val editorViewModel: EditorViewModel by activityViewModels {
-        ViewModelFactory((requireActivity().application as App).repository)
+        ViewModelFactory((requireActivity().application as App).repository, (requireActivity().application as App).habitsUseCase)
     }
     private lateinit var vm: HabitsListViewModel
 
@@ -42,7 +42,7 @@ class HabitsListFragment: Fragment() {
 
         val mode = arguments?.get(IntentKeys.Mode) as HabitType
 
-        val factory = ViewModelFactory((requireActivity().application as App).repository)
+        val factory = ViewModelFactory((requireActivity().application as App).repository, (requireActivity().application as App).habitsUseCase)
         vm = ViewModelProvider(requireActivity(), factory)[mode.name, HabitsListViewModel::class.java]
 
         vm.getHabits(mode).observe(viewLifecycleOwner) {
