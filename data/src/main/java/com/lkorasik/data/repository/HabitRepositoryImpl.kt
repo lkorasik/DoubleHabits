@@ -1,6 +1,8 @@
 package com.lkorasik.data.repository
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.lkorasik.data.net.RequestContext
 import com.lkorasik.data.room.HabitDao
 import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.domain.Repository
@@ -10,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.lang.RuntimeException
 
 class HabitRepositoryImpl(private val dao: HabitDao): Repository {
     private val database: HabitRepositoryDatabase = HabitRepositoryDatabase(dao)
@@ -18,26 +21,53 @@ class HabitRepositoryImpl(private val dao: HabitDao): Repository {
     private val liveData = MutableLiveData<List<HabitEntity>>()
 
     override fun getAllHabits(): Flow<List<HabitModel>> {
-        reloadDatabase()
+        return dao.getAll().map { it.map { entity -> entity.toModel() } }
+    }
 
-        //todo: верни ld из базы
-//        return liveData
+    override suspend fun loadHabits() {
+        try {
+            val response = RequestContext.API.getHabits().execute().body()
+            Log.i(HabitRepositoryImpl::class.java.name, response.toString())
 
-        return dao.getAll().map { it.map { entity ->
-            HabitModel(
-                id = entity.id,
-                name = entity.title,
-                description = entity.description,
-                color = entity.color,
-                date = entity.createdAt.nano,
-                countRepeats = entity.count,
-                interval = entity.frequency.toIntOrNull() ?: 0,
-                type = entity.type,
-                priority = entity.priority,
-            )
-        }
+            response?.forEach {
+                updateLocalDatabase(it.toHabitModel())
+            }
+        } catch (e: RuntimeException) { }
+    }
+
+    private suspend fun updateLocalDatabase(habit: HabitModel) {
+        val existingHabit = dao.checkExistHabit(habit.id)
+        if (existingHabit != null) {
+            if (existingHabit.createdAt.nano < habit.date) {
+                dao.update(HabitEntity.fromModel(habit))
+            }
+        } else {
+            Log.i(HabitRepositoryImpl::class.java.name, "${habit.name} new habit.")
+            dao.insertAll(HabitEntity.fromModel(habit))
         }
     }
+
+//    override fun getAllHabits(): Flow<List<HabitModel>> {
+//        reloadDatabase()
+//
+//        //todo: верни ld из базы
+////        return liveData
+//
+//        return dao.getAll().map { it.map { entity ->
+//            HabitModel(
+//                id = entity.id,
+//                name = entity.title,
+//                description = entity.description,
+//                color = entity.color,
+//                date = entity.createdAt.nano,
+//                countRepeats = entity.count,
+//                interval = entity.frequency.toIntOrNull() ?: 0,
+//                type = entity.type,
+//                priority = entity.priority,
+//            )
+//        }
+//        }
+//    }
 
     override suspend fun addHabit(habit: HabitModel) {
         TODO("Not yet implemented")

@@ -1,8 +1,6 @@
 package com.lkorasik.domain.entities
 
 import android.os.Parcelable
-import com.lkorasik.domain.HabitPriority
-import com.lkorasik.domain.HabitType
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

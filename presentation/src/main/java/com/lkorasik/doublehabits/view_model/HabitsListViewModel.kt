@@ -1,15 +1,13 @@
 package com.lkorasik.doublehabits.view_model
 
 import androidx.lifecycle.*
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
 import com.lkorasik.doublehabits.extensions.addLiveData
 import com.lkorasik.doublehabits.extensions.map
 import com.lkorasik.data.repository.HabitRepositoryImpl
 import com.lkorasik.data.room.HabitEntity
-import com.lkorasik.domain.HabitPriority
-import com.lkorasik.domain.HabitType
+import com.lkorasik.domain.entities.HabitType
 import com.lkorasik.domain.HabitsUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.Instant
 
@@ -54,6 +52,12 @@ class HabitsListViewModel(private val repository: HabitRepositoryImpl, private v
                  .filter { it.title.contains(searchLine, ignoreCase) }
                         .sortedWith(habitComparator)
                 }
+    }
+
+    fun loadHabits() {
+        viewModelScope.launch(Dispatchers.IO) {
+            useCase.loadHabits()
+        }
     }
 
     fun getHabits(type: HabitType): LiveData<List<HabitEntity>> {

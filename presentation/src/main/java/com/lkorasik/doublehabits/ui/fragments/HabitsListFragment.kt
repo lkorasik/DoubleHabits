@@ -14,7 +14,7 @@ import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.doublehabits.IntentKeys
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentHabitListBinding
-import com.lkorasik.domain.HabitType
+import com.lkorasik.domain.entities.HabitType
 import com.lkorasik.doublehabits.App
 import com.lkorasik.doublehabits.ui.adapters.habit_adapter.HabitRecycleViewAdapter
 import com.lkorasik.doublehabits.view_model.EditorViewModel
@@ -44,6 +44,8 @@ class HabitsListFragment: Fragment() {
 
         val factory = ViewModelFactory((requireActivity().application as App).repository, (requireActivity().application as App).habitsUseCase)
         vm = ViewModelProvider(requireActivity(), factory)[mode.name, HabitsListViewModel::class.java]
+
+        vm.loadHabits()
 
         vm.getHabits(mode).observe(viewLifecycleOwner) {
             adapter.submitList(it)

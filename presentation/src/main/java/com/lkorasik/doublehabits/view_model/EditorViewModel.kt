@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lkorasik.data.repository.HabitRepositoryImpl
 import com.lkorasik.data.room.HabitEntity
-import com.lkorasik.domain.HabitType
+import com.lkorasik.domain.entities.HabitType
 import kotlinx.coroutines.launch
 import java.time.Instant
 

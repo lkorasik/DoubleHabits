@@ -18,6 +18,9 @@ interface HabitDao {
     @Update
     fun update(habit: HabitEntity)
 
+    @Query("select * from Habits where id == :id")
+    suspend fun checkExistHabit(id: String): HabitEntity?
+
     @Query("SELECT * FROM habits WHERE id=:id ")
     fun getById(id: String): HabitEntity
 

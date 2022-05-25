@@ -17,8 +17,8 @@ import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.doublehabits.IntentKeys
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentViewHabitBinding
-import com.lkorasik.domain.HabitPriority
-import com.lkorasik.domain.HabitType
+import com.lkorasik.domain.entities.HabitPriority
+import com.lkorasik.domain.entities.HabitType
 import com.lkorasik.doublehabits.App
 import com.lkorasik.doublehabits.ui.custom_views.color_picker.ColorPickerDialog
 import com.lkorasik.doublehabits.view_model.EditorViewModel

@@ -4,8 +4,9 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.lkorasik.domain.HabitPriority
-import com.lkorasik.domain.HabitType
+import com.lkorasik.domain.entities.HabitModel
+import com.lkorasik.domain.entities.HabitPriority
+import com.lkorasik.domain.entities.HabitType
 //import com.lkorasik.doublehabits.net.dto.HabitDTO
 import kotlinx.parcelize.Parcelize
 import java.time.Instant
@@ -26,4 +27,31 @@ data class HabitEntity(
     //TODO: Make single date
     @ColumnInfo val createdAt: Instant, //TODO: Delete
     @ColumnInfo val lastEditedAt: Instant, //TODO: Delete
-): Parcelable
+): Parcelable {
+    companion object {
+        fun fromModel(model: HabitModel): HabitEntity = HabitEntity(
+            id = model.id,
+            title = model.name,
+            description = model.description,
+            color = model.color,
+            createdAt = Instant.now(), //model.date,
+            count = model.countRepeats,
+            frequency = model.interval.toString(),
+            type = model.type,
+            priority = model.priority,
+            lastEditedAt = Instant.now()
+        )
+    }
+
+    fun toModel(): HabitModel = HabitModel(
+        id = id,
+        name = title,
+        description = description,
+        color = color,
+        countRepeats = count,
+        interval = 0,
+        type = type,
+        priority = priority,
+        date = createdAt.nano
+    )
+}

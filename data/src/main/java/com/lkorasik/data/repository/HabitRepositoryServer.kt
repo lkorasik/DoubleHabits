@@ -2,8 +2,8 @@ package com.lkorasik.data.repository
 
 import com.lkorasik.data.net.RequestContext
 import com.lkorasik.data.room.HabitEntity
-import com.lkorasik.domain.HabitPriority
-import com.lkorasik.domain.HabitType
+import com.lkorasik.domain.entities.HabitPriority
+import com.lkorasik.domain.entities.HabitType
 import com.lkorasik.data.dto.HabitDTO
 import com.lkorasik.data.dto.HabitUID_DTO
 import java.time.Instant

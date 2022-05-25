@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.lkorasik.data.room.HabitEntity
-import com.lkorasik.domain.HabitPriority
-import com.lkorasik.domain.HabitType
+import com.lkorasik.domain.entities.HabitPriority
+import com.lkorasik.domain.entities.HabitType
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.WidgetHabitBinding
 

@@ -1,5 +1,9 @@
 package com.lkorasik.data.dto
 
+import com.lkorasik.domain.entities.HabitModel
+import com.lkorasik.domain.entities.HabitPriority
+import com.lkorasik.domain.entities.HabitType
+
 data class HabitDTO(
     val uid: String?,
     val title: String,
@@ -11,4 +15,17 @@ data class HabitDTO(
     val frequency: Int,
     val priority: Int, // Enum: 0, 1, 2
     val type: Int, // Enum: 0, 1
-)
+) {
+    fun toHabitModel() = HabitModel(
+        id = uid ?: "",
+        name = title,
+        description = description,
+        color = color,
+        date = date,
+        countRepeats = count,
+        interval = frequency,
+        type = HabitType.values()[type],
+        priority = HabitPriority.values()[priority]
+
+    )
+}
