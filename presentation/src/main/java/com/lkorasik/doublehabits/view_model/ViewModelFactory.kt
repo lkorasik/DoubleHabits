@@ -8,7 +8,7 @@ import com.lkorasik.domain.HabitsUseCase
 class ViewModelFactory(private val habitRepository: HabitRepositoryImpl, private val useCase: HabitsUseCase) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val viewModel = when (modelClass) {
-            HabitsListViewModel::class.java -> HabitsListViewModel(habitRepository, useCase)
+            HabitsListViewModel::class.java -> HabitsListViewModel(useCase)
             EditorViewModel::class.java -> EditorViewModel(habitRepository)
             else -> throw IllegalStateException("Unknown ViewModel class")
         }

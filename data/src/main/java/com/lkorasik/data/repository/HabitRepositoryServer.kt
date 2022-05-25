@@ -29,7 +29,6 @@ class HabitRepositoryServer {
                 lastEditedAt = Instant.now()
             )
         } ?: listOf()
-//        return habits.body()?.map { com.lkorasik.domain.Habit.from(it) } ?: listOf()
     }
 
     suspend fun addHabit(habit: HabitEntity) {
@@ -41,7 +40,6 @@ class HabitRepositoryServer {
     }
 
     private suspend fun sendHabit(habit: HabitEntity) {
-//        val dto = HabitDTO.from(habit)
         val dto = HabitDTO(
             color = habit.color,
             count = habit.count,
@@ -56,9 +54,5 @@ class HabitRepositoryServer {
         )
 
         RequestContext.API.saveHabit(dto)
-    }
-
-    suspend fun deleteHabit(habit: HabitUID_DTO) {
-        RequestContext.API.deleteHabit(habit)
     }
 }

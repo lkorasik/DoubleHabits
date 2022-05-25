@@ -13,8 +13,8 @@ data class HabitDTO(
     val description: String,
     val done_dates: List<Int>,
     val frequency: Int,
-    val priority: Int, // Enum: 0, 1, 2
-    val type: Int, // Enum: 0, 1
+    val priority: Int,
+    val type: Int
 ) {
     fun toHabitModel() = HabitModel(
         id = uid ?: "",

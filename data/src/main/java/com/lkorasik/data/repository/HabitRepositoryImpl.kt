@@ -47,34 +47,14 @@ class HabitRepositoryImpl(private val dao: HabitDao): Repository {
         }
     }
 
-//    override fun getAllHabits(): Flow<List<HabitModel>> {
-//        reloadDatabase()
-//
-//        //todo: верни ld из базы
-////        return liveData
-//
-//        return dao.getAll().map { it.map { entity ->
-//            HabitModel(
-//                id = entity.id,
-//                name = entity.title,
-//                description = entity.description,
-//                color = entity.color,
-//                date = entity.createdAt.nano,
-//                countRepeats = entity.count,
-//                interval = entity.frequency.toIntOrNull() ?: 0,
-//                type = entity.type,
-//                priority = entity.priority,
-//            )
-//        }
-//        }
-//    }
-
     override suspend fun addHabit(habit: HabitModel) {
-        TODO("Not yet implemented")
+        val h = HabitEntity.fromModel(habit)
+        addHabit(h)
     }
 
     override suspend fun editHabit(habit: HabitModel) {
-        TODO("Not yet implemented")
+        val h = HabitEntity.fromModel(habit)
+        editHabit(h)
     }
 
     private fun reloadDatabase() {
@@ -98,11 +78,6 @@ class HabitRepositoryImpl(private val dao: HabitDao): Repository {
         network.updateHabit(habit)
         reloadDatabase()
     }
-
-//    suspend fun deleteHabit(habituidDto: HabitUID_DTO) {
-//        network.deleteHabit(habituidDto)
-//        reloadDatabase()
-//    }
 }
 
 

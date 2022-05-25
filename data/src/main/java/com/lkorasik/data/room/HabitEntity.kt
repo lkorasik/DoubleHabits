@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey
 import com.lkorasik.domain.entities.HabitModel
 import com.lkorasik.domain.entities.HabitPriority
 import com.lkorasik.domain.entities.HabitType
-//import com.lkorasik.doublehabits.net.dto.HabitDTO
 import kotlinx.parcelize.Parcelize
 import java.time.Instant
 

@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.Instant
 
-class HabitsListViewModel(private val repository: HabitRepositoryImpl, private val useCase: HabitsUseCase): ViewModel() {
+class HabitsListViewModel(private val useCase: HabitsUseCase): ViewModel() {
     private val emptyPair = "" to false
     private val emptyComparator = Comparator { _: HabitEntity, _: HabitEntity -> 0 }
 
@@ -21,7 +21,6 @@ class HabitsListViewModel(private val repository: HabitRepositoryImpl, private v
     private var data: LiveData<List<HabitEntity>> = MutableLiveData(listOf())
 
     init {
-//        data = repository
         data = useCase
             .getAllHabits()
             .asLiveData(viewModelScope.coroutineContext)
