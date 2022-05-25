@@ -31,3 +31,9 @@ class App : Application() {
         instance = this
     }
 }
+
+val Context.component: AppComponent
+    get() = when(this) {
+        is App -> component
+        else -> applicationContext.component
+    }

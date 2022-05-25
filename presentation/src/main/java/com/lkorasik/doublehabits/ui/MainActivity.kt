@@ -1,6 +1,7 @@
 package com.lkorasik.doublehabits.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -9,8 +10,12 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.lkorasik.data.room.HabitEntity
+import com.lkorasik.doublehabits.AppComponent
 import com.lkorasik.doublehabits.R
+import com.lkorasik.doublehabits.component
 import com.lkorasik.doublehabits.databinding.ActivityMainBinding
+import javax.inject.Inject
 
 
 class MainActivity: AppCompatActivity() {
@@ -18,10 +23,17 @@ class MainActivity: AppCompatActivity() {
 
     private lateinit var navController: NavController
 
+    @Inject
+    lateinit var habit: HabitEntity
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        component.inject(this)
+
+        Log.i("APP", habit.toString())
 
         configureToolbar()
 
