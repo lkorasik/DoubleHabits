@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.lang.RuntimeException
+import javax.inject.Inject
 
 class HabitRepositoryImpl(private val dao: HabitDao): Repository {
     private val database: HabitRepositoryDatabase = HabitRepositoryDatabase(dao)
@@ -20,13 +21,17 @@ class HabitRepositoryImpl(private val dao: HabitDao): Repository {
 
     private val liveData = MutableLiveData<List<HabitEntity>>()
 
+    @Inject
+    lateinit var requests: RequestContext
+
     override fun getAllHabits(): Flow<List<HabitModel>> {
         return dao.getAll().map { it.map { entity -> entity.toModel() } }
     }
 
     override suspend fun loadHabits() {
         try {
-            val response = RequestContext.API.getHabits().execute().body()
+//            val response = RequestContext.API.getHabits().execute().body()
+            val response = requests.API.getHabits().execute().body()
             Log.i(HabitRepositoryImpl::class.java.name, response.toString())
 
             response?.forEach {
