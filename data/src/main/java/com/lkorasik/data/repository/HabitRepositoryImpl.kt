@@ -13,8 +13,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.lang.RuntimeException
+import javax.inject.Inject
 
-class HabitRepositoryImpl(private val dao: HabitDao): Repository {
+class HabitRepositoryImpl @Inject constructor(private val dao: HabitDao): Repository {
     private val database: HabitRepositoryDatabase = HabitRepositoryDatabase(dao)
     private val network: HabitRepositoryServer = HabitRepositoryServer()
 

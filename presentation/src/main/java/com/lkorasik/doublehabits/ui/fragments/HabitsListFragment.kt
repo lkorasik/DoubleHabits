@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lkorasik.data.repository.HabitRepositoryImpl
@@ -24,6 +25,7 @@ import com.lkorasik.doublehabits.ui.adapters.habit_adapter.HabitRecycleViewAdapt
 import com.lkorasik.doublehabits.view_model.EditorViewModel
 import com.lkorasik.doublehabits.view_model.HabitsListViewModel
 import com.lkorasik.doublehabits.view_model.ViewModelFactory
+import kotlinx.coroutines.flow.take
 import javax.inject.Inject
 
 class HabitsListFragment: Fragment() {
@@ -33,11 +35,15 @@ class HabitsListFragment: Fragment() {
 
     private lateinit var adapter: HabitRecycleViewAdapter
 
+//    @Inject
+//    lateinit var database: AppDatabase
+
     @Inject
-    lateinit var database: AppDatabase
+    lateinit var repository: HabitRepositoryImpl
 
     private val editorViewModel: EditorViewModel by activityViewModels {
-        ViewModelFactory((requireActivity().application as App).repository, (requireActivity().application as App).habitsUseCase)
+//        ViewModelFactory((requireActivity().application as App).repository, (requireActivity().application as App).habitsUseCase)
+        ViewModelFactory(repository, (requireActivity().application as App).habitsUseCase)
     }
     private lateinit var vm: HabitsListViewModel
 
@@ -52,7 +58,8 @@ class HabitsListFragment: Fragment() {
 
         val mode = arguments?.get(IntentKeys.Mode) as HabitType
 
-        val factory = ViewModelFactory((requireActivity().application as App).repository, (requireActivity().application as App).habitsUseCase)
+//        val factory = ViewModelFactory((requireActivity().application as App).repository, (requireActivity().application as App).habitsUseCase)
+        val factory = ViewModelFactory(repository, (requireActivity().application as App).habitsUseCase)
         vm = ViewModelProvider(requireActivity(), factory)[mode.name, HabitsListViewModel::class.java]
 
         vm.loadHabits()
