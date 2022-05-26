@@ -6,6 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
+//TODO: inject it!
 object RequestContext {
     private const val BASE_URL = "https://droid-test-server.doubletapp.ru/"
 

@@ -40,10 +40,10 @@ class HabitsListFragment: Fragment() {
 //    @Inject
 //    lateinit var database: AppDatabase
 
-    @Inject
+    @Inject //todo: remove
     lateinit var repository: HabitRepositoryImpl
 
-    @Inject
+    @Inject //todo: injet it in viewmodel
     lateinit var habitsUseCase: HabitsUseCase
 
     private val editorViewModel: EditorViewModel by activityViewModels {

@@ -15,6 +15,7 @@ import java.time.Instant
 import javax.inject.Inject
 
 //class EditorViewModel(private val repository: HabitRepositoryImpl): ViewModel() {
+//todo: inject use case
 class EditorViewModel @Inject constructor(private val repository: Repository): ViewModel() {
     private val selectedHabit: MutableLiveData<HabitEntity> = MutableLiveData(null)
     private val selectedColor = MutableLiveData(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
