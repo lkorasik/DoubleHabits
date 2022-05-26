@@ -4,10 +4,8 @@ import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 
-@Singleton
 object RequestContext {
     private val doubleHabitsAPI: DoubleHabitsAPI
     private const val BASE_URL = "https://droid-test-server.doubletapp.ru/"
