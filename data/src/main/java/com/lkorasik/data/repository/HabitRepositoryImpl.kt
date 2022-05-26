@@ -1,8 +1,6 @@
 package com.lkorasik.data.repository
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.lkorasik.data.net.RequestContext
 import com.lkorasik.data.room.HabitDao
 import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.domain.Repository
@@ -12,7 +10,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.lang.RuntimeException
 import java.time.Instant
 import javax.inject.Inject
 
@@ -29,15 +26,18 @@ class HabitRepositoryImpl @Inject constructor(private val dao: HabitDao): Reposi
     }
 
     override suspend fun addHabit(habit: HabitModel) {
-        addHabit(HabitEntity.fromModel(habit))
+//        addHabit(HabitEntity.from(habit))
+        val convertedHabit = HabitEntity.from(habit)
+        network.addHabit(convertedHabit)
+        reloadDatabase()
     }
 
     override suspend fun editHabit(habit: HabitModel) {
-        editHabit(HabitEntity.fromModel(habit))
+        editHabit(HabitEntity.from(habit))
     }
 
     override suspend fun doneHabit(habit: HabitModel): String {
-        network.doneHabit(HabitEntity.fromModel(habit))
+        network.doneHabit(HabitEntity.from(habit))
         reloadDatabase()
 
         val habit = dao.getById(habit.id)

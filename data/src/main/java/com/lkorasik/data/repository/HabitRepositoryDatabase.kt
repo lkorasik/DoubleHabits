@@ -21,11 +21,11 @@ class HabitRepositoryDatabase(private val dao: HabitDao) {
 
         if (existingHabit != null) {
             if (existingHabit.date < habit.date) {
-                dao.update(HabitEntity.fromModel(habit))
+                dao.update(HabitEntity.from(habit))
             }
         } else {
             Log.i(HabitRepositoryImpl::class.java.name, "${habit.title} new habit.")
-            dao.insertAll(HabitEntity.fromModel(habit))
+            dao.insertAll(HabitEntity.from(habit))
         }
     }
 }

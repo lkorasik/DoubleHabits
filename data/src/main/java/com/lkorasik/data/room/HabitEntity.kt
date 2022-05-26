@@ -26,7 +26,7 @@ data class HabitEntity(
     @ColumnInfo val done_dates: List<Int>
 ): Parcelable {
     companion object {
-        fun fromModel(model: HabitModel) = HabitEntity(
+        fun from(model: HabitModel) = HabitEntity(
             id = model.id,
             title = model.title,
             color = model.color,
