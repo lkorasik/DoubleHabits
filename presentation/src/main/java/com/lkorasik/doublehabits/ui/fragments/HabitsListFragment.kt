@@ -10,16 +10,21 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.lkorasik.data.repository.HabitRepositoryImpl
+import com.lkorasik.data.room.AppDatabase
 import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.doublehabits.IntentKeys
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentHabitListBinding
 import com.lkorasik.domain.entities.HabitType
 import com.lkorasik.doublehabits.App
+import com.lkorasik.doublehabits.component
+import com.lkorasik.doublehabits.ui.MainActivity
 import com.lkorasik.doublehabits.ui.adapters.habit_adapter.HabitRecycleViewAdapter
 import com.lkorasik.doublehabits.view_model.EditorViewModel
 import com.lkorasik.doublehabits.view_model.HabitsListViewModel
 import com.lkorasik.doublehabits.view_model.ViewModelFactory
+import javax.inject.Inject
 
 class HabitsListFragment: Fragment() {
     private var fragmentHabitListBinding: FragmentHabitListBinding? = null
@@ -28,6 +33,9 @@ class HabitsListFragment: Fragment() {
 
     private lateinit var adapter: HabitRecycleViewAdapter
 
+    @Inject
+    lateinit var database: AppDatabase
+
     private val editorViewModel: EditorViewModel by activityViewModels {
         ViewModelFactory((requireActivity().application as App).repository, (requireActivity().application as App).habitsUseCase)
     }
@@ -35,6 +43,8 @@ class HabitsListFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentHabitListBinding = FragmentHabitListBinding.inflate(inflater, container, false)
+
+        (requireActivity() as MainActivity).component.inject(this)
 
         adapter = HabitRecycleViewAdapter(binding.root.context) { habit, position ->
             editHabit(habit, position)
