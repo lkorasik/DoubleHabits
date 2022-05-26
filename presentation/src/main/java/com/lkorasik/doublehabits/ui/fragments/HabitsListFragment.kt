@@ -62,7 +62,6 @@ class HabitsListFragment: Fragment() {
             editHabit(habit, position)
         }, { habit, position ->
             doneHabit(habit, position)
-            Toast.makeText(context, "Some text special for u ${habit.id}", Toast.LENGTH_LONG).show()
         })
 
         val mode = arguments?.get(IntentKeys.Mode) as HabitType

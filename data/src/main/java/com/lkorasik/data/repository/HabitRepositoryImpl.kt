@@ -5,7 +5,10 @@ import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.domain.Repository
 import com.lkorasik.domain.entities.HabitModel
 import com.lkorasik.domain.entities.HabitType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import java.time.Instant
 import javax.inject.Inject
 
@@ -47,7 +50,11 @@ class HabitRepositoryImpl @Inject constructor(private val dao: HabitDao): Reposi
         }
     }
 
-    private fun reloadDatabase() = network.getAllHabitsEntity().forEach { database.update(it) }
+    private fun reloadDatabase() {
+        CoroutineScope(Dispatchers.IO).launch {
+            network.getAllHabitsEntity().forEach { database.update(it) }
+        }
+    }
 
     suspend fun addHabit(habit: HabitEntity) {
         network.addHabit(habit)
