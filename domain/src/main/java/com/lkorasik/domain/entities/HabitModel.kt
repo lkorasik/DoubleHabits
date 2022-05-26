@@ -14,4 +14,5 @@ data class HabitModel(
     var interval: Int,
     var type: HabitType,
     var priority: HabitPriority,
+    var doneDates: List<Int>
 ) : Parcelable

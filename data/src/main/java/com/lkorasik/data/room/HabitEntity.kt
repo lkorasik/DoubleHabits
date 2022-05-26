@@ -4,8 +4,6 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.lkorasik.domain.entities.HabitModel
 import com.lkorasik.domain.entities.HabitPriority
 import com.lkorasik.domain.entities.HabitType
@@ -28,7 +26,7 @@ data class HabitEntity(
     //TODO: Make single date
     @ColumnInfo val createdAt: Instant, //TODO: Delete
     @ColumnInfo val lastEditedAt: Instant, //TODO: Delete
-    @ColumnInfo val dates: String
+    @ColumnInfo val done_dates: List<Int>
 ): Parcelable {
     companion object {
         fun fromModel(model: HabitModel): HabitEntity = HabitEntity(
@@ -42,7 +40,7 @@ data class HabitEntity(
             type = model.type,
             priority = model.priority,
             lastEditedAt = Instant.now(),
-            dates = ""
+            done_dates = model.doneDates
         )
     }
 
@@ -55,6 +53,7 @@ data class HabitEntity(
         interval = 0,
         type = type,
         priority = priority,
-        date = createdAt.nano
+        date = createdAt.nano,
+        doneDates = done_dates
     )
 }

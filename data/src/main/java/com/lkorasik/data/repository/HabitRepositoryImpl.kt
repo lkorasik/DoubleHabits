@@ -7,12 +7,14 @@ import com.lkorasik.data.room.HabitDao
 import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.domain.Repository
 import com.lkorasik.domain.entities.HabitModel
+import com.lkorasik.domain.entities.HabitType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.lang.RuntimeException
+import java.time.Instant
 import javax.inject.Inject
 
 class HabitRepositoryImpl @Inject constructor(private val dao: HabitDao): Repository {
@@ -58,9 +60,37 @@ class HabitRepositoryImpl @Inject constructor(private val dao: HabitDao): Reposi
         editHabit(h)
     }
 
-    override suspend fun doneHabit(habit: HabitModel) {
+    override suspend fun doneHabit(habit: HabitModel): String {
         network.doneHabit(HabitEntity.fromModel(habit))
         reloadDatabase()
+
+        val habit = dao.getById(habit.id)
+        val hours = habit.frequency.toInt()
+        val now = Instant.now().nano
+        val list = habit.done_dates.sorted().filter { it - now < hours }
+
+        if (habit.type == HabitType.REGULAR) {
+            return if (list.size <= habit.count){
+                val message = "Можете выполнить еще столько-то раз"
+                Log.i("APP", message)
+                message
+            } else {
+                val message = "Хватит это делать"
+                Log.i("APP", message)
+                message
+            }
+        }
+        else {
+            return if (list.size <= habit.count){
+                val message = "Стоит выполнить еще столько то раз"
+                Log.i("APP", message)
+                message
+            } else {
+                val message = "You are breathtaking!"
+                Log.i("APP", message)
+                message
+            }
+        }
     }
 
     private fun reloadDatabase() {

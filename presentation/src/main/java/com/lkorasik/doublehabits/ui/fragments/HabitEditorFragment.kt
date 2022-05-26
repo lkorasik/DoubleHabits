@@ -21,7 +21,6 @@ import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentViewHabitBinding
 import com.lkorasik.domain.entities.HabitPriority
 import com.lkorasik.domain.entities.HabitType
-import com.lkorasik.doublehabits.App
 import com.lkorasik.doublehabits.component
 import com.lkorasik.doublehabits.ui.MainActivity
 import com.lkorasik.doublehabits.ui.custom_views.color_picker.ColorPickerDialog
@@ -261,7 +260,7 @@ class HabitEditorFragment: Fragment() {
             count = getCount(),
             createdAt = editorViewModel.createdAt ?: Instant.now(),
             lastEditedAt = Instant.now(),
-            dates = ""
+            done_dates = listOf()
         )
     }
 

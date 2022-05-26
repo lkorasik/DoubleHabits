@@ -25,7 +25,7 @@ data class HabitDTO(
         countRepeats = count,
         interval = frequency,
         type = HabitType.values()[type],
-        priority = HabitPriority.values()[priority]
-
+        priority = HabitPriority.values()[priority],
+        doneDates = done_dates
     )
 }

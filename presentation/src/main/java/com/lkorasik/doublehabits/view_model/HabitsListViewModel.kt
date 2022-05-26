@@ -1,15 +1,14 @@
 package com.lkorasik.doublehabits.view_model
 
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.lkorasik.doublehabits.extensions.addLiveData
 import com.lkorasik.doublehabits.extensions.map
-import com.lkorasik.data.repository.HabitRepositoryImpl
 import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.domain.entities.HabitType
 import com.lkorasik.domain.HabitsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.text.FieldPosition
 import java.time.Instant
 
 class HabitsListViewModel(private val useCase: HabitsUseCase): ViewModel() {
@@ -20,6 +19,7 @@ class HabitsListViewModel(private val useCase: HabitsUseCase): ViewModel() {
     private var habitComparator = MutableLiveData(emptyComparator)
 
     private var data: LiveData<List<HabitEntity>> = MutableLiveData(listOf())
+    var toast: MutableLiveData<String> = MutableLiveData("")
 
     init {
         data = useCase
@@ -47,7 +47,7 @@ class HabitsListViewModel(private val useCase: HabitsUseCase): ViewModel() {
                         type = it.type,
                         createdAt = Instant.now(),
                         lastEditedAt = Instant.now(),
-                        dates = ""
+                        done_dates = listOf()
                     )
                 }
                  .filter { it.title.contains(searchLine, ignoreCase) }
@@ -74,7 +74,8 @@ class HabitsListViewModel(private val useCase: HabitsUseCase): ViewModel() {
     fun doneHabit(habit: HabitEntity, position: Int) {
         viewModelScope.launch(Dispatchers.IO) {
 //            useCase.updateHabit(habit.toModel())
-            useCase.doneHabit(habit.toModel())
+            val message = useCase.doneHabit(habit.toModel())
+            toast.postValue(message)
         }
     }
 

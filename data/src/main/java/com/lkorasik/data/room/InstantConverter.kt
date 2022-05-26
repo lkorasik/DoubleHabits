@@ -12,16 +12,16 @@ class InstantConverter {
 
 class DataConverter {
     @TypeConverter
-    fun fromListToString(dates: List<String>): String {
+    fun fromListToString(dates: List<Int>): String {
         val gson = Gson()
         val result = gson.toJson(dates)
         return result
     }
 
     @TypeConverter
-    fun fromStringToList(value: String): List<String> {
+    fun fromStringToList(value: String): List<Int> {
         val gson = Gson()
-        val type = object : TypeToken<List<String>>() {}.type
+        val type = object : TypeToken<List<Int>>() {}.type
         return gson.fromJson(value, type)
     }
 }

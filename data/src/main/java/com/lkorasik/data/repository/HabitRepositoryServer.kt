@@ -1,13 +1,11 @@
 package com.lkorasik.data.repository
 
-import android.util.Log
 import com.lkorasik.data.net.RequestContext
 import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.domain.entities.HabitPriority
 import com.lkorasik.domain.entities.HabitType
 import com.lkorasik.data.dto.HabitDTO
 import com.lkorasik.data.dto.HabitDoneDTO
-import com.lkorasik.data.dto.HabitUID_DTO
 import java.time.Instant
 
 class HabitRepositoryServer {
@@ -29,7 +27,7 @@ class HabitRepositoryServer {
                 count = habit.count,
                 createdAt = Instant.now(),
                 lastEditedAt = Instant.now(),
-                dates = ""
+                done_dates = habit.done_dates
             )
         } ?: listOf()
     }

@@ -11,7 +11,7 @@ class HabitsUseCase @Inject constructor(private val habitRepository: Repository)
         habitRepository.editHabit(habitModel)
     }
 
-    suspend fun doneHabit(habitModel: HabitModel) {
-        habitRepository.doneHabit(habitModel)
+    suspend fun doneHabit(habitModel: HabitModel): String {
+        return habitRepository.doneHabit(habitModel)
     }
 }

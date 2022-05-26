@@ -38,7 +38,7 @@ object ModuleA {
             type = HabitType.REGULAR,
             createdAt = Instant.now(),
             lastEditedAt = Instant.now(),
-            dates = ""
+            done_dates = listOf()
         )
     }
 }
