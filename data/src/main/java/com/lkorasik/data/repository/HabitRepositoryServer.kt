@@ -10,7 +10,7 @@ import com.lkorasik.data.dto.HabitDoneDTO
 import java.time.Instant
 
 class HabitRepositoryServer {
-    fun getAllHabits2(): List<HabitEntity> {
+    fun getAllHabitsEntity(): List<HabitEntity> {
         val habits = RequestContext.API.getHabits().execute()
 
         if (!habits.isSuccessful)
@@ -19,7 +19,7 @@ class HabitRepositoryServer {
         return habits.body()?.map { habit -> HabitEntity.from(habit) } ?: listOf()
     }
 
-    fun getAllHabits(): List<HabitDTO>? {
+    fun getAllHabitsDTO(): List<HabitDTO>? {
         var response: List<HabitDTO>? = null
 
         try {

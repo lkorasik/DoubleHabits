@@ -1,15 +1,11 @@
 package com.lkorasik.data.repository
 
-import androidx.lifecycle.MutableLiveData
 import com.lkorasik.data.room.HabitDao
 import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.domain.Repository
 import com.lkorasik.domain.entities.HabitModel
 import com.lkorasik.domain.entities.HabitType
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import java.time.Instant
 import javax.inject.Inject
 
@@ -17,61 +13,41 @@ class HabitRepositoryImpl @Inject constructor(private val dao: HabitDao): Reposi
     private val database: HabitRepositoryDatabase = HabitRepositoryDatabase(dao)
     private val network: HabitRepositoryServer = HabitRepositoryServer()
 
-    private val liveData = MutableLiveData<List<HabitEntity>>()
-
     override fun getAllHabits(): Flow<List<HabitModel>> = database.getAllHabits()
+    override suspend fun addHabit(habit: HabitModel) = addHabit(HabitEntity.from(habit))
+    override suspend fun editHabit(habit: HabitModel) = editHabit(HabitEntity.from(habit))
 
     override suspend fun loadHabits() {
-        network.getAllHabits()?.forEach { database.update(it.toHabitModel()) }
-    }
-
-    override suspend fun addHabit(habit: HabitModel) {
-//        addHabit(HabitEntity.from(habit))
-        val convertedHabit = HabitEntity.from(habit)
-        network.addHabit(convertedHabit)
-        reloadDatabase()
-    }
-
-    override suspend fun editHabit(habit: HabitModel) {
-        editHabit(HabitEntity.from(habit))
+        network.getAllHabitsDTO()?.forEach { database.update(it.toHabitModel()) }
     }
 
     override suspend fun doneHabit(habit: HabitModel): String {
         network.doneHabit(HabitEntity.from(habit))
         reloadDatabase()
 
-        val habit = dao.getById(habit.id)
-        val hours = habit.frequency.toInt()
+        val storedHabit = database.getHabitById(habit.id)
+        val hours = storedHabit.frequency.toInt()
         val now = Instant.now().nano
-        val list = habit.done_dates.sorted().filter { it - now < hours }
+        val list = storedHabit.done_dates.sorted().filter { it - now < hours }
 
-        if (habit.type == HabitType.REGULAR) {
-            return if (list.size <= habit.count){
+        return selectMessage(storedHabit, list)
+    }
+
+    private fun <T> selectMessage(habit: HabitEntity, list: List<T>): String {
+        return if (habit.type == HabitType.REGULAR) {
+            if (list.size <= habit.count)
                 "Можете выполнить еще несколько раз"
-            } else {
+            else
                 "Хватит это делать"
-            }
-        }
-        else {
-            return if (list.size <= habit.count){
+        } else {
+            if (list.size <= habit.count)
                 "Стоит выполнить еще несколько раз"
-            } else {
+            else
                 "You are breathtaking!"
-            }
         }
     }
 
-    private fun reloadDatabase() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val habits = network.getAllHabits2()
-
-            for (habit in habits) {
-                database.update(habit)
-            }
-
-            liveData.postValue(habits) //todo: убери лишнюю LD, getAllHabits: LD
-        }
-    }
+    private fun reloadDatabase() = network.getAllHabitsEntity().forEach { database.update(it) }
 
     suspend fun addHabit(habit: HabitEntity) {
         network.addHabit(habit)

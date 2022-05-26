@@ -4,8 +4,11 @@ import android.util.Log
 import com.lkorasik.data.room.HabitDao
 import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.domain.entities.HabitModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class HabitRepositoryDatabase(private val dao: HabitDao) {
     fun update(habit: HabitEntity) {
@@ -15,6 +18,8 @@ class HabitRepositoryDatabase(private val dao: HabitDao) {
     fun getAllHabits(): Flow<List<HabitModel>> = dao
         .getAll()
         .map { it.map { entity -> entity.toModel() } }
+
+    fun getHabitById(id: String): HabitEntity = dao.getById(id)
 
     suspend fun update(habit: HabitModel) {
         val existingHabit = dao.checkExistHabit(habit.id)
