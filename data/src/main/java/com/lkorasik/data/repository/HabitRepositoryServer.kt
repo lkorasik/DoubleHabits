@@ -15,20 +15,7 @@ class HabitRepositoryServer {
         if (!habits.isSuccessful)
             return listOf()
 
-        return habits.body()?.map { habit ->
-            HabitEntity(
-                id = habit.uid ?: "",
-                title = habit.title,
-                description = habit.description,
-                priority = HabitPriority.values()[habit.priority],
-                type = HabitType.values()[habit.type],
-                frequency = habit.frequency.toString(),
-                color = habit.color,
-                count = habit.count,
-                date = habit.date,
-                done_dates = habit.done_dates
-            )
-        } ?: listOf()
+        return habits.body()?.map { habit -> HabitEntity.from(habit) } ?: listOf()
     }
 
     suspend fun addHabit(habit: HabitEntity) {
@@ -39,28 +26,14 @@ class HabitRepositoryServer {
         sendHabit(habit)
     }
 
-    suspend fun doneHabit(habit: HabitEntity) {
-        val dto = HabitDoneDTO(
-            date = Instant.now().toEpochMilli().toInt(),
-            habit_uid = habit.id
-        )
+    fun doneHabit(habit: HabitEntity) {
+        val dto = HabitDoneDTO.from(habit)
 
         RequestContext.API.habitDone(dto).execute()
     }
 
     private suspend fun sendHabit(habit: HabitEntity) {
-        val dto = HabitDTO(
-            color = habit.color,
-            count = habit.count,
-            date = Instant.now().toEpochMilli().toInt(),
-            description = habit.description,
-            done_dates = listOf(0),
-            frequency = habit.frequency.toInt(),
-            priority = habit.priority.ordinal,
-            title = habit.title,
-            type = habit.type.ordinal,
-            uid = habit.id.ifEmpty { null }
-        )
+        val dto = HabitDTO.from(habit)
 
         RequestContext.API.saveHabit(dto)
     }
