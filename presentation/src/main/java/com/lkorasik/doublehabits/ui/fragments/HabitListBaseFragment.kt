@@ -10,15 +10,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
+import com.lkorasik.data.repository.HabitRepositoryImpl
+import com.lkorasik.domain.HabitsUseCase
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentHabitBaseBinding
 import com.lkorasik.domain.entities.HabitType
 import com.lkorasik.doublehabits.App
+import com.lkorasik.doublehabits.component
+import com.lkorasik.doublehabits.ui.MainActivity
 import com.lkorasik.doublehabits.ui.adapters.HabitListPagerAdapter
 import com.lkorasik.doublehabits.ui.custom_views.filter_view.FilterView
 import com.lkorasik.doublehabits.view_model.EditorViewModel
 import com.lkorasik.doublehabits.view_model.HabitsListViewModel
 import com.lkorasik.doublehabits.view_model.ViewModelFactory
+import javax.inject.Inject
 
 class HabitListBaseFragment: Fragment() {
     private var fragmentAboutBinding: FragmentHabitBaseBinding? = null
@@ -26,8 +31,15 @@ class HabitListBaseFragment: Fragment() {
         get() = fragmentAboutBinding!!
     private lateinit var pagerAdapter: HabitListPagerAdapter
 
+    @Inject
+    lateinit var repository: HabitRepositoryImpl
+
+    @Inject
+    lateinit var habitsUseCase: HabitsUseCase
+
     private val editorViewModel: EditorViewModel by activityViewModels {
-        ViewModelFactory((requireActivity().application as App).repository, (requireActivity().application as App).habitsUseCase)
+//        ViewModelFactory((requireActivity().application as App).repository, (requireActivity().application as App).habitsUseCase)
+        ViewModelFactory(repository, habitsUseCase)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -37,6 +49,8 @@ class HabitListBaseFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (requireActivity() as MainActivity).component.inject(this)
 
         binding.addHabit.setOnClickListener {
             editorViewModel.createHabit()

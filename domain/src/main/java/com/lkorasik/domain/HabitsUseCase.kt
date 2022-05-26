@@ -1,6 +1,8 @@
 package com.lkorasik.domain
 
-class HabitsUseCase(private val habitRepository: Repository) {
+import javax.inject.Inject
+
+class HabitsUseCase @Inject constructor(private val habitRepository: Repository) {
     fun getAllHabits() = habitRepository.getAllHabits()
     suspend fun loadHabits() = habitRepository.loadHabits()
 }

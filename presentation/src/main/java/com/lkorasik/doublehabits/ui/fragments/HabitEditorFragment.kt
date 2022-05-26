@@ -13,17 +13,22 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.lkorasik.data.repository.HabitRepositoryImpl
 import com.lkorasik.data.room.HabitEntity
+import com.lkorasik.domain.HabitsUseCase
 import com.lkorasik.doublehabits.IntentKeys
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentViewHabitBinding
 import com.lkorasik.domain.entities.HabitPriority
 import com.lkorasik.domain.entities.HabitType
 import com.lkorasik.doublehabits.App
+import com.lkorasik.doublehabits.component
+import com.lkorasik.doublehabits.ui.MainActivity
 import com.lkorasik.doublehabits.ui.custom_views.color_picker.ColorPickerDialog
 import com.lkorasik.doublehabits.view_model.EditorViewModel
 import com.lkorasik.doublehabits.view_model.ViewModelFactory
 import java.time.Instant
+import javax.inject.Inject
 
 
 class HabitEditorFragment: Fragment() {
@@ -33,12 +38,21 @@ class HabitEditorFragment: Fragment() {
 
     private lateinit var colorPickerDialog: ColorPickerDialog
 
+    @Inject
+    lateinit var repository: HabitRepositoryImpl
+
+    @Inject
+    lateinit var habitsUseCase: HabitsUseCase
+
     private val editorViewModel: EditorViewModel by activityViewModels {
-        ViewModelFactory((requireActivity().application as App).repository, (requireActivity().application as App).habitsUseCase)
+//        ViewModelFactory((requireActivity().application as App).repository, (requireActivity().application as App).habitsUseCase)
+        ViewModelFactory(repository, habitsUseCase)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentViewHabitBinding = FragmentViewHabitBinding.inflate(inflater, container, false)
+
+        (requireActivity() as MainActivity).component.inject(this)
 
         setHasOptionsMenu(true)
         return binding.root

@@ -5,6 +5,8 @@ import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.domain.entities.HabitPriority
 import com.lkorasik.domain.entities.HabitType
 import com.lkorasik.doublehabits.ui.MainActivity
+import com.lkorasik.doublehabits.ui.fragments.HabitEditorFragment
+import com.lkorasik.doublehabits.ui.fragments.HabitListBaseFragment
 import com.lkorasik.doublehabits.ui.fragments.HabitsListFragment
 import dagger.Component
 import dagger.Module
@@ -17,6 +19,8 @@ interface AppComponent {
 
     fun inject(activity: MainActivity)
     fun inject(fragment: HabitsListFragment)
+    fun inject(fragment: HabitListBaseFragment)
+    fun inject(fragment: HabitEditorFragment)
 }
 
 @Module

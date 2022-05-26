@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lkorasik.data.repository.HabitRepositoryImpl
 import com.lkorasik.data.room.AppDatabase
 import com.lkorasik.data.room.HabitEntity
+import com.lkorasik.domain.HabitsUseCase
 import com.lkorasik.doublehabits.IntentKeys
 import com.lkorasik.doublehabits.R
 import com.lkorasik.doublehabits.databinding.FragmentHabitListBinding
@@ -41,9 +42,13 @@ class HabitsListFragment: Fragment() {
     @Inject
     lateinit var repository: HabitRepositoryImpl
 
+    @Inject
+    lateinit var habitsUseCase: HabitsUseCase
+
     private val editorViewModel: EditorViewModel by activityViewModels {
 //        ViewModelFactory((requireActivity().application as App).repository, (requireActivity().application as App).habitsUseCase)
-        ViewModelFactory(repository, (requireActivity().application as App).habitsUseCase)
+//        ViewModelFactory(repository, (requireActivity().application as App).habitsUseCase)
+        ViewModelFactory(repository, habitsUseCase)
     }
     private lateinit var vm: HabitsListViewModel
 
@@ -59,7 +64,8 @@ class HabitsListFragment: Fragment() {
         val mode = arguments?.get(IntentKeys.Mode) as HabitType
 
 //        val factory = ViewModelFactory((requireActivity().application as App).repository, (requireActivity().application as App).habitsUseCase)
-        val factory = ViewModelFactory(repository, (requireActivity().application as App).habitsUseCase)
+//        val factory = ViewModelFactory(repository, (requireActivity().application as App).habitsUseCase)
+        val factory = ViewModelFactory(repository, habitsUseCase)
         vm = ViewModelProvider(requireActivity(), factory)[mode.name, HabitsListViewModel::class.java]
 
         vm.loadHabits()
