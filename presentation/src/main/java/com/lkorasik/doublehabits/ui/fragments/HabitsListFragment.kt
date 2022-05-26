@@ -79,7 +79,8 @@ class HabitsListFragment: Fragment() {
         }
 
         vm.toast.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            if (it.isNotEmpty())
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
 
         binding.habitsList.layoutManager = LinearLayoutManager(binding.root.context)

@@ -2,7 +2,6 @@ package com.lkorasik.data.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.lkorasik.data.R
 import com.lkorasik.data.net.RequestContext
 import com.lkorasik.data.room.HabitDao
 import com.lkorasik.data.room.HabitEntity
@@ -12,7 +11,6 @@ import com.lkorasik.domain.entities.HabitType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.lang.RuntimeException
 import java.time.Instant
@@ -24,41 +22,18 @@ class HabitRepositoryImpl @Inject constructor(private val dao: HabitDao): Reposi
 
     private val liveData = MutableLiveData<List<HabitEntity>>()
 
-    override fun getAllHabits(): Flow<List<HabitModel>> {
-        return dao.getAll().map { it.map { entity -> entity.toModel() } }
-    }
+    override fun getAllHabits(): Flow<List<HabitModel>> = database.getAllHabits()
 
     override suspend fun loadHabits() {
-        try {
-            val response = RequestContext.API.getHabits().execute().body()
-            Log.i(HabitRepositoryImpl::class.java.name, response.toString())
-
-            response?.forEach {
-                updateLocalDatabase(it.toHabitModel())
-            }
-        } catch (e: RuntimeException) { }
-    }
-
-    private suspend fun updateLocalDatabase(habit: HabitModel) {
-        val existingHabit = dao.checkExistHabit(habit.id)
-        if (existingHabit != null) {
-            if (existingHabit.date < habit.date) {
-                dao.update(HabitEntity.fromModel(habit))
-            }
-        } else {
-            Log.i(HabitRepositoryImpl::class.java.name, "${habit.title} new habit.")
-            dao.insertAll(HabitEntity.fromModel(habit))
-        }
+        network.getAllHabits()?.forEach { database.update(it.toHabitModel()) }
     }
 
     override suspend fun addHabit(habit: HabitModel) {
-        val h = HabitEntity.fromModel(habit)
-        addHabit(h)
+        addHabit(HabitEntity.fromModel(habit))
     }
 
     override suspend fun editHabit(habit: HabitModel) {
-        val h = HabitEntity.fromModel(habit)
-        editHabit(h)
+        editHabit(HabitEntity.fromModel(habit))
     }
 
     override suspend fun doneHabit(habit: HabitModel): String {
@@ -72,27 +47,23 @@ class HabitRepositoryImpl @Inject constructor(private val dao: HabitDao): Reposi
 
         if (habit.type == HabitType.REGULAR) {
             return if (list.size <= habit.count){
-                val message = "Можете выполнить еще несколько раз"
-                message
+                "Можете выполнить еще несколько раз"
             } else {
-                val message = "Хватит это делать"
-                message
+                "Хватит это делать"
             }
         }
         else {
             return if (list.size <= habit.count){
-                val message = "Стоит выполнить еще несколько раз"
-                message
+                "Стоит выполнить еще несколько раз"
             } else {
-                val message = "You are breathtaking!"
-                message
+                "You are breathtaking!"
             }
         }
     }
 
     private fun reloadDatabase() {
         CoroutineScope(Dispatchers.IO).launch {
-            val habits = network.getAllHabits()
+            val habits = network.getAllHabits2()
 
             for (habit in habits) {
                 database.update(habit)

@@ -1,5 +1,6 @@
 package com.lkorasik.data.repository
 
+import android.util.Log
 import com.lkorasik.data.net.RequestContext
 import com.lkorasik.data.room.HabitEntity
 import com.lkorasik.domain.entities.HabitPriority
@@ -9,13 +10,25 @@ import com.lkorasik.data.dto.HabitDoneDTO
 import java.time.Instant
 
 class HabitRepositoryServer {
-    fun getAllHabits(): List<HabitEntity> {
+    fun getAllHabits2(): List<HabitEntity> {
         val habits = RequestContext.API.getHabits().execute()
 
         if (!habits.isSuccessful)
             return listOf()
 
         return habits.body()?.map { habit -> HabitEntity.from(habit) } ?: listOf()
+    }
+
+    fun getAllHabits(): List<HabitDTO>? {
+        var response: List<HabitDTO>? = null
+
+        try {
+            response = RequestContext.API.getHabits().execute().body()
+        } catch (exception: RuntimeException) {
+            Log.i(this::class.qualifiedName, "Get error from request! \n $response")
+        }
+
+        return response
     }
 
     suspend fun addHabit(habit: HabitEntity) {

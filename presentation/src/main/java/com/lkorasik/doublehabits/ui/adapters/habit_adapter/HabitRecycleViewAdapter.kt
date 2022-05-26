@@ -34,8 +34,6 @@ class HabitRecycleViewAdapter(
 
             setOnClickListener {
                 onItemDoneClicked.onClick(getItem(position), position)
-
-                Log.i("App", "click ${getItem(position)} $position")
             }
         }
     }
