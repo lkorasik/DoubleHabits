@@ -32,4 +32,10 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             habitPeriodicity.text = habit.frequency
         }
     }
+
+    fun setOnClickListener(onClick: View.OnClickListener) {
+        with(WidgetHabitBinding.bind(itemView)) {
+            doneHabit.setOnClickListener { onClick.onClick(it) }
+        }
+    }
 }

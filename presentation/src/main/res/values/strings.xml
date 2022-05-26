@@ -53,4 +53,6 @@
     <string name="sort_type.priority">Sort by priority</string>
     <string name="sort_type.date_creation">Sort by date of creation</string>
     <string name="sort_type.date_editing">Sort by date of last editing</string>
+
+    <string name="widget_habit.done">Done</string>
 </resources>

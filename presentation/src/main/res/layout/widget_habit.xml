@@ -90,6 +90,13 @@
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/done_habit"
+                android:layout_gravity="center"
+                android:text="@string/widget_habit.done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
 
     </LinearLayout>

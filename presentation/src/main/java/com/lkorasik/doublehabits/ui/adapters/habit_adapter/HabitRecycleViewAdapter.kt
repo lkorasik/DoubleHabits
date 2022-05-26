@@ -1,6 +1,7 @@
 package com.lkorasik.doublehabits.ui.adapters.habit_adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -29,10 +30,9 @@ class HabitRecycleViewAdapter(
                 onItemClicked.onClick(getItem(position), position)
             }
 
-//            itemView.setOnLongClickListener {
-//                onItemLongClicked.onClick(getItem(position), position)
-//                true
-//            }
+            setOnClickListener {
+                Log.i("App", "click ${getItem(position)} $position")
+            }
         }
     }
 }
