@@ -25,8 +25,7 @@ class HabitRepositoryServer {
                 frequency = habit.frequency.toString(),
                 color = habit.color,
                 count = habit.count,
-                createdAt = Instant.now(),
-                lastEditedAt = Instant.now(),
+                date = habit.date,
                 done_dates = habit.done_dates
             )
         } ?: listOf()

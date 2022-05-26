@@ -36,8 +36,7 @@ object ModuleA {
             frequency = "S",
             priority = HabitPriority.HIGH,
             type = HabitType.REGULAR,
-            createdAt = Instant.now(),
-            lastEditedAt = Instant.now(),
+            date = Instant.now().nano,
             done_dates = listOf()
         )
     }

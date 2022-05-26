@@ -18,12 +18,12 @@ data class HabitDTO(
 ) {
     fun toHabitModel() = HabitModel(
         id = uid ?: "",
-        name = title,
+        title = title,
         description = description,
         color = color,
         date = date,
-        countRepeats = count,
-        interval = frequency,
+        count = count,
+        frequency = frequency,
         type = HabitType.values()[type],
         priority = HabitPriority.values()[priority],
         doneDates = done_dates

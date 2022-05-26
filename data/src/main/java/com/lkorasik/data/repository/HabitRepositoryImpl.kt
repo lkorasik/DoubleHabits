@@ -2,6 +2,7 @@ package com.lkorasik.data.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.lkorasik.data.R
 import com.lkorasik.data.net.RequestContext
 import com.lkorasik.data.room.HabitDao
 import com.lkorasik.data.room.HabitEntity
@@ -41,11 +42,11 @@ class HabitRepositoryImpl @Inject constructor(private val dao: HabitDao): Reposi
     private suspend fun updateLocalDatabase(habit: HabitModel) {
         val existingHabit = dao.checkExistHabit(habit.id)
         if (existingHabit != null) {
-            if (existingHabit.createdAt.nano < habit.date) {
+            if (existingHabit.date < habit.date) {
                 dao.update(HabitEntity.fromModel(habit))
             }
         } else {
-            Log.i(HabitRepositoryImpl::class.java.name, "${habit.name} new habit.")
+            Log.i(HabitRepositoryImpl::class.java.name, "${habit.title} new habit.")
             dao.insertAll(HabitEntity.fromModel(habit))
         }
     }
@@ -72,22 +73,18 @@ class HabitRepositoryImpl @Inject constructor(private val dao: HabitDao): Reposi
         if (habit.type == HabitType.REGULAR) {
             return if (list.size <= habit.count){
                 val message = "Можете выполнить еще столько-то раз"
-                Log.i("APP", message)
                 message
             } else {
                 val message = "Хватит это делать"
-                Log.i("APP", message)
                 message
             }
         }
         else {
             return if (list.size <= habit.count){
                 val message = "Стоит выполнить еще столько то раз"
-                Log.i("APP", message)
                 message
             } else {
                 val message = "You are breathtaking!"
-                Log.i("APP", message)
                 message
             }
         }

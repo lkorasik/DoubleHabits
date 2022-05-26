@@ -1,6 +1,5 @@
 package com.lkorasik.doublehabits.view_model
 
-import android.widget.Toast
 import androidx.lifecycle.*
 import com.lkorasik.doublehabits.extensions.addLiveData
 import com.lkorasik.doublehabits.extensions.map
@@ -38,15 +37,16 @@ class HabitsListViewModel(private val useCase: HabitsUseCase): ViewModel() {
                 habits.map {
                     HabitEntity(
                         id = it.id,
-                        title = it.name,
+                        title = it.title,
                         color = it.color,
-                        count = it.countRepeats,
+                        count = it.count,
                         description = it.description,
-                        frequency = it.interval.toString(),
+                        frequency = it.frequency.toString(),
                         priority = it.priority,
                         type = it.type,
-                        createdAt = Instant.now(),
-                        lastEditedAt = Instant.now(),
+//                        createdAt = Instant.now(),
+//                        lastEditedAt = Instant.now(),
+                        date = it.date,
                         done_dates = listOf()
                     )
                 }

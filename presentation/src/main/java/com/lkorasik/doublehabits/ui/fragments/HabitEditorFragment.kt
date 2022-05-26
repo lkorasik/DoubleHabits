@@ -258,8 +258,9 @@ class HabitEditorFragment: Fragment() {
             frequency = binding.periodicity.editText?.text.toString(),
             color = editorViewModel.getSelectedColor(),
             count = getCount(),
-            createdAt = editorViewModel.createdAt ?: Instant.now(),
-            lastEditedAt = Instant.now(),
+//            createdAt = editorViewModel.createdAt ?: Instant.now(),
+//            lastEditedAt = Instant.now(),
+            date = Instant.now().nano,
             done_dates = listOf()
         )
     }

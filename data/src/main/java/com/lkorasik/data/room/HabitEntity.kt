@@ -8,7 +8,6 @@ import com.lkorasik.domain.entities.HabitModel
 import com.lkorasik.domain.entities.HabitPriority
 import com.lkorasik.domain.entities.HabitType
 import kotlinx.parcelize.Parcelize
-import java.time.Instant
 
 
 @Parcelize
@@ -19,41 +18,37 @@ data class HabitEntity(
     @ColumnInfo val color: Int,
     @ColumnInfo val count: Int,
     @ColumnInfo val description: String,
-    //TODO: Add done dates
     @ColumnInfo val frequency: String,
     @ColumnInfo val priority: HabitPriority,
     @ColumnInfo val type: HabitType,
-    //TODO: Make single date
-    @ColumnInfo val createdAt: Instant, //TODO: Delete
-    @ColumnInfo val lastEditedAt: Instant, //TODO: Delete
+    @ColumnInfo val date: Int,
     @ColumnInfo val done_dates: List<Int>
 ): Parcelable {
     companion object {
         fun fromModel(model: HabitModel): HabitEntity = HabitEntity(
             id = model.id,
-            title = model.name,
-            description = model.description,
+            title = model.title,
             color = model.color,
-            createdAt = Instant.now(), //model.date,
-            count = model.countRepeats,
-            frequency = model.interval.toString(),
-            type = model.type,
+            count = model.count,
+            description = model.description,
+            frequency = model.frequency.toString(),
             priority = model.priority,
-            lastEditedAt = Instant.now(),
+            type = model.type,
+            date = model.date,
             done_dates = model.doneDates
         )
     }
 
     fun toModel(): HabitModel = HabitModel(
         id = id,
-        name = title,
-        description = description,
+        title = title,
         color = color,
-        countRepeats = count,
-        interval = 0,
-        type = type,
+        count = count,
+        description = description,
+        frequency = 0,
         priority = priority,
-        date = createdAt.nano,
+        type = type,
+        date = date,
         doneDates = done_dates
     )
 }
