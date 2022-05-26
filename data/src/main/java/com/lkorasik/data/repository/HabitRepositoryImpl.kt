@@ -72,7 +72,7 @@ class HabitRepositoryImpl @Inject constructor(private val dao: HabitDao): Reposi
 
         if (habit.type == HabitType.REGULAR) {
             return if (list.size <= habit.count){
-                val message = "Можете выполнить еще столько-то раз"
+                val message = "Можете выполнить еще несколько раз"
                 message
             } else {
                 val message = "Хватит это делать"
@@ -81,7 +81,7 @@ class HabitRepositoryImpl @Inject constructor(private val dao: HabitDao): Reposi
         }
         else {
             return if (list.size <= habit.count){
-                val message = "Стоит выполнить еще столько то раз"
+                val message = "Стоит выполнить еще несколько раз"
                 message
             } else {
                 val message = "You are breathtaking!"
