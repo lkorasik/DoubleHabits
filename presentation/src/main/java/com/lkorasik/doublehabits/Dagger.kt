@@ -37,7 +37,8 @@ object ModuleA {
             priority = HabitPriority.HIGH,
             type = HabitType.REGULAR,
             createdAt = Instant.now(),
-            lastEditedAt = Instant.now()
+            lastEditedAt = Instant.now(),
+            dates = ""
         )
     }
 }

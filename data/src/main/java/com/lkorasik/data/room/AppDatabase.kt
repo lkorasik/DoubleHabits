@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 
 
 @Database(entities = [HabitEntity::class], version = 1)
-@TypeConverters(InstantConverter::class)
+@TypeConverters(InstantConverter::class, DataConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun habitDao(): HabitDao
 

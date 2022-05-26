@@ -260,7 +260,8 @@ class HabitEditorFragment: Fragment() {
             color = editorViewModel.getSelectedColor(),
             count = getCount(),
             createdAt = editorViewModel.createdAt ?: Instant.now(),
-            lastEditedAt = Instant.now()
+            lastEditedAt = Instant.now(),
+            dates = ""
         )
     }
 

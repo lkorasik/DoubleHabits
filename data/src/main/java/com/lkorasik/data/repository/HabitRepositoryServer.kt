@@ -26,7 +26,8 @@ class HabitRepositoryServer {
                 color = habit.color,
                 count = habit.count,
                 createdAt = Instant.now(),
-                lastEditedAt = Instant.now()
+                lastEditedAt = Instant.now(),
+                dates = ""
             )
         } ?: listOf()
     }

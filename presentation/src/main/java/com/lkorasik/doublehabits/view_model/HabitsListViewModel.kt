@@ -9,6 +9,7 @@ import com.lkorasik.domain.entities.HabitType
 import com.lkorasik.domain.HabitsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.FieldPosition
 import java.time.Instant
 
 class HabitsListViewModel(private val useCase: HabitsUseCase): ViewModel() {
@@ -45,7 +46,8 @@ class HabitsListViewModel(private val useCase: HabitsUseCase): ViewModel() {
                         priority = it.priority,
                         type = it.type,
                         createdAt = Instant.now(),
-                        lastEditedAt = Instant.now()
+                        lastEditedAt = Instant.now(),
+                        dates = ""
                     )
                 }
                  .filter { it.title.contains(searchLine, ignoreCase) }
@@ -67,6 +69,10 @@ class HabitsListViewModel(private val useCase: HabitsUseCase): ViewModel() {
         habitComparator.postValue(comparator)
 
         return this
+    }
+
+    fun doneHabit(habit: HabitEntity, position: Int) {
+
     }
 
     fun deleteHabit(habit: HabitEntity) {

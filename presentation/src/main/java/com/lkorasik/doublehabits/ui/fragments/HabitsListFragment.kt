@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -57,9 +58,12 @@ class HabitsListFragment: Fragment() {
 
         (requireActivity() as MainActivity).component.inject(this)
 
-        adapter = HabitRecycleViewAdapter(binding.root.context) { habit, position ->
+        adapter = HabitRecycleViewAdapter(binding.root.context, { habit, position ->
             editHabit(habit, position)
-        }
+        }, { habit, position ->
+            doneHabit(habit, position)
+            Toast.makeText(context, "Some text special for u ${habit.id}", Toast.LENGTH_LONG).show()
+        })
 
         val mode = arguments?.get(IntentKeys.Mode) as HabitType
 
@@ -78,6 +82,10 @@ class HabitsListFragment: Fragment() {
         binding.habitsList.adapter = adapter
 
         return binding.root
+    }
+
+    private fun doneHabit(habit: HabitEntity, position: Int) {
+        vm.doneHabit(habit, position)
     }
 
     private fun editHabit(habit: HabitEntity, position: Int) {

@@ -12,7 +12,8 @@ import com.lkorasik.doublehabits.R
 
 class HabitRecycleViewAdapter(
     private val context: Context,
-    private val onItemClicked: OnItemClicked
+    private val onItemClicked: OnItemClicked,
+    private val onItemDoneClicked: OnItemClicked
 ): ListAdapter<HabitEntity, ViewHolder>(HabitDiffCallBack()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -32,8 +33,9 @@ class HabitRecycleViewAdapter(
             }
 
             setOnClickListener {
+                onItemDoneClicked.onClick(getItem(position), position)
+
                 Log.i("App", "click ${getItem(position)} $position")
-                Toast.makeText(context, "Some text special for u", Toast.LENGTH_LONG).show()
             }
         }
     }
