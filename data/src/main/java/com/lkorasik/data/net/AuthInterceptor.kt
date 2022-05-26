@@ -8,7 +8,7 @@ class AuthInterceptor: Interceptor {
         val newRequest = chain
             .request()
             .newBuilder()
-            .addHeader(AUTHORIZATION_HEADER, APIKey.authorizationToken)
+            .addHeader(AUTHORIZATION_HEADER, AUTHORIZATION_TOKEN)
             .build()
 
         return chain.proceed(newRequest)
@@ -16,5 +16,6 @@ class AuthInterceptor: Interceptor {
 
     companion object {
         private const val AUTHORIZATION_HEADER = "Authorization"
+        private const val AUTHORIZATION_TOKEN = "0f01165e-6ec7-4c6a-aeb2-01c7e961bad8"
     }
 }
