@@ -7,11 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lkorasik.data.repository.HabitRepositoryImpl
 import com.lkorasik.data.room.HabitEntity
+import com.lkorasik.domain.Repository
+import com.lkorasik.domain.entities.HabitModel
 import com.lkorasik.domain.entities.HabitType
 import kotlinx.coroutines.launch
 import java.time.Instant
+import javax.inject.Inject
 
-class EditorViewModel(private val repository: HabitRepositoryImpl): ViewModel() {
+//class EditorViewModel(private val repository: HabitRepositoryImpl): ViewModel() {
+class EditorViewModel @Inject constructor(private val repository: Repository): ViewModel() {
     private val selectedHabit: MutableLiveData<HabitEntity> = MutableLiveData(null)
     private val selectedColor = MutableLiveData(Color.HSVToColor(floatArrayOf(11.25f, 1f, 1f)))
     private var old: HabitType? = null
@@ -50,13 +54,13 @@ class EditorViewModel(private val repository: HabitRepositoryImpl): ViewModel() 
 
     fun addHabit(habit: HabitEntity) {
         viewModelScope.launch {
-            repository.addHabit(habit)
+            repository.addHabit(habit.toModel())
         }
     }
 
     fun editHabit(habit: HabitEntity) {
         viewModelScope.launch {
-            repository.editHabit(habit)
+            repository.editHabit(habit.toModel())
         }
     }
 }

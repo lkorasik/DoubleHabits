@@ -38,12 +38,12 @@ class HabitRepositoryImpl @Inject constructor(private val dao: HabitDao): Reposi
 
     private fun <T> selectMessage(habit: HabitEntity, list: List<T>): String {
         return if (habit.type == HabitType.REGULAR) {
-            if (list.size <= habit.count)
+            if (list.size < habit.count)
                 "Можете выполнить еще несколько раз"
             else
                 "Хватит это делать"
         } else {
-            if (list.size <= habit.count)
+            if (list.size < habit.count)
                 "Стоит выполнить еще несколько раз"
             else
                 "You are breathtaking!"
@@ -56,12 +56,12 @@ class HabitRepositoryImpl @Inject constructor(private val dao: HabitDao): Reposi
         }
     }
 
-    suspend fun addHabit(habit: HabitEntity) {
+    private suspend fun addHabit(habit: HabitEntity) {
         network.addHabit(habit)
         reloadDatabase()
     }
 
-    suspend fun editHabit(habit: HabitEntity) {
+    private suspend fun editHabit(habit: HabitEntity) {
         network.updateHabit(habit)
         reloadDatabase()
     }
