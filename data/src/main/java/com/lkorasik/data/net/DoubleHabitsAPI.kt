@@ -18,5 +18,5 @@ interface DoubleHabitsAPI {
     fun deleteHabit(@Body habit: HabitUID_DTO): Call<ResponseBody?>
 
     @POST("api/habit_done")
-    fun habitDone(habit: HabitDoneDTO)
+    fun habitDone(@Body habit: HabitDoneDTO): Call<ResponseBody?>
 }

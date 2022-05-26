@@ -58,6 +58,11 @@ class HabitRepositoryImpl @Inject constructor(private val dao: HabitDao): Reposi
         editHabit(h)
     }
 
+    override suspend fun doneHabit(habit: HabitModel) {
+        network.doneHabit(HabitEntity.fromModel(habit))
+        reloadDatabase()
+    }
+
     private fun reloadDatabase() {
         CoroutineScope(Dispatchers.IO).launch {
             val habits = network.getAllHabits()

@@ -72,7 +72,10 @@ class HabitsListViewModel(private val useCase: HabitsUseCase): ViewModel() {
     }
 
     fun doneHabit(habit: HabitEntity, position: Int) {
-
+        viewModelScope.launch(Dispatchers.IO) {
+//            useCase.updateHabit(habit.toModel())
+            useCase.doneHabit(habit.toModel())
+        }
     }
 
     fun deleteHabit(habit: HabitEntity) {

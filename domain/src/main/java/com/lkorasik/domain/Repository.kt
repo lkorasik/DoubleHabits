@@ -8,4 +8,5 @@ interface Repository {
     suspend fun loadHabits()
     suspend fun addHabit(habit: HabitModel)
     suspend fun editHabit(habit: HabitModel)
+    suspend fun doneHabit(habit: HabitModel)
 }
