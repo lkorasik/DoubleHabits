@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">DoubleHabits</string>
+
+    <string name="add_habit.habit_title">Habit title</string>
+    <string name="add_habit.habit_description">Habit description</string>
+    <string name="add_habit.habit_count">Count of execution</string>
+    <string name="add_habit.habit_periodicity">Periodicity</string>
+    <string name="add_habit.habit_type">Habit type:</string>
+    <string name="add_habit.habit_priority">Habit priority:</string>
+    <string name="add_habit.habit_type_regular">Regular</string>
+    <string name="add_habit.habit_type_harmful">Harmful</string>
+    <string name="add_habit.empty_title">You must write habit\'s title</string>
+    <string name="add_habit.empty_description">You must write habit\'s description</string>
+    <string name="add_habit.habit_color">Habits color</string>
+    <string name="add_habit.select_color">Select color</string>
+    <string name="add_habit.incorrect_count">Count must be positive number</string>
+    <string name="add_habit.incorrect_periodicity">Periodicity must be positive number</string>
+    <string name="add_habit.activity_create_title">Create habit</string>
+    <string name="add_habit.activity_edit_title">Edit habit</string>
+
+    <string name="add_habit.habit_priority.low">Low</string>
+    <string name="add_habit.habit_priority.medium">Medium</string>
+    <string name="add_habit.habit_priority.high">High</string>
+
+    <string name="add_habit_menu.add_habit">Add habit</string>
+
+    <string name="dialog_color_picker.current_color">Current color</string>
+    <string name="dialog_color_picker.title">Select habit\'s color</string>
+    <string name="dialog_color_picker.ok">OK</string>
+    <string name="dialog_color_picker.cancel">Cancel</string>
+    <string name="dialog_color_picker.rgb">RGB\n(%1$d, %2$d, %3$d)</string>
+    <string name="dialog_color_picker.hsv">HSV\n(%1$.2f, %2$.2f, %3$.2f)</string>
+
+    <string name="about.author">Author: Lev</string>
+    <string name="about.email">Email: lkorasik83@gmail.com</string>
+    <string name="about.version">Version: %1$s</string>
+
+    <string name="navigation.home">Home</string>
+    <string name="navigation.about">About</string>
+
+    <string name="main_activity.open_navigation_drawer">Open navigation</string>
+    <string name="main_activity.close_navigation_drawer">Close navigation</string>
+
+    <string name="bottom_sheet.title">Filters and sorting</string>
+    <string name="bottom_sheet.button_text">Apply filters</string>
+    <string name="bottom_sheet.ascending">Ascending</string>
+    <string name="bottom_sheet.descending">Descending</string>
+    <string name="bottom_sheet.search_hint">Search by name…</string>
+    <string name="bottom_sheet.ignore_case">Ignore letter case</string>
+
+    <string name="sort_type.no_sort">No sort</string>
+    <string name="sort_type.name">Sort by name</string>
+    <string name="sort_type.priority">Sort by priority</string>
+    <string name="sort_type.date_creation">Sort by date of creation</string>
+    <string name="sort_type.date_editing">Sort by date of last editing</string>
+
+    <string name="widget_habit.done">Done</string>
+</resources>
